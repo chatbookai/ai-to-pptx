@@ -1,5 +1,5 @@
 <template>
-  <div class="pptist-screen">
+  <div class="chatbook-screen">
     <BaseView :changeViewMode="changeViewMode" v-if="viewMode === 'base'" />
     <PresenterView :changeViewMode="changeViewMode" v-else-if="viewMode === 'presenter'" />
   </div>
@@ -32,7 +32,7 @@ onUnmounted(() => document.removeEventListener('keydown', keydownListener))
 </script>
 
 <style lang="scss" scoped>
-.pptist-screen {
+.chatbook-screen {
   width: 100%;
   height: 100%;
 }

@@ -55,10 +55,9 @@ export default () => {
     }, 200)
   }
   
-  // 导出pptist文件（特有 .pptist 后缀文件）
   const exportSpecificFile = (_slides: Slide[]) => {
     const blob = new Blob([encrypt(JSON.stringify(_slides))], { type: '' })
-    saveAs(blob, `${title.value}.pptist`)
+    saveAs(blob, `${title.value}.ChatBook`)
   }
   
   // 导出JSON文件
@@ -378,7 +377,7 @@ export default () => {
     if (masterOverwrite) {
       const { color: bgColor, alpha: bgAlpha } = formatColor(theme.value.backgroundColor)
       pptx.defineSlideMaster({
-        title: 'PPTIST_MASTER',
+        title: 'CHATBOOK_MASTER',
         background: { color: bgColor, transparency: (1 - bgAlpha) * 100 },
       })
     }
