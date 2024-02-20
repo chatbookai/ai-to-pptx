@@ -1,5 +1,5 @@
 <template>
-  <div class="export-ChatPPT-dialog">
+  <div class="export-CHATPPT-dialog">
     <div class="configs">
       <div class="row">
         <div class="title">导出范围：</div>
@@ -67,7 +67,7 @@ const selectedSlides = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.export-ChatPPT-dialog {
+.export-CHATPPT-dialog {
   height: 100%;
   display: flex;
   justify-content: center;

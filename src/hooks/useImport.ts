@@ -29,6 +29,7 @@ export default () => {
 
   const exporting = ref(false)
 
+  // 导入ChatPPT文件
   const importSpecificFile = (files: FileList, cover = false) => {
     const file = files[0]
 

@@ -55,6 +55,7 @@ export default () => {
     }, 200)
   }
   
+  // 导出ChatPPT文件（特有 .ChatPPT 后缀文件）
   const exportSpecificFile = (_slides: Slide[]) => {
     const blob = new Blob([encrypt(JSON.stringify(_slides))], { type: '' })
     saveAs(blob, `${title.value}.ChatPPT`)

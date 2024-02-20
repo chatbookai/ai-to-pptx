@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia'
 import tinycolor from 'tinycolor2'
 import { omit } from 'lodash'
-import axios from 'axios'
 import type { Slide, SlideTheme, PPTElement, PPTAnimation } from '@/types/slides'
 import { slides } from '@/api/slides'
-import { theme } from '@/api/theme'
-import { layouts } from '@/api/layout'
+import { theme } from '@/mocks/theme'
+import { layouts } from '@/mocks/layout'
 
 interface RemoveElementPropData {
   id: string
@@ -108,16 +107,6 @@ export const useSlidesStore = defineStore('slides', {
   },
 
   actions: {
-    async fetchSlides() {
-      try {
-        const response = await axios.get<Slide[]>('http://localhost:1988/api/pptx/listtemplate');
-        this.setSlides(response.data);
-        console.log('response:', response);
-      } catch (error) {
-        console.error('Error fetching slides:', error);
-      }
-    },
-
     setTitle(title: string) {
       if (!title) this.title = '未命名演示文稿'
       else this.title = title

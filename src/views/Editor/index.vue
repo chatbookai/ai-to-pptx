@@ -1,5 +1,5 @@
 <template>
-  <div class="ChatPPT-editor">
+  <div class="CHATPPT-editor">
     <EditorHeader class="layout-header" />
     <div class="layout-content">
       <Thumbnails class="layout-content-left" />
@@ -59,7 +59,7 @@ usePasteEvent()
 </script>
 
 <style lang="scss" scoped>
-.ChatPPT-editor {
+.CHATPPT-editor {
   height: 100%;
 }
 .layout-header {

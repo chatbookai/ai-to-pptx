@@ -20,12 +20,8 @@
     </a>
 </p>
 
-# 软件声明
-1 当前库是一个基于PPTist的修改版本，授权协议同样为AGPL-3.0。
-2 主要改动是增加后端的支持,后端采用Node express, 同时增加一些模板的选项。
-3 本软件的目的是打造为适用于利用AI技术生成PPTX，并允许用户修改模板和更改版式。
 
-# 🎨 PPTist
+# 🎨 ChatPPT
 > 一个基于 Vue3.x + TypeScript 的在线演示文稿（幻灯片）应用，还原了大部分 Office PowerPoint 常用功能，支持 文字、图片、形状、线条、图表、表格、视频、音频、公式 几种最常用的元素类型，每一种元素都拥有高度可编辑能力，同时支持丰富的快捷键和右键菜单，力求还原桌面应用级体验。支持导出本地 PPTX 文件，支持移动端基础编辑和预览。您可以在此基础上搭建自己的在线幻灯片应用。
 
 <b>在线体验地址👉：[https://pipipi-pikachu.github.io/PPTist/](https://pipipi-pikachu.github.io/PPTist/)</b>
@@ -53,7 +49,7 @@ npm run dev
 - 快捷键
 - 右键菜单
 - 导出本地文件（PPTX、JSON、图片、PDF）
-- 导入导出特有 .pptist 文件
+- 导入导出特有 .ChatPPT 文件
 - 打印
 ### 幻灯片页面编辑
 - 页面添加、删除
