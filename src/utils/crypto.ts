@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js'
 
-const CRYPTO_KEY = 'ChatBook'
+const CRYPTO_KEY = 'ChatPPT'
 
 /**
  * 加密

@@ -57,7 +57,7 @@ export default () => {
   
   const exportSpecificFile = (_slides: Slide[]) => {
     const blob = new Blob([encrypt(JSON.stringify(_slides))], { type: '' })
-    saveAs(blob, `${title.value}.ChatBook`)
+    saveAs(blob, `${title.value}.ChatPPT`)
   }
   
   // 导出JSON文件
@@ -377,7 +377,7 @@ export default () => {
     if (masterOverwrite) {
       const { color: bgColor, alpha: bgAlpha } = formatColor(theme.value.backgroundColor)
       pptx.defineSlideMaster({
-        title: 'CHATBOOK_MASTER',
+        title: 'CHATPPT_MASTER',
         background: { color: bgColor, transparency: (1 - bgAlpha) * 100 },
       })
     }

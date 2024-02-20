@@ -95,7 +95,7 @@ const applyAllSlide = () => {
   overflow: hidden;
 
   @mixin elAnimation($animationType) {
-    content: 'ChatBook';
+    content: 'ChatPPT';
     width: 100%;
     height: 100%;
     position: absolute;
