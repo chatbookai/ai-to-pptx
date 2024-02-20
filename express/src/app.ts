@@ -10,8 +10,7 @@ import { initChatBookDbExec } from './utils/db';
 
 import userRouter from './router/user'
 import utilsRouter from './router/utils'
-
-//import seaartRouter from './router/seaart'
+import pptxRouter from './router/pptx'
 
 //Start Express Server
 const app = express();
@@ -19,7 +18,6 @@ const port = 1988;
 app.use(cors());
 app.use(bodyParser.json());
 dotenv.config();
-
 
 //Initial Database and Folder
 initChatBookDbExec()
@@ -30,10 +28,9 @@ cron.schedule('*/1 * * * *', () => {
   console.log('Task End !');
 });
 
-
 app.use('/', userRouter);
 app.use('/', utilsRouter);
-
+app.use('/', pptxRouter);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   // 处理身份验证错误
