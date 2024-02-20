@@ -110,18 +110,22 @@ export const useSlidesStore = defineStore('slides', {
     setTitle(title: string) {
       if (!title) this.title = '未命名演示文稿'
       else this.title = title
+      console.log("slides setTitle", title)
     },
 
     setTheme(themeProps: Partial<SlideTheme>) {
       this.theme = { ...this.theme, ...themeProps }
+      console.log("slides setTheme", themeProps)
     },
   
     setViewportRatio(viewportRatio: number) {
       this.viewportRatio = viewportRatio
+      console.log("slides setViewportRatio", viewportRatio)
     },
   
     setSlides(slides: Slide[]) {
       this.slides = slides
+      console.log("slides setSlides", slides)
     },
   
     addSlide(slide: Slide | Slide[]) {
@@ -129,11 +133,13 @@ export const useSlidesStore = defineStore('slides', {
       const addIndex = this.slideIndex + 1
       this.slides.splice(addIndex, 0, ...slides)
       this.slideIndex = addIndex
+      console.log("slides addSlide", slide)
     },
   
     updateSlide(props: Partial<Slide>) {
       const slideIndex = this.slideIndex
       this.slides[slideIndex] = { ...this.slides[slideIndex], ...props }
+      console.log("slides updateSlide", props)
     },
   
     deleteSlide(slideId: string | string[]) {
@@ -151,10 +157,12 @@ export const useSlidesStore = defineStore('slides', {
   
       this.slideIndex = newIndex
       this.slides = this.slides.filter(item => !slidesId.includes(item.id))
+      console.log("slides deleteSlide", slideId)
     },
   
     updateSlideIndex(index: number) {
       this.slideIndex = index
+      console.log("slides updateSlideIndex", index)
     },
   
     addElement(element: PPTElement | PPTElement[]) {
@@ -162,6 +170,7 @@ export const useSlidesStore = defineStore('slides', {
       const currentSlideEls = this.slides[this.slideIndex].elements
       const newEls = [...currentSlideEls, ...elements]
       this.slides[this.slideIndex].elements = newEls
+      console.log("slides addElement", element)
     },
 
     deleteElement(elementId: string | string[]) {
@@ -169,6 +178,7 @@ export const useSlidesStore = defineStore('slides', {
       const currentSlideEls = this.slides[this.slideIndex].elements
       const newEls = currentSlideEls.filter(item => !elementIdList.includes(item.id))
       this.slides[this.slideIndex].elements = newEls
+      console.log("slides deleteElement", elementId)
     },
   
     updateElement(data: UpdateElementData) {
@@ -181,6 +191,7 @@ export const useSlidesStore = defineStore('slides', {
         return elIdList.includes(el.id) ? { ...el, ...props } : el
       })
       this.slides[slideIndex].elements = (elements as PPTElement[])
+      console.log("slides updateElement", data)
     },
   
     removeElementProps(data: RemoveElementPropData) {
@@ -193,6 +204,7 @@ export const useSlidesStore = defineStore('slides', {
         return el.id === id ? omit(el, propsNames) : el
       })
       this.slides[slideIndex].elements = (elements as PPTElement[])
+      console.log("slides removeElementProps", data)
     },
   },
 })

@@ -4,8 +4,6 @@
   <Mobile v-else />
 </template>
 
-
-
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
