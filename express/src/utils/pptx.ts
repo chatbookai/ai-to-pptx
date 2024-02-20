@@ -9,13 +9,13 @@
   dotenv.config();
 
   import { db, getDbRecord, getDbRecordALL } from './db'
+  import { slidesTemplate } from './const.pptx'
 
   type SqliteQueryFunction = (sql: string, params?: any[]) => Promise<any[]>;
 
   const secretKey: string = process.env.JWT_TOKEN_SECRET_KEY || "ChatBookAI"; 
 
-  export const createJwtToken = (userId: string, email: string, role: string) => {
-    const token = jwt.sign({ id: userId, email, role }, secretKey, { expiresIn: '10m' });
+  export const getPPTXTemplate = () => {
 
-    return token;
+    return slidesTemplate;
   };
