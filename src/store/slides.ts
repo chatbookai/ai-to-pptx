@@ -30,6 +30,18 @@ export interface SlidesState {
   viewportRatio: number
 }
 
+export const getPageId = () => {
+  if(window && window.location && window.location.href) {
+    const parsedUrl = new URL(window.location.href);
+    const id = parsedUrl.searchParams.get('id');
+    console.log(id); // 输出: 101
+    return id;
+  }
+  else {
+    return null;
+  }
+}
+
 export const useSlidesStore = defineStore('slides', {
   state: (): SlidesState => ({
     title: '未命名演示文稿', // 幻灯片标题
@@ -107,6 +119,7 @@ export const useSlidesStore = defineStore('slides', {
   },
 
   actions: {
+
     setTitle(title: string) {
       if (!title) this.title = '未命名演示文稿'
       else this.title = title

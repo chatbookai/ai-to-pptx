@@ -11,6 +11,7 @@ import { useScreenStore, useMainStore, useSnapshotStore } from '@/store'
 import { LOCALSTORAGE_KEY_DISCARDED_DB } from '@/configs/storage'
 import { deleteDiscardedDB } from '@/utils/database'
 import { isPC } from './utils/common'
+import { useRoute } from 'vue-router'
 
 import Editor from './views/Editor/index.vue'
 import Screen from './views/Screen/index.vue'
@@ -28,6 +29,7 @@ if (import.meta.env.MODE !== 'development') {
 }
 
 onMounted(async () => {
+  console.log("URL中的id值为", window.location)
   await deleteDiscardedDB()
   snapshotStore.initSnapshotDatabase()
   mainStore.setAvailableFonts()
