@@ -229,7 +229,7 @@ export async function initChatBookDb() {
                 slides text not null default '',
                 slideIndex INTEGER not null default 0,
                 viewportRatio INTEGER not null default 0,
-                userId text not null default '',
+                userId INTEGER not null default 0,
                 updatetime INTEGER not null default 0
             );
         `); 

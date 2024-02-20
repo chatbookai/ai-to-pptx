@@ -57,7 +57,7 @@
     "@types/crypto-js": "^4.2.1",
     "@types/file-saver": "^2.0.7",
     "@types/lodash": "^4.14.202",
-    "@types/node": "^18.19.3",
+    "@types/node": "^18.19.17",
     "@types/svg-arc-to-cubic-bezier": "^3.2.2",
     "@types/tinycolor2": "^1.4.6",
     "@vitejs/plugin-vue": "^4.5.2",

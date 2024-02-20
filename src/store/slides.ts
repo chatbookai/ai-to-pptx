@@ -5,6 +5,8 @@ import type { Slide, SlideTheme, PPTElement, PPTAnimation } from '@/types/slides
 import { slides } from '@/api/slides'
 import { theme } from '@/api/theme'
 import { layouts } from '@/api/layout'
+import axios from 'axios'
+import authConfig from '../configs/auth'
 
 interface RemoveElementPropData {
   id: string
@@ -34,7 +36,7 @@ export const getPageId = () => {
   if(window && window.location && window.location.href) {
     const parsedUrl = new URL(window.location.href);
     const id = parsedUrl.searchParams.get('id');
-    console.log(id); // 输出: 101
+    console.log(id);
     return id;
   }
   else {
@@ -120,11 +122,21 @@ export const useSlidesStore = defineStore('slides', {
 
   actions: {
 
-    setTitle(title: string) {
+    async setTitle(title: string) {
       if (!title) this.title = '未命名演示文稿'
       else this.title = title
       console.log("slides setTitle", title)
-      console.log("URL中的id值为 setTitle", getPageId())
+      const id = getPageId()
+      if(id) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setTitle', {id, title}, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("URL中的id值为 authConfig.backEndApiChatBook", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
 
     setTheme(themeProps: Partial<SlideTheme>) {
