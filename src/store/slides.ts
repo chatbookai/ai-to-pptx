@@ -3,8 +3,8 @@ import tinycolor from 'tinycolor2'
 import { omit } from 'lodash'
 import type { Slide, SlideTheme, PPTElement, PPTAnimation } from '@/types/slides'
 import { slides } from '@/api/slides'
-import { theme } from '@/mocks/theme'
-import { layouts } from '@/mocks/layout'
+import { theme } from '@/api/theme'
+import { layouts } from '@/api/layout'
 
 interface RemoveElementPropData {
   id: string
@@ -124,6 +124,7 @@ export const useSlidesStore = defineStore('slides', {
       if (!title) this.title = '未命名演示文稿'
       else this.title = title
       console.log("slides setTitle", title)
+      console.log("URL中的id值为 setTitle", getPageId())
     },
 
     setTheme(themeProps: Partial<SlideTheme>) {
