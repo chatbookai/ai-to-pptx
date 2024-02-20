@@ -3,9 +3,9 @@ import tinycolor from 'tinycolor2'
 import { omit } from 'lodash'
 import axios from 'axios'
 import type { Slide, SlideTheme, PPTElement, PPTAnimation } from '@/types/slides'
-import { slides } from '@/mocks/slides'
-import { theme } from '@/mocks/theme'
-import { layouts } from '@/mocks/layout'
+import { slides } from '@/api/slides'
+import { theme } from '@/api/theme'
+import { layouts } from '@/api/layout'
 
 interface RemoveElementPropData {
   id: string
