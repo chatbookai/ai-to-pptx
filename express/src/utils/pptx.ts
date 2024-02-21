@@ -18,6 +18,12 @@
   export const getPPTXTemplate = () => {
     return slidesTemplate;
   };
+  
+  export async function getPPTXContent(id: number) {
+    const Records: any = await (getDbRecord as SqliteQueryFunction)("SELECT * from pptx where id = ? ", [id]);
+    const slidesData = Records && Records.slides ? JSON.parse(Records.slides) : {}
+    return slidesData
+  }
 
   export async function setTitle(Data: any) {
     console.log("Data", Data)
@@ -26,7 +32,7 @@
     updateSetting.finalize();
     return {"status":"ok", "msg":"Update title success"}
   }
-  
+
   export async function setTheme(Data: any) {
     console.log("Data", Data)
     const updateSetting = db.prepare('update pptx set theme = ? where id = ?');
@@ -48,5 +54,33 @@
     const updateSetting = db.prepare('update pptx set slides = ? where id = ?');
     updateSetting.run(JSON.stringify(Data.slides), Data.id);
     updateSetting.finalize();
-    return {"status":"ok", "msg":"Update slides success"}
+    return {"status":"ok", "msg":"Update setSlides success"}
   }
+
+  export async function setSlide(Data: any) {
+    console.log("Data setSlide", Data)
+    const Records: any = await (getDbRecord as SqliteQueryFunction)("SELECT * from pptx where id = ? ", [Data.fileId]);
+    const slidesData = Records && Records.slides ? JSON.parse(Records.slides) : {}
+    slidesData[Number(Data.slideIndex)] = {elements: Data.elements}
+    console.log("Data slidesData", slidesData)
+    const updateSetting = db.prepare('update pptx set slides = ? where id = ?')
+    updateSetting.run(JSON.stringify(slidesData), Data.fileId)
+    updateSetting.finalize()
+    return {"status":"ok", "msg":"Update setSlide success"}
+  }
+
+  export async function addSlide(Data: any) {
+    console.log("Data addSlide", Data)
+    const Records: any = await (getDbRecord as SqliteQueryFunction)("SELECT * from pptx where id = ? ", [Data.fileId]);
+    const slidesData = Records && Records.slides ? JSON.parse(Records.slides) : {}
+    console.log("Data slidesData", slidesData)
+    const slidesArray = Object.values(slidesData);
+    slidesArray.splice(Data.addIndex, 0, ...Data.addSlide)
+    console.log("Data addSlide", slidesArray)
+    const updateSetting = db.prepare('update pptx set slides = ? where id = ?')
+    updateSetting.run(JSON.stringify(slidesArray), Data.fileId)
+    updateSetting.finalize()
+    return {"status":"ok", "msg":"Update addSlide success"}
+  }
+
+  

@@ -154,12 +154,23 @@ export const useSlidesStore = defineStore('slides', {
       console.log("slides setSlides", slides)
     },
   
-    addSlide(slide: Slide | Slide[]) {
+    async addSlide(slide: Slide | Slide[]) {
       const slides = Array.isArray(slide) ? slide : [slide]
       const addIndex = this.slideIndex + 1
       this.slides.splice(addIndex, 0, ...slides)
       this.slideIndex = addIndex
       console.log("slides addSlide", slide)
+      const fileId = getPageId()
+      if(fileId) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/addSlide', {fileId, addIndex, addSlide: slides }, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("URL中的id值为 authConfig.backEndApiChatBook", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
   
     updateSlide(props: Partial<Slide>) {
@@ -207,7 +218,7 @@ export const useSlidesStore = defineStore('slides', {
       console.log("slides deleteElement", elementId)
     },
   
-    updateElement(data: UpdateElementData) {
+    async updateElement(data: UpdateElementData) {
       const { id, props, slideId } = data
       const elIdList = typeof id === 'string' ? [id] : id
 
@@ -217,7 +228,18 @@ export const useSlidesStore = defineStore('slides', {
         return elIdList.includes(el.id) ? { ...el, ...props } : el
       })
       this.slides[slideIndex].elements = (elements as PPTElement[])
-      console.log("slides updateElement", data)
+      console.log("slides updateElement", this.slides)
+      const fileId = getPageId()
+      if(fileId) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setSlide', {fileId, slideIndex, elements: this.slides[slideIndex].elements}, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("updateElement", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
   
     removeElementProps(data: RemoveElementPropData) {

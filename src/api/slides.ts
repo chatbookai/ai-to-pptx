@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export async function fetchSlides() {
   try {
-    const response = await axios.get<Slide[]>('http://localhost:1988/api/pptx/listtemplate');
+    const response = await axios.post('http://localhost:1988/api/pptx/getPPTXContent', {id: 101});
     return response.data;
   } catch (error) {
     console.error('Error fetching slides:', error);
