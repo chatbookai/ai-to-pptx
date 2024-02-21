@@ -28,3 +28,10 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+/express/node_modules
+/express/dist
+/express/data
+/express/data/ChatBookSqlite3.db
+/express/.env
+.env
