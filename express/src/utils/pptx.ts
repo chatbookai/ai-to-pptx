@@ -83,4 +83,18 @@
     return {"status":"ok", "msg":"Update addSlide success"}
   }
 
+  export async function updateSlide(Data: any) {
+    console.log("Data updateSlide", Data)
+    const Records: any = await (getDbRecord as SqliteQueryFunction)("SELECT * from pptx where id = ? ", [Data.fileId]);
+    const slidesData = Records && Records.slides ? JSON.parse(Records.slides) : {}
+    console.log("Data slidesData", slidesData)
+    slidesData[Data.slideIndex] = { ...slidesData[Data.slideIndex], ...Data.props }
+    const slidesArray = Object.values(slidesData);
+    console.log("Data updateSlide", slidesArray)
+    const updateSetting = db.prepare('update pptx set slides = ? where id = ?')
+    updateSetting.run(JSON.stringify(slidesArray), Data.fileId)
+    updateSetting.finalize()
+    return {"status":"ok", "msg":"Update updateSlide success"}
+  }
+
   

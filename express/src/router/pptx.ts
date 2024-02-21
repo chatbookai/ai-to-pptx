@@ -3,7 +3,7 @@
 
   import { checkUserPassword, registerUser, changeUserPasswordByToken, changeUserDetail, changeUserStatus, checkUserToken, getUsers, getUserLogsAll, getUserLogs, getOneUserByToken, updateUserImageFavorite, updateUserVideoFavorite, refreshUserToken } from '../utils/user';
 
-  import { getPPTXContent, getPPTXTemplate, setTitle, setTheme, setViewportRatio, setSlides, setSlide, addSlide } from '../utils/pptx'
+  import { getPPTXContent, getPPTXTemplate, setTitle, setTheme, setViewportRatio, setSlides, setSlide, addSlide, updateSlide } from '../utils/pptx'
 
   const app = express();
 
@@ -71,5 +71,15 @@
     res.status(200).json(result);
     res.end();
   });
+
+  app.post('/api/pptx/updateSlide', async (req: Request, res: Response) => {
+    //const { authorization } = req.headers;
+    //const checkUserTokenData = await checkUserToken(authorization as string);
+    const result = await updateSlide(req.body)
+    res.status(200).json(result);
+    res.end();
+  });
+  
+
   
   export default app;
