@@ -29,7 +29,6 @@ if (import.meta.env.MODE !== 'development') {
 }
 
 onMounted(async () => {
-  console.log("URL中的id值为", window.location)
   await deleteDiscardedDB()
   snapshotStore.initSnapshotDatabase()
   mainStore.setAvailableFonts()

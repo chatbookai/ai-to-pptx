@@ -126,32 +126,64 @@ export const useSlidesStore = defineStore('slides', {
       if (!title) this.title = '未命名演示文稿'
       else this.title = title
       console.log("slides setTitle", title)
-      const id = getPageId()
-      if(id) {
+      const fileId = getPageId()
+      if(fileId) {
         try {
-          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setTitle', {id, title}, {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setTitle', {fileId, title}, {
             headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
           }).then(res => res.data);
-          console.log("URL中的id值为 authConfig.backEndApiChatBook", RS)
         } catch (error) {
           console.error('Error fetching slides:', error);
         }
       }
     },
 
-    setTheme(themeProps: Partial<SlideTheme>) {
+    async setTheme(themeProps: Partial<SlideTheme>) {
       this.theme = { ...this.theme, ...themeProps }
       console.log("slides setTheme", themeProps)
+      const fileId = getPageId()
+      if(fileId) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setTheme', {fileId, themeProps}, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("setTheme", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
   
-    setViewportRatio(viewportRatio: number) {
+    async setViewportRatio(viewportRatio: number) {
       this.viewportRatio = viewportRatio
       console.log("slides setViewportRatio", viewportRatio)
+      const fileId = getPageId()
+      if(fileId) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setViewportRatio', {fileId, viewportRatio}, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("updateElement", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
   
-    setSlides(slides: Slide[]) {
+    async setSlides(slides: Slide[]) {
       this.slides = slides
       console.log("slides setSlides", slides)
+      const fileId = getPageId()
+      if(fileId) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setSlides', {fileId, slides}, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("updateElement", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
   
     async addSlide(slide: Slide | Slide[]) {
@@ -166,17 +198,28 @@ export const useSlidesStore = defineStore('slides', {
           const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/addSlide', {fileId, addIndex, addSlide: slides }, {
             headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
           }).then(res => res.data);
-          console.log("URL中的id值为 authConfig.backEndApiChatBook", RS)
+          console.log("slides addSlide", RS)
         } catch (error) {
           console.error('Error fetching slides:', error);
         }
       }
     },
   
-    updateSlide(props: Partial<Slide>) {
+    async updateSlide(props: Partial<Slide>) {
       const slideIndex = this.slideIndex
       this.slides[slideIndex] = { ...this.slides[slideIndex], ...props }
       console.log("slides updateSlide", props)
+      const fileId = getPageId()
+      if(fileId) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/updateSlide', {fileId, slideIndex, props}, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("slides updateElement", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
   
     deleteSlide(slideId: string | string[]) {
@@ -199,23 +242,44 @@ export const useSlidesStore = defineStore('slides', {
   
     updateSlideIndex(index: number) {
       this.slideIndex = index
-      console.log("slides updateSlideIndex", index)
     },
   
-    addElement(element: PPTElement | PPTElement[]) {
+    async addElement(element: PPTElement | PPTElement[]) {
       const elements = Array.isArray(element) ? element : [element]
       const currentSlideEls = this.slides[this.slideIndex].elements
       const newEls = [...currentSlideEls, ...elements]
       this.slides[this.slideIndex].elements = newEls
       console.log("slides addElement", element)
+      const fileId = getPageId()
+      if(fileId) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setSlide', {fileId, slideIndex: this.slideIndex, elements: newEls}, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("slides addElement", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
 
-    deleteElement(elementId: string | string[]) {
+    async deleteElement(elementId: string | string[]) {
       const elementIdList = Array.isArray(elementId) ? elementId : [elementId]
       const currentSlideEls = this.slides[this.slideIndex].elements
       const newEls = currentSlideEls.filter(item => !elementIdList.includes(item.id))
       this.slides[this.slideIndex].elements = newEls
       console.log("slides deleteElement", elementId)
+      const fileId = getPageId()
+      if(fileId) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setSlide', {fileId, slideIndex: this.slideIndex, elements: newEls}, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("slides deleteElement", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
   
     async updateElement(data: UpdateElementData) {
@@ -235,14 +299,14 @@ export const useSlidesStore = defineStore('slides', {
           const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setSlide', {fileId, slideIndex, elements: this.slides[slideIndex].elements}, {
             headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
           }).then(res => res.data);
-          console.log("updateElement", RS)
+          console.log("slides updateElement", RS)
         } catch (error) {
           console.error('Error fetching slides:', error);
         }
       }
     },
   
-    removeElementProps(data: RemoveElementPropData) {
+    async removeElementProps(data: RemoveElementPropData) {
       const { id, propName } = data
       const propsNames = typeof propName === 'string' ? [propName] : propName
   
@@ -253,6 +317,17 @@ export const useSlidesStore = defineStore('slides', {
       })
       this.slides[slideIndex].elements = (elements as PPTElement[])
       console.log("slides removeElementProps", data)
+      const fileId = getPageId()
+      if(fileId) {
+        try {
+          const RS = await axios.post(authConfig.backEndApiChatBook + '/api/pptx/setSlide', {fileId, slideIndex: this.slideIndex, elements: this.slides[slideIndex].elements}, {
+            headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+          }).then(res => res.data);
+          console.log("slides removeElementProps", RS)
+        } catch (error) {
+          console.error('Error fetching slides:', error);
+        }
+      }
     },
   },
 })

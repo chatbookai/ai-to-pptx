@@ -79,7 +79,15 @@
     res.status(200).json(result);
     res.end();
   });
-  
 
+  app.post('/api/pptx/setSlides', async (req: Request, res: Response) => {
+    //const { authorization } = req.headers;
+    //const checkUserTokenData = await checkUserToken(authorization as string);
+    const result = await setSlides(req.body)
+    res.status(200).json(result);
+    res.end();
+  });
+  
+  
   
   export default app;
