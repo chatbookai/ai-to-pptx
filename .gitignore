@@ -29,6 +29,7 @@ coverage
 
 *.tsbuildinfo
 
+# express
 /express/node_modules
 /express/dist
 /express/data
