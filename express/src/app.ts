@@ -7,10 +7,16 @@ import dotenv from 'dotenv';
 import { join } from 'path';
 
 import { initChatBookDbExec } from './utils/db';
+import { debug, parseFiles } from './utils/llms';
+import { downloadVideoFromAPI } from './utils/stability';
 
 import userRouter from './router/user'
+import llmsRouter from './router/llms'
 import utilsRouter from './router/utils'
-import pptxRouter from './router/pptx'
+import stabilityRouter from './router/stability'
+import getimgRouter from './router/getimg'
+
+//import seaartRouter from './router/seaart'
 
 //Start Express Server
 const app = express();
@@ -19,18 +25,31 @@ app.use(cors());
 app.use(bodyParser.json());
 dotenv.config();
 
+
 //Initial Database and Folder
 initChatBookDbExec()
 
 //Schedule Task for Parse Upload Files
 cron.schedule('*/1 * * * *', () => {
   console.log('Task Begin !');
+  parseFiles();
+  downloadVideoFromAPI();
   console.log('Task End !');
 });
 
+
 app.use('/', userRouter);
+app.use('/', llmsRouter);
 app.use('/', utilsRouter);
-app.use('/', pptxRouter);
+app.use('/', getimgRouter);
+app.use('/', stabilityRouter);
+
+//app.use('/', seaartRouter);
+
+app.get('/api/debug', async (req: Request, res: Response) => {
+  await debug(res, "ChatGPT4");
+  res.end();
+});
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   // 处理身份验证错误

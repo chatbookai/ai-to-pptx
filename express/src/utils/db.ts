@@ -221,18 +221,6 @@ export async function initChatBookDb() {
                 createtime INTEGER not null default 0
             );
         `); 
-        db.run(`
-            CREATE TABLE IF NOT EXISTS pptx (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                title text not null default '',
-                theme text not null default '',
-                slides text not null default '',
-                slideIndex INTEGER not null default 0,
-                viewportRatio INTEGER not null default 0,
-                userId INTEGER not null default 0,
-                updatetime INTEGER not null default 0
-            );
-        `); 
     });
 }
 

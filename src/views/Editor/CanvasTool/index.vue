@@ -64,6 +64,8 @@
         </template>
         <IconVideoTwo class="handler-item" v-tooltip="'插入音视频'" />
       </Popover>
+			<div style="margin:3px 20px 0;cursor: pointer;" @click="banshiVisible=true">更换版式</div>
+			<div style="margin:3px 0px 0;cursor: pointer;" @click="mobanVisible=true">更换模板</div>
     </div>
 
     <div class="right-handler">
@@ -93,19 +95,62 @@
         @update="data => { createLatexElement(data); latexEditorVisible = false }"
       />
     </Modal>
+		
+		<!-- 选择版式 -->
+		<Modal
+		  v-model:visible="banshiVisible" 
+		  :width="880"
+		>
+		  <div style="margin-bottom: 15px;font-weight: bold;">更换版式</div>
+			<BanShiList @select="slide => { updateSlideByTemplate(slide); banshiVisible = false }" />
+		</Modal>
+		
+		<!-- 选择模板 -->
+		<Modal
+		  v-model:visible="mobanVisible" 
+		  :width="880"
+		>
+		  <div style="margin-bottom: 15px;font-weight: bold;">更换模板</div>
+			<div style="margin: 20px 0;">
+				<div class="type-box">
+					<div>颜色：</div>
+					<div @click="typeIndex01 = 0" :class="typeIndex01 == 0 ? 'chooseColor':''">全部</div>
+					<div @click="typeIndex01 = 1" :class="typeIndex01 == 1 ? 'chooseColor':''">红色</div>
+					<div @click="typeIndex01 = 2" :class="typeIndex01 == 2 ? 'chooseColor':''">橙色</div>
+					<div @click="typeIndex01 = 3" :class="typeIndex01 == 3 ? 'chooseColor':''">黄色</div>
+				</div>
+				<div class="type-box">
+					<div>风格：</div>
+					<div @click="typeIndex02 = 0" :class="typeIndex02 == 0 ? 'chooseColor':''">全部</div>
+					<div @click="typeIndex02 = 1" :class="typeIndex02 == 1 ? 'chooseColor':''">商务风</div>
+					<div @click="typeIndex02 = 2" :class="typeIndex02 == 2 ? 'chooseColor':''">小清新</div>
+					<div @click="typeIndex02 = 3" :class="typeIndex02 == 3 ? 'chooseColor':''">中国风</div>
+				</div>
+				<div class="type-box">
+					<div>场景：</div>
+					<div @click="typeIndex03 = 0" :class="typeIndex03 == 0 ? 'chooseColor':''">全部</div>
+					<div @click="typeIndex03 = 1" :class="typeIndex03 == 1 ? 'chooseColor':''">总结汇报</div>
+					<div @click="typeIndex03 = 2" :class="typeIndex03 == 2 ? 'chooseColor':''">企业培训</div>
+					<div @click="typeIndex03 = 3" :class="typeIndex03 == 3 ? 'chooseColor':''">营销策划</div>
+				</div>
+			</div>
+			<MoBanList @select="slides => { chooseSlideByTemplate(slides); mobanVisible = false }" />
+		</Modal>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useMainStore, useSnapshotStore } from '@/store'
+import { useMainStore, useSnapshotStore, useSlidesStore } from '@/store'
 import { getImageDataURL } from '@/utils/image'
 import type { ShapePoolItem } from '@/configs/shapes'
+import type { Slide } from '@/types/slides'
 import type { LinePoolItem } from '@/configs/lines'
 import useScaleCanvas from '@/hooks/useScaleCanvas'
 import useHistorySnapshot from '@/hooks/useHistorySnapshot'
 import useCreateElement from '@/hooks/useCreateElement'
+import useSlideHandler from '@/hooks/useSlideHandler'
 
 import ShapePool from './ShapePool.vue'
 import LinePool from './LinePool.vue'
@@ -119,7 +164,11 @@ import Divider from '@/components/Divider.vue'
 import Popover from '@/components/Popover.vue'
 import PopoverMenuItem from '@/components/PopoverMenuItem.vue'
 
+import BanShiList from './BanShiList.vue'
+import MoBanList from './MoBanList.vue'
+
 const mainStore = useMainStore()
+const slidesStore = useSlidesStore()
 const { creatingElement, creatingCustomShape, showSelectPanel, showSearchPanel, showNotesPanel } = storeToRefs(mainStore)
 const { canUndo, canRedo } = storeToRefs(useSnapshotStore())
 
@@ -149,6 +198,11 @@ const {
   createAudioElement,
 } = useCreateElement()
 
+const {
+  updateSlideByTemplate,
+  resetSlides
+} = useSlideHandler()
+
 const insertImageElement = (files: FileList) => {
   const imageFile = files[0]
   if (!imageFile) return
@@ -162,6 +216,18 @@ const tableGeneratorVisible = ref(false)
 const mediaInputVisible = ref(false)
 const latexEditorVisible = ref(false)
 const textTypeSelectVisible = ref(false)
+const banshiVisible = ref(false)
+const mobanVisible = ref(false)
+
+
+const typeIndex01 = ref(0)
+const typeIndex02 = ref(0)
+const typeIndex03 = ref(0)
+
+// 确认选择模板
+const chooseSlideByTemplate = (slides: Slide[]) => {
+  slidesStore.setSlides(slides)
+}
 
 // 绘制文字范围
 const drawText = (vertical = false) => {
@@ -332,5 +398,19 @@ const toggleNotesPanel = () => {
   .left-handler, .right-handler {
     display: none;
   }
+}
+.type-box{
+	display: flex;
+	align-items: center;
+	margin: 15px 0;
+	
+	>div{
+		padding: 0 10px;
+		cursor: pointer;
+	}
+	
+	.chooseColor{
+		color: blueviolet;
+	}
 }
 </style>

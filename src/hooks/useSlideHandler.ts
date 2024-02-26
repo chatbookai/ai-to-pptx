@@ -149,6 +149,23 @@ export default () => {
     slidesStore.setSlides(_slides)
     slidesStore.updateSlideIndex(newIndex)
   }
+	
+	//根据模板更改幻灯片
+	const updateSlideByTemplate = (slide: Slide) => {
+		const { groupIdMap, elIdMap } = createElementIdMap(slide.elements)
+		
+		for (const element of slide.elements) {
+		  element.id = elIdMap[element.id]
+		  if (element.groupId) element.groupId = groupIdMap[element.groupId]
+		}
+		const newSlide = {
+		  ...slide,
+		  id: nanoid(10),
+		}
+		mainStore.setActiveElementIdList([])
+		slidesStore.updateSlide(newSlide)
+		addHistorySnapshot()
+	}
 
   return {
     resetSlides,
@@ -162,5 +179,6 @@ export default () => {
     cutSlide,
     selectAllSlide,
     sortSlides,
+		updateSlideByTemplate
   }
 }

@@ -5,6 +5,7 @@ import type { Slide, SlideTheme, PPTElement, PPTAnimation } from '@/types/slides
 import { slides } from '@/api/slides'
 import { theme } from '@/api/theme'
 import { layouts } from '@/api/layout'
+import { mobanLayouts } from '@/api/mobanLayout'
 import axios from 'axios'
 import authConfig from '../configs/auth'
 
@@ -118,6 +119,27 @@ export const useSlidesStore = defineStore('slides', {
       
       return JSON.parse(layoutsString)
     },
+
+    mobanLayouts(state) {
+		  const {
+		    themeColor,
+		    fontColor,
+		    fontName,
+		    backgroundColor,
+		  } = state.theme
+		  
+		  const subColor = tinycolor(fontColor).isDark() ? 'rgba(230, 230, 230, 0.5)' : 'rgba(180, 180, 180, 0.5)'
+		  
+		  const layoutsString = JSON.stringify(mobanLayouts)
+		    .replace(/{{themeColor}}/g, themeColor)
+		    .replace(/{{fontColor}}/g, fontColor)
+		    .replace(/{{fontName}}/g, fontName)
+		    .replace(/{{backgroundColor}}/g, backgroundColor)
+		    .replace(/{{subColor}}/g, subColor)
+		  
+		  return JSON.parse(layoutsString)
+		},
+
   },
 
   actions: {
