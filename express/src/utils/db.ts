@@ -233,6 +233,7 @@ export async function initChatBookDb() {
                 updatetime INTEGER not null default 0
             );
         `); 
+        db.run(`insert or ignore into pptx (id, title) values(101, 'TEST PPTX');`);
     });
 }
 
