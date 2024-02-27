@@ -66,6 +66,10 @@
       </Popover>
 			<div style="margin:3px 20px 0;cursor: pointer;" @click="banshiVisible=true">更换版式</div>
 			<div style="margin:3px 0px 0;cursor: pointer;" @click="mobanVisible=true">更换模板</div>
+      <div style="margin:3px 20px 0;cursor: pointer;" @click="mobanVisible=true">重构</div>
+
+      
+
     </div>
 
     <div class="right-handler">
