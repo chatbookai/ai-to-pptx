@@ -273,8 +273,8 @@ export const useSlidesStore = defineStore('slides', {
           // 等待一段时间再更新下一张幻灯片，以便用户可以看到更新的过程
           await new Promise(resolve => setTimeout(resolve, 1000)); // 等待1秒
       }
-  }
-  
+  },
+
 
 
   
