@@ -243,6 +243,40 @@ export const useSlidesStore = defineStore('slides', {
         }
       }
     },
+
+    async updateSlidesStyleSequentially(props: Partial<Slide>) {
+      // 获取当前的幻灯片数量
+      const slidesCount = this.slides.length;
+  
+      // 循环更新每一张幻灯片
+      for (let slideIndex = 0; slideIndex < slidesCount; slideIndex++) {
+          // 更新当前幻灯片
+          this.slides[slideIndex] = { ...this.slides[slideIndex], ...props };
+          console.log("Updating slide", slideIndex, "with", props);
+  
+          const fileId = getPageId();
+          if (fileId) {
+              try {
+                  await axios.post(authConfig.backEndApiChatBook + '/api/pptx/updateSlide', {
+                      fileId,
+                      slideIndex,
+                      props
+                  }, {
+                      headers: { Authorization: 'auth?.user?.token', 'Content-Type': 'application/json' },
+                  }).then(res => res.data);
+                  console.log("Slide updated on server", slideIndex);
+              } catch (error) {
+                  console.error('Error updating slide:', slideIndex, error);
+              }
+          }
+  
+          // 等待一段时间再更新下一张幻灯片，以便用户可以看到更新的过程
+          await new Promise(resolve => setTimeout(resolve, 1000)); // 等待1秒
+      }
+  }
+  
+
+
   
     deleteSlide(slideId: string | string[]) {
       const slidesId = Array.isArray(slideId) ? slideId : [slideId]

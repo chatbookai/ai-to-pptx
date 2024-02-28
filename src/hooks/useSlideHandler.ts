@@ -149,9 +149,24 @@ export default () => {
     slidesStore.setSlides(_slides)
     slidesStore.updateSlideIndex(newIndex)
   }
+
+  const updateSlidesByTemplateSequentially = async (templateSlide: Slide) => {
+    // 获取当前所有选中的幻灯片
+    const slidesToUpdate = [...selectedSlides.value];
+    
+    for (const slide of slidesToUpdate) {
+      // 使用模板更新当前幻灯片
+      updateSlideByTemplate(slide, templateSlide); 
+      // 添加一个小延迟，以便用户可以看到每一页逐渐被更新的效果
+      await new Promise(resolve => setTimeout(resolve, 500)); // 延迟500毫秒
+    }
+  
+    // 更新完成后，可能需要执行其他操作，比如添加历史快照等
+    addHistorySnapshot();
+  };
 	
 	//根据模板更改幻灯片
-	const updateSlideByTemplate = (slide: Slide) => {
+	const updateSlideByTemplate = (slide: Slide,templateSlide: Slide) => {
 		const { groupIdMap, elIdMap } = createElementIdMap(slide.elements)
 		
 		for (const element of slide.elements) {
@@ -166,6 +181,7 @@ export default () => {
 		slidesStore.updateSlide(newSlide)
 		addHistorySnapshot()
 	}
+  
 
   return {
     resetSlides,
@@ -179,6 +195,7 @@ export default () => {
     cutSlide,
     selectAllSlide,
     sortSlides,
-		updateSlideByTemplate
+		updateSlideByTemplate,
+    updateSlidesByTemplateSequentially,
   }
 }
