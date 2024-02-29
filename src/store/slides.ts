@@ -219,24 +219,43 @@ export const useSlidesStore = defineStore("slides", {
         }
       }
     },
+
     async setSlides(newSlides: Slide[]) {
-      // 获取传入的幻灯片数量
-      const slidesCount = newSlides.length;
+      for (let slideIndex = 0; slideIndex < newSlides.length; slideIndex++) {
+        const slide = newSlides[slideIndex];
 
-      // 循环更新每一张幻灯片
-      for (let slideIndex = 0; slideIndex < slidesCount; slideIndex++) {
-        // 更新当前幻灯片
-        this.slides[slideIndex] = newSlides[slideIndex];
-
-        // 使用 $patch 触发响应式更新
-        this.$patch({ slides: [...this.slides] });
-
-        console.log("Setting slide", slideIndex, "with", newSlides[slideIndex]);
-
-        // 确保 Vue 更新了 DOM
+        // 初始化空幻灯片
+        const emptySlide = {
+          id: slide.id,
+          elements: [],
+          background: slide.background,
+        };
+        this.slides[slideIndex] = emptySlide;
         await nextTick();
 
-        // 发送更新到服务器，如果需要的话
+        // 逐步添加元素
+        for (
+          let elementIndex = 0;
+          elementIndex < slide.elements.length;
+          elementIndex++
+        ) {
+          const element = slide.elements[elementIndex];
+          this.slides[slideIndex].elements.push(element);
+
+          // 触发响应式更新
+          this.$patch({ slides: [...this.slides] });
+          await nextTick(); // 确保DOM更新完成
+          console.log(
+            "Setting slide",
+            slideIndex,
+            "with",
+            newSlides[slideIndex]
+          );
+
+          // 等待一段时间再渲染下一个元素
+          await new Promise((resolve) => setTimeout(resolve, 100)); // 例如，等待0.5秒
+        }
+        // 发送更新到服务器
         const fileId = getPageId();
         if (fileId) {
           try {
@@ -262,13 +281,15 @@ export const useSlidesStore = defineStore("slides", {
           }
         }
 
-        // 仅在你需要给用户时间观察每次更新时才添加延时
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // 等待1秒
+        console.log("Completed setting slide", slideIndex);
       }
 
       // 如果新幻灯片数组长度小于当前的长度，去除多余的幻灯片
-      if (this.slides.length > slidesCount) {
-        this.slides.splice(slidesCount, this.slides.length - slidesCount);
+      if (this.slides.length > newSlides.length) {
+        this.slides.splice(
+          newSlides.length,
+          this.slides.length - newSlides.length
+        );
         this.$patch({ slides: [...this.slides] });
       }
     },
