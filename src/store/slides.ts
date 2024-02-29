@@ -231,7 +231,9 @@ export const useSlidesStore = defineStore("slides", {
           background: slide.background,
         };
         this.slides[slideIndex] = emptySlide;
-        await nextTick();
+        this.slideIndex = slideIndex;
+        this.$patch({ slides: [...this.slides], slideIndex });
+        await nextTick(); // 确保DOM更新完成
 
         // 逐步添加元素
         for (
@@ -255,33 +257,32 @@ export const useSlidesStore = defineStore("slides", {
           // 等待一段时间再渲染下一个元素
           await new Promise((resolve) => setTimeout(resolve, 100)); // 例如，等待0.5秒
         }
-        // 发送更新到服务器
-        const fileId = getPageId();
-        if (fileId) {
-          try {
-            await axios
-              .post(
-                `${authConfig.backEndApiChatBook}/api/pptx/setSlides`,
-                {
-                  fileId,
-                  slideIndex,
-                  slide: newSlides[slideIndex],
-                },
-                {
-                  headers: {
-                    Authorization: "Bearer auth.user.token", // 请确保这里正确设置了token
-                    "Content-Type": "application/json",
-                  },
-                }
-              )
-              .then((res) => res.data);
-            console.log("Slide updated on server", slideIndex);
-          } catch (error) {
-            console.error("Error setting slide:", slideIndex, error);
-          }
-        }
-
         console.log("Completed setting slide", slideIndex);
+      }
+      // 发送更新到服务器
+      const fileId = getPageId();
+      if (fileId) {
+        try {
+          await axios
+            .post(
+              `${authConfig.backEndApiChatBook}/api/pptx/setSlides`,
+              {
+                fileId,
+                slideIndex,
+                slide: newSlides[slideIndex],
+              },
+              {
+                headers: {
+                  Authorization: "Bearer auth.user.token", // 请确保这里正确设置了token
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .then((res) => res.data);
+          console.log("Slide updated on server", slideIndex);
+        } catch (error) {
+          console.error("Error setting slide:", slideIndex, error);
+        }
       }
 
       // 如果新幻灯片数组长度小于当前的长度，去除多余的幻灯片
@@ -345,53 +346,6 @@ export const useSlidesStore = defineStore("slides", {
         } catch (error) {
           console.error("Error fetching slides:", error);
         }
-      }
-    },
-
-    async updateSlidesStyleSequentially(props: Partial<Slide>) {
-      // 获取当前的幻灯片数量
-      const slidesCount = this.slides.length;
-
-      // 循环更新每一张幻灯片
-      for (let slideIndex = 0; slideIndex < slidesCount; slideIndex++) {
-        const updatedSlide = { ...this.slides[slideIndex], ...props };
-        // 直接更新整个数组元素
-        this.slides.splice(slideIndex, 1, updatedSlide);
-        // 使用 $patch 触发响应式更新
-        this.$patch({ slides: [...this.slides] });
-
-        console.log("Updating slide", slideIndex, "with", props);
-
-        // 确保DOM更新后再执行网络请求和延迟
-        await nextTick();
-
-        const fileId = getPageId();
-        if (fileId) {
-          try {
-            await axios
-              .post(
-                `${authConfig.backEndApiChatBook}/api/pptx/setSlides`,
-                {
-                  fileId,
-                  slideIndex,
-                  props,
-                },
-                {
-                  headers: {
-                    Authorization: "Bearer auth.user.token",
-                    "Content-Type": "application/json",
-                  },
-                }
-              )
-              .then((res) => res.data);
-            console.log("Slide updated on server", slideIndex);
-          } catch (error) {
-            console.error("Error updating slide:", slideIndex, error);
-          }
-        }
-
-        // 等待一段时间再更新下一张幻灯片，以便用户可以看到更新的过程
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // 等待1秒
       }
     },
 
