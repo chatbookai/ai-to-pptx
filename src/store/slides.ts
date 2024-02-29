@@ -219,29 +219,57 @@ export const useSlidesStore = defineStore("slides", {
         }
       }
     },
+    async setSlides(newSlides: Slide[]) {
+      // 获取传入的幻灯片数量
+      const slidesCount = newSlides.length;
 
-    async setSlides(slides: Slide[]) {
-      this.slides = slides;
-      console.log("slides setSlides", slides);
-      const fileId = getPageId();
-      if (fileId) {
-        try {
-          const RS = await axios
-            .post(
-              authConfig.backEndApiChatBook + "/api/pptx/setSlides",
-              { fileId, slides },
-              {
-                headers: {
-                  Authorization: "auth?.user?.token",
-                  "Content-Type": "application/json",
+      // 循环更新每一张幻灯片
+      for (let slideIndex = 0; slideIndex < slidesCount; slideIndex++) {
+        // 更新当前幻灯片
+        this.slides[slideIndex] = newSlides[slideIndex];
+
+        // 使用 $patch 触发响应式更新
+        this.$patch({ slides: [...this.slides] });
+
+        console.log("Setting slide", slideIndex, "with", newSlides[slideIndex]);
+
+        // 确保 Vue 更新了 DOM
+        await nextTick();
+
+        // 发送更新到服务器，如果需要的话
+        const fileId = getPageId();
+        if (fileId) {
+          try {
+            await axios
+              .post(
+                `${authConfig.backEndApiChatBook}/api/pptx/setSlides`,
+                {
+                  fileId,
+                  slideIndex,
+                  slide: newSlides[slideIndex],
                 },
-              }
-            )
-            .then((res) => res.data);
-          console.log("updateElement", RS);
-        } catch (error) {
-          console.error("Error fetching slides:", error);
+                {
+                  headers: {
+                    Authorization: "Bearer auth.user.token", // 请确保这里正确设置了token
+                    "Content-Type": "application/json",
+                  },
+                }
+              )
+              .then((res) => res.data);
+            console.log("Slide updated on server", slideIndex);
+          } catch (error) {
+            console.error("Error setting slide:", slideIndex, error);
+          }
         }
+
+        // 仅在你需要给用户时间观察每次更新时才添加延时
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // 等待1秒
+      }
+
+      // 如果新幻灯片数组长度小于当前的长度，去除多余的幻灯片
+      if (this.slides.length > slidesCount) {
+        this.slides.splice(slidesCount, this.slides.length - slidesCount);
+        this.$patch({ slides: [...this.slides] });
       }
     },
 

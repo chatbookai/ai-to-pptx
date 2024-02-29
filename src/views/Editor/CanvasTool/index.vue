@@ -230,7 +230,7 @@ const typeIndex03 = ref(0)
 
 // 确认选择模板
 const chooseSlideByTemplate = (slides: Slide[]) => {
-  slidesStore.updateSlidesStyleSequentially(slides)
+  slidesStore.setSlides(slides)
 }
 
 // 绘制文字范围
