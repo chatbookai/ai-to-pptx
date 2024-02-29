@@ -13,7 +13,7 @@ export interface Snapshot {
   slides: Slide[]
 }
 
-const databaseNamePrefix = 'ChatPPT'
+const databaseNamePrefix = 'Ai-to-pptx'
 
 // 删除失效/过期的数据库
 // 应用关闭时（关闭或刷新浏览器），会将其数据库ID记录在 localStorage 中，表示该ID指向的数据库已失效

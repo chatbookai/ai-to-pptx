@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js'
 
-const CRYPTO_KEY = 'ChatPPT'
+const CRYPTO_KEY = 'Ai-to-pptx'
 
 /**
  * 加密

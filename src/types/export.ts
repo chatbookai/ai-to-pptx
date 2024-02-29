@@ -1,1 +1,1 @@
-export type DialogForExportTypes = 'image' | 'pdf' | 'json' | 'pptx' | 'ChatPPT' | ''
+export type DialogForExportTypes = 'image' | 'pdf' | 'json' | 'pptx' | 'Ai-to-pptx' | ''

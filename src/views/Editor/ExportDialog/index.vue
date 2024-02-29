@@ -36,7 +36,7 @@ const { dialogForExport } = storeToRefs(mainStore)
 const setDialogForExport = mainStore.setDialogForExport
 
 const tabs: TabItem[] = [
-  { key: 'ChatPPT', label: '导出 ChatPPT 文件' },
+  { key: 'Ai-to-pptx', label: '导出 Ai-to-pptx 文件' },
   { key: 'pptx', label: '导出 PPTX' },
   { key: 'image', label: '导出图片' },
   { key: 'json', label: '导出 JSON' },
@@ -49,7 +49,7 @@ const currentDialogComponent = computed<unknown>(() => {
     'json': ExportJSON,
     'pdf': ExportPDF,
     'pptx': ExportPPTX,
-    'ChatPPT': ExportSpecificFile,
+    'Ai-to-pptx': ExportSpecificFile,
   }
   if (dialogForExport.value) return dialogMap[dialogForExport.value] || null
   return null
