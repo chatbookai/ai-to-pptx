@@ -16,10 +16,6 @@ import { storeToRefs } from 'pinia'
 import { getTemplate } from "@/api/template";
 import { useSlidesStore } from '@/store'
 import type { Slide } from '@/types/slides'
-import { moban01 } from '@/api/moban01'
-import { moban02 } from '@/api/moban02'
-import { moban03 } from '@/api/moban03'
-import { slides } from '@/api/slides'
 
 import ThumbnailSlide from '@/views/components/ThumbnailSlide/index.vue'
 
@@ -31,7 +27,6 @@ const { templateCoverList } = storeToRefs(useSlidesStore())
 
 const selectSlideTemplate = async (index: number) => {
   const template = await getTemplate(index+1)
-  console.log("templatetemplatetemplatetemplate", template)
   emit('select', [].concat(template))
 }
 </script>
