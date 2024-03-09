@@ -10,7 +10,7 @@ import type {
 import { slides } from "@/api/slides";
 import { theme } from "@/api/theme";
 import { layouts } from "@/api/layout";
-import { templateCoverListData } from "@/api/mobanLayout";
+import { templateCoverListData } from "@/api/templateCoverListData";
 import axios from "axios";
 import authConfig from "../configs/auth";
 

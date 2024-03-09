@@ -34,7 +34,7 @@ export async function getTemplates() {
 }
 
 export async function getTemplateCovers() {
-  const RecordsAll: any[] = await (getDbRecordALL as SqliteQueryFunction)("SELECT * FROM templates", []) || [];
+  const RecordsAll: any[] = await (getDbRecordALL as SqliteQueryFunction)("SELECT * FROM templates order by id desc", []) || [];
   const slidesData = RecordsAll.map((record: any) =>
     record && record.coverimage ? JSON.parse(record.coverimage) : {}
   );
