@@ -126,7 +126,7 @@ export const useSlidesStore = defineStore("slides", {
       return JSON.parse(layoutsString);
     },
 
-    mobanLayouts(state) {
+    templateCoverList(state) {
       const { themeColor, fontColor, fontName, backgroundColor } = state.theme;
 
       const subColor = tinycolor(fontColor).isDark()

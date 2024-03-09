@@ -2,7 +2,7 @@
   <div class="layout-pool">
     <div 
       class="layout-item"
-      v-for="(slide,index) in mobanLayouts" 
+      v-for="(slide,index) in templateCoverList" 
       :key="slide.id"
       @click="selectSlideTemplate(index)"
     >
@@ -26,7 +26,7 @@ const emit = defineEmits<{
   (event: 'select', payload: Slide[]): void
 }>()
 
-const { mobanLayouts } = storeToRefs(useSlidesStore())
+const { templateCoverList } = storeToRefs(useSlidesStore())
 
 const selectSlideTemplate = (index: number) => {
   switch (index) {
