@@ -268,8 +268,8 @@ export const useSlidesStore = defineStore("slides", {
               `${authConfig.backEndApiChatBook}/api/pptx/setSlides`,
               {
                 fileId,
-                slideIndex,
-                slide: newSlides[slideIndex],
+                slideIndex: this.slideIndex,
+                slide: newSlides[this.slideIndex],
               },
               {
                 headers: {
@@ -279,9 +279,9 @@ export const useSlidesStore = defineStore("slides", {
               }
             )
             .then((res) => res.data);
-          console.log("Slide updated on server", slideIndex);
+          console.log("Slide updated on server", this.slideIndex);
         } catch (error) {
-          console.error("Error setting slide:", slideIndex, error);
+          console.error("Error setting slide:", this.slideIndex, error);
         }
       }
 

@@ -234,6 +234,19 @@ export async function initChatBookDb() {
             );
         `); 
         db.run(`insert or ignore into pptx (id, title) values(101, 'TEST PPTX');`);
+        db.run(`
+            CREATE TABLE IF NOT EXISTS templates (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                color text not null default '',
+                style text not null default '',
+                type text not null default '',
+                name text not null default '',
+                description text not null default '',
+                slides text not null default '',
+                coverimage text not null default '',
+                createtime INTEGER not null default 0
+            );
+        `);
     });
 }
 

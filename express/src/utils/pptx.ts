@@ -25,6 +25,14 @@ export async function getPPTXContent(id: number) {
   return slidesData
 }
 
+export async function getTemplates() {
+  const RecordsAll: any[] = await (getDbRecordALL as SqliteQueryFunction)("SELECT * FROM templates", []) || [];
+  const slidesData = RecordsAll.map((record: any) =>
+    record && record.slides ? JSON.parse(record.slides) : {}
+  );
+  return slidesData;
+}
+
 export async function setTitle(Data: any) {
   console.log("Data", Data)
   const updateSetting = db.prepare('update pptx set title = ? where id = ?');
