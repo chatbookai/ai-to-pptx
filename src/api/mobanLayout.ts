@@ -2,7 +2,7 @@
 
 import type { Slide } from '@/types/slides'
 
-export const mobanLayouts: Slide[] = [
+export const mobanLayoutsList: Slide[] = [
 	{
 		"id": "template",
 		"elements": [

@@ -106,7 +106,7 @@
 		  :width="880"
 		>
 		  <div style="margin-bottom: 15px;font-weight: bold;">更换版式</div>
-			<BanShiList @select="slide => { updateSlideByTemplate(slide); banshiVisible = false }" />
+			<BanShiList @select="slide => { updateSlideByTemplate(slide, slide); banshiVisible = false }" />
 		</Modal>
 		
 		<!-- 选择模板 -->
@@ -138,7 +138,7 @@
 					<div @click="typeIndex03 = 3" :class="typeIndex03 == 3 ? 'chooseColor':''">营销策划</div>
 				</div>
 			</div>
-			<MoBanList @select="slides => { chooseSlideByTemplate(slides); mobanVisible = false }" />
+			<MoBanList @select="slides => { mobanVisible = false; chooseSlideByTemplate(slides);  }" />
 		</Modal>
   </div>
 </template>

@@ -10,7 +10,7 @@ import type {
 import { slides } from "@/api/slides";
 import { theme } from "@/api/theme";
 import { layouts } from "@/api/layout";
-import { mobanLayouts } from "@/api/mobanLayout";
+import { mobanLayoutsList } from "@/api/mobanLayout";
 import axios from "axios";
 import authConfig from "../configs/auth";
 
@@ -133,7 +133,7 @@ export const useSlidesStore = defineStore("slides", {
         ? "rgba(230, 230, 230, 0.5)"
         : "rgba(180, 180, 180, 0.5)";
 
-      const layoutsString = JSON.stringify(mobanLayouts)
+      const layoutsString = JSON.stringify(mobanLayoutsList)
         .replace(/{{themeColor}}/g, themeColor)
         .replace(/{{fontColor}}/g, fontColor)
         .replace(/{{fontName}}/g, fontName)
