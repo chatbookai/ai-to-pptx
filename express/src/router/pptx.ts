@@ -3,7 +3,7 @@
 
   import { checkUserPassword, registerUser, changeUserPasswordByToken, changeUserDetail, changeUserStatus, checkUserToken, getUsers, getUserLogsAll, getUserLogs, getOneUserByToken, updateUserImageFavorite, updateUserVideoFavorite, refreshUserToken } from '../utils/user';
 
-  import { getPPTXContent, getTemplates, getTemplateCovers, getPPTXTemplate, setTitle, setTheme, setViewportRatio, setSlides, setSlide, addSlide, updateSlide } from '../utils/pptx'
+  import { getPPTXContent, getTemplate, getTemplates, getTemplateCovers, getPPTXTemplate, setTitle, setTheme, setViewportRatio, setSlides, setSlide, addSlide, updateSlide } from '../utils/pptx'
 
   const app = express();
 
@@ -20,6 +20,14 @@
     //const checkUserTokenData = await checkUserToken(authorization as string);
     console.log("req.body.id", req.body.id)
     const result = await getPPTXContent(req.body.id)
+    res.status(200).json(result);
+    res.end();
+  });
+
+  app.post('/api/pptx/getTemplate', async (req: Request, res: Response) => {
+    //const { authorization } = req.headers;
+    //const checkUserTokenData = await checkUserToken(authorization as string);
+    const result = await getTemplate(req.body.id)
     res.status(200).json(result);
     res.end();
   });

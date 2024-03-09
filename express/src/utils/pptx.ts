@@ -24,6 +24,11 @@ export async function getPPTXContent(id: number) {
   const slidesData = Records && Records.slides ? JSON.parse(Records.slides) : {}
   return slidesData
 }
+export async function getTemplate(id: number) {
+  const Records: any = await (getDbRecord as SqliteQueryFunction)("SELECT * from templates where id = ? ", [id]);
+  const slidesData = Records && Records.slides ? JSON.parse(Records.slides) : {}
+  return slidesData
+}
 
 export async function getTemplates() {
   const RecordsAll: any[] = await (getDbRecordALL as SqliteQueryFunction)("SELECT * FROM templates", []) || [];

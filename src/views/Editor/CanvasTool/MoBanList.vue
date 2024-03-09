@@ -13,6 +13,7 @@
 
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
+import { getTemplate } from "@/api/template";
 import { useSlidesStore } from '@/store'
 import type { Slide } from '@/types/slides'
 import { moban01 } from '@/api/moban01'
@@ -28,21 +29,10 @@ const emit = defineEmits<{
 
 const { templateCoverList } = storeToRefs(useSlidesStore())
 
-const selectSlideTemplate = (index: number) => {
-  switch (index) {
-    case 0:
-      emit('select', [].concat(moban01))
-      break
-    case 1:
-      emit('select', [].concat(moban02))
-      break
-    case 2:
-      emit('select', [].concat(moban03))
-      break
-    default:
-      emit('select', [].concat(slides))
-      break
-  }
+const selectSlideTemplate = async (index: number) => {
+  const template = await getTemplate(index+1)
+  console.log("templatetemplatetemplatetemplate", template)
+  emit('select', [].concat(template))
 }
 </script>
 
