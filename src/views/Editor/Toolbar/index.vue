@@ -21,6 +21,7 @@ import { ToolbarStates } from '@/types/toolbar'
 import ElementStylePanel from './ElementStylePanel/index.vue'
 import ElementPositionPanel from './ElementPositionPanel.vue'
 import ElementAnimationPanel from './ElementAnimationPanel.vue'
+import ElementChatPanel from './ElementChatPanel.vue'
 import SlideDesignPanel from './SlideDesignPanel.vue'
 import SlideAnimationPanel from './SlideAnimationPanel.vue'
 import MultiPositionPanel from './MultiPositionPanel.vue'
@@ -51,9 +52,9 @@ const elementTabs = computed<ElementTabs[]>(() => {
   ]
 })
 const slideTabs = [
+  { label: '对话', key: ToolbarStates.EL_CHAT },
   { label: '设计', key: ToolbarStates.SLIDE_DESIGN },
   { label: '切换', key: ToolbarStates.SLIDE_ANIMATION },
-  { label: '动画', key: ToolbarStates.EL_ANIMATION },
 ]
 const multiSelectTabs = [
   { label: '样式', key: ToolbarStates.EL_STYLE },
@@ -86,6 +87,7 @@ const currentPanelComponent = computed(() => {
     [ToolbarStates.SLIDE_ANIMATION]: SlideAnimationPanel,
     [ToolbarStates.MULTI_POSITION]: MultiPositionPanel,
     [ToolbarStates.SYMBOL]: SymbolPanel,
+    [ToolbarStates.EL_CHAT]: ElementChatPanel,
   }
   return panelMap[toolbarState.value] || null
 })
