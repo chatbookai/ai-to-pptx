@@ -27,16 +27,35 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
+import { nanoid } from 'nanoid'
+import { storeToRefs } from 'pinia'
+import { useMainStore, useSlidesStore } from '@/store'
 import Divider from '@/components/Divider.vue';
+import { getTemplate } from "@/api/template";
+import type { Slide } from '@/types/slides'
+import { fetchMoban } from '@/api/moban' 
 
 const messages = ref([{ content: "chat with ai！", sent: false }]);
 const message = ref('');
 
+const { templateCoverList } = storeToRefs(useSlidesStore());
+
+const selectSlideTemplate = async (index: number) => {
+  const template = await getTemplate(index + 1);
+  console.log("Template selected", template);
+  chooseSlideByTemplate([].concat(template));
+};
+
+const slidesStore = useSlidesStore();
+const chooseSlideByTemplate = (slides) => {
+  slidesStore.setSlides(slides);
+};
+
 const sendMessage = () => {
   if (message.value.trim() !== '') {
     messages.value.push({ content: message.value, sent: true });
-    message.value = ''; 
+    message.value = ''; // 清空输入框
 
     // 模拟AI回复
     setTimeout(() => {
@@ -53,12 +72,12 @@ const sendOnEnter = (event) => {
 
 const formatMessage = (msg) => {
   if (!msg.sent) {
-    
     return `AI:<br><br>${msg.content}`;
   } else {
     return msg.content;
   }
 };
+
 </script>
 
 <style lang="scss" scoped>
