@@ -1,65 +1,56 @@
 <template>
   <div class="element-chat-panel">
-    <!-- 顶部提示区域 -->
     <div class="tip" @click="selectSlideTemplate(0)">
       <IconClick /> 点我选择模板
     </div>
     <Divider />
-    <!-- 聊天消息显示区 -->
     <div class="chat-messages">
-      <div class="chat-messages">
-      <div v-for="(msg, index) in messages" :key="index" class="message" :class="{'message-sent': msg.sent, 'message-received': !msg.sent}">
+    <div v-for="(msg, index) in messages" :key="index" class="message" :class="{'message-sent': msg.type === MessageType.User, 'message-received': msg.type === MessageType.AI}">
+      <div v-if="msg.type === MessageType.AI" class="ai-message-container">
+        <img src="@/assets/robot-one.svg" alt="AI" class="avatar">
+        <div class="ai-message-content" style="margin-top: 1rem;">
+          <span v-html="formatMessage(msg)"></span>
+        </div>
+      </div>
+      <div v-else>
         <span v-html="formatMessage(msg)"></span>
       </div>
     </div>
-    </div>
-    <!-- 消息输入区域 -->
+  </div>
     <div class="chat-input-container">
-      <textarea v-model="message" 
+      <textarea v-model="input_message" 
                 placeholder="输入消息..." 
                 class="chat-input" 
                 @keyup.enter="sendOnEnter" 
-                @keydown.enter.prevent="() => {}" 
-                ></textarea>
+                @keydown.enter.prevent="() => {}"></textarea>
       <button @click="sendMessage" class="send-button">send</button>
     </div>
   </div>
 </template>
 
+
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { nanoid } from 'nanoid'
-import { storeToRefs } from 'pinia'
-import { useMainStore, useSlidesStore } from '@/store'
+import { ref } from 'vue';
 import Divider from '@/components/Divider.vue';
-import { getTemplate } from "@/api/template";
-import type { Slide } from '@/types/slides'
-import { fetchMoban } from '@/api/moban' 
 
-const messages = ref([{ content: "chat with ai！", sent: false }]);
-const message = ref('');
-
-const { templateCoverList } = storeToRefs(useSlidesStore());
-
-const selectSlideTemplate = async (index: number) => {
-  const template = await getTemplate(index + 1);
-  console.log("Template selected", template);
-  chooseSlideByTemplate([].concat(template));
+// 定义两种消息类型
+const MessageType = {
+  User: 'MessageUser',
+  AI: 'MessageAI'
 };
 
-const slidesStore = useSlidesStore();
-const chooseSlideByTemplate = (slides) => {
-  slidesStore.setSlides(slides);
-};
+const messages = ref([
+  { content: "Welcome please chat with ai！", type: MessageType.AI }
+]);
+const input_message = ref('');
 
 const sendMessage = () => {
-  if (message.value.trim() !== '') {
-    messages.value.push({ content: message.value, sent: true });
-    message.value = ''; // 清空输入框
+  if (input_message.value.trim() !== '') {
+    messages.value.push({ content: input_message.value, type: MessageType.User });
+    input_message.value = '';
 
-    // 模拟AI回复
     setTimeout(() => {
-      messages.value.push({ content: "test success", sent: false });
+      messages.value.push({ content: "AI response", type: MessageType.AI });
     }, 500); 
   }
 };
@@ -71,14 +62,14 @@ const sendOnEnter = (event) => {
 };
 
 const formatMessage = (msg) => {
-  if (!msg.sent) {
-    return `AI:<br><br>${msg.content}`;
+  if (msg.type === MessageType.AI) {
+    return `${msg.content}`;
   } else {
     return msg.content;
   }
 };
-
 </script>
+
 
 <style lang="scss" scoped>
 .element-chat-panel {
@@ -106,22 +97,19 @@ const formatMessage = (msg) => {
 }
 
 .message {
-  margin-bottom: 10px;
-  padding: 4px 4px;
-  border-radius: 8px;
-  background-color: transparent; /* 去掉背景色 */
-  word-break: break-word; /* 确保长消息能够换行 */
-  display: flex; /* 启用flex布局 */
-  justify-content: flex-start; /* 对于发送的消息，内容向右对齐 */
+  display: flex;
+  flex-direction: column; /* 使图标和消息内容垂直排列 */
+  align-items: flex-start; /* 对齐到左边 */
+}
+
+.message-sent {
+  margin-top: 1rem;
+  align-items: flex-end; /* 用户消息右对齐 */
 }
 
 .message-received {
-  justify-content: flex-start; /* 对于接收的消息，内容向左对齐 */
-}
-
-.message-sent,
-.message-received {
-  text-align: start; /* 确保文本从容器的开始对齐 */
+  margin-top: 1rem;
+  align-items: flex-start; /* AI消息左对齐 */
 }
 .chat-input-container {
   display: flex;
@@ -157,6 +145,13 @@ const formatMessage = (msg) => {
   .ai-prefix {
   font-weight: bold;
   color: #007bff; /* 或者选择一个更适合您的UI设计的颜色 */
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 }
 </style>
