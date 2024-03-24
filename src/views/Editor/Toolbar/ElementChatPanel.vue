@@ -45,6 +45,15 @@ const storedMessages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
 const messages = ref(storedMessages);
 const input_message = ref('');
 
+// 初始问候语
+const loadInitialChat = () => {
+  const storedMessages = JSON.parse(localStorage.getItem('chatMessages'));
+  if (storedMessages && storedMessages.length > 0) {
+    messages.value = storedMessages;
+  } else {
+    messages.value = [{ content: 'What kind of PPT you want generate?', type: MessageType.AI }];
+  }
+};
 
 const sendMessage = () => {
   if (input_message.value.trim() !== '') {
@@ -87,8 +96,7 @@ const sendOnEnter = (event) => {
 const formatMessage = (msg) => msg.content;
 
 onMounted(() => {
-  // 在组件加载时，从localStorage读取聊天历史
-  messages.value = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+  loadInitialChat();
 });
 
 watch(messages, () => {
