@@ -32,30 +32,51 @@
 
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import Divider from '@/components/Divider.vue';
 
-// 定义两种消息类型
 const MessageType = {
   User: 'MessageUser',
   AI: 'MessageAI'
 };
 
-const messages = ref([
-  { content: "Welcome please chat with ai！", type: MessageType.AI }
-]);
+// 从localStorage读取聊天历史，如果没有则初始化为空数组
+const storedMessages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+const messages = ref(storedMessages);
 const input_message = ref('');
+
 
 const sendMessage = () => {
   if (input_message.value.trim() !== '') {
-    messages.value.push({ content: input_message.value, type: MessageType.User });
+    const userMessage = {
+      content: input_message.value,
+      type: MessageType.User
+    };
+    messages.value.push(userMessage);
     input_message.value = '';
 
+    // 保存消息
+    saveMessagesToLocalStorage();
+
+    // 模拟AI回复
     setTimeout(() => {
-      messages.value.push({ content: "AI response", type: MessageType.AI });
+      const aiResponse = {
+        content: "AI response",
+        type: MessageType.AI
+      };
+      messages.value.push(aiResponse);
+      
+      // 保存消息
+      saveMessagesToLocalStorage();
     }, 500); 
   }
 };
+
+// 用于保存消息到localStorage
+const saveMessagesToLocalStorage = () => {
+  localStorage.setItem('chatMessages', JSON.stringify(messages.value));
+};
+
 
 const sendOnEnter = (event) => {
   if (!event.shiftKey) { 
@@ -63,14 +84,19 @@ const sendOnEnter = (event) => {
   }
 };
 
-const formatMessage = (msg) => {
-  if (msg.type === MessageType.AI) {
-    return `${msg.content}`;
-  } else {
-    return msg.content;
-  }
-};
+const formatMessage = (msg) => msg.content;
+
+onMounted(() => {
+  // 在组件加载时，从localStorage读取聊天历史
+  messages.value = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+});
+
+watch(messages, () => {
+  // 每次messages变化时，保存到localStorage
+  saveMessagesToLocalStorage();
+});
 </script>
+
 
 
 <style lang="scss" scoped>
