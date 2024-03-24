@@ -3,6 +3,11 @@
     <div class="tip" @click="selectSlideTemplate(0)">
       <IconClick /> 点我选择模板
     </div>
+    <div class="tip" @click="clearChatHistory">
+      <IconClick /> 点我重置聊天
+    </div>
+
+
     <Divider />
     <div class="chat-messages">
       <div v-for="(msg, index) in messages" :key="index" class="message" :class="{'message-sent': msg.type === MessageType.User, 'message-received': msg.type === MessageType.AI}">
@@ -84,6 +89,12 @@ const sendMessage = () => {
 // 用于保存消息到localStorage
 const saveMessagesToLocalStorage = () => {
   localStorage.setItem('chatMessages', JSON.stringify(messages.value));
+};
+
+const clearChatHistory = () => {
+  localStorage.removeItem('chatMessages');
+  messages.value = []; // 清空当前组件的聊天状态
+  loadInitialChat();
 };
 
 
@@ -183,7 +194,7 @@ watch(messages, () => {
   }
   .ai-prefix {
   font-weight: bold;
-  color: #007bff; /* 或者选择一个更适合您的UI设计的颜色 */
+  color: #007bff; 
 }
 
 .avatar {
