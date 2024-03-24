@@ -23,7 +23,9 @@
                 class="chat-input" 
                 @keyup.enter="sendOnEnter" 
                 @keydown.enter.prevent="() => {}"></textarea>
-      <button @click="sendMessage" class="send-button">send</button>
+      <button @click="sendMessage" class="send-button">
+        <img src="@/assets/send-one.svg" alt="Send" />
+      </button>
     </div>
   </div>
 </template>
@@ -102,11 +104,13 @@ const formatMessage = (msg) => {
 }
 
 .message-sent {
-  align-self: flex-end;
+  border-radius: 5px;
+  padding: 10px;
+  align-self: flex-start;
 }
 
 .message-received {
-  background-color: #c1c1c1;
+  background-color: #f9f9f9;
   align-self: flex-start;
   border-radius: 5px;
   padding: 10px;
@@ -130,13 +134,13 @@ const formatMessage = (msg) => {
   padding: 8px 16px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #f9f9f9;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #c1c1c1;
   }
 
   &:disabled {
