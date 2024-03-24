@@ -5,17 +5,17 @@
     </div>
     <Divider />
     <div class="chat-messages">
-    <div v-for="(msg, index) in messages" :key="index" class="message" :class="{'message-sent': msg.type === MessageType.User, 'message-received': msg.type === MessageType.AI}">
-      <div v-if="msg.type === MessageType.AI" class="ai-message-container">
-        <img src="@/assets/robot-one.svg" alt="AI" class="avatar">
-        <div class="ai-message-content" style="margin-top: 1rem;">
+      <div v-for="(msg, index) in messages" :key="index" class="message" :class="{'message-sent': msg.type === MessageType.User, 'message-received': msg.type === MessageType.AI}">
+        <div v-if="msg.type === MessageType.AI" class="ai-message-container">
+          <img src="@/assets/robot-one.svg" alt="AI" class="avatar">
+          <div class="ai-message-content" style="margin-top: 1rem;">
+            <span v-html="formatMessage(msg)"></span>
+          </div>
+        </div>
+        <div v-else>
           <span v-html="formatMessage(msg)"></span>
         </div>
       </div>
-      <div v-else>
-        <span v-html="formatMessage(msg)"></span>
-      </div>
-    </div>
   </div>
     <div class="chat-input-container">
       <textarea v-model="input_message" 
@@ -97,18 +97,19 @@ const formatMessage = (msg) => {
 }
 
 .message {
-  max-width: 75%;
   word-break: break-word;
   margin-top: 1rem;
 }
 
 .message-sent {
   align-self: flex-end;
-  padding-left: 25%;
 }
 
 .message-received {
+  background-color: #c1c1c1;
   align-self: flex-start;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .chat-input-container {
