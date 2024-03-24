@@ -92,37 +92,37 @@ const formatMessage = (msg) => {
 }
 
 .chat-messages {
-  flex-grow: 1;
-  overflow-y: auto;
+  flex-grow: 1; /* 让聊天消息区域占用所有可用空间 */
+  overflow-y: auto; /* 添加滚动条 */
 }
 
 .message {
-  display: flex;
-  flex-direction: column; /* 使图标和消息内容垂直排列 */
-  align-items: flex-start; /* 对齐到左边 */
+  max-width: 75%;
+  word-break: break-word;
+  margin-top: 1rem;
 }
 
 .message-sent {
-  margin-top: 1rem;
-  align-items: flex-end; /* 用户消息右对齐 */
+  align-self: flex-end;
+  padding-left: 25%;
 }
 
 .message-received {
-  margin-top: 1rem;
-  align-items: flex-start; /* AI消息左对齐 */
+  align-self: flex-start;
 }
+
 .chat-input-container {
   display: flex;
   gap: 10px;
-  margin-top: auto; /* 确保输入区始终在底部 */
+  margin-top: auto
 }
+  
 
 .chat-input {
   flex-grow: 1;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 8px 12px;
-  resize: none;
 }
 
 .send-button {

@@ -101,6 +101,9 @@ const currentPanelComponent = computed(() => {
   flex-direction: column;
 }
 .content {
+   display: flex; // 使用flex布局
+  flex-direction: column; // 子元素垂直排列
+  height: 100%; // 占满整个父容器的高度
   padding: 12px;
   font-size: 13px;
 
