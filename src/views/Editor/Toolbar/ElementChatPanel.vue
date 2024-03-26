@@ -3,17 +3,22 @@
     <div class="tip" @click="selectSlideTemplate(0)">
       <IconClick /> 点我选择模板
     </div>
-    <div class="tip" @click="clearChatHistory">
-      <IconClick /> 点我重置聊天
-    </div>
-
+    <div class="tip" @click="clearChatHistory"><IconClick /> 点我重置聊天</div>
 
     <Divider />
     <div class="chat-messages">
-      <div v-for="(msg, index) in messages" :key="index" class="message" :class="{'message-sent': msg.type === MessageType.User, 'message-received': msg.type === MessageType.AI}">
+      <div
+        v-for="(msg, index) in messages"
+        :key="index"
+        class="message"
+        :class="{
+          'message-sent': msg.type === MessageType.User,
+          'message-received': msg.type === MessageType.AI,
+        }"
+      >
         <div v-if="msg.type === MessageType.AI" class="ai-message-container">
-          <img src="@/assets/robot-one.svg" alt="AI" class="avatar">
-          <div class="ai-message-content" style="margin-top: 1rem;">
+          <img src="@/assets/robot-one.svg" alt="AI" class="avatar" />
+          <div class="ai-message-content" style="margin-top: 1rem">
             <span v-html="formatMessage(msg)"></span>
           </div>
         </div>
@@ -21,13 +26,15 @@
           <span v-html="formatMessage(msg)"></span>
         </div>
       </div>
-  </div>
+    </div>
     <div class="chat-input-container">
-      <textarea v-model="input_message" 
-                placeholder="输入消息..." 
-                class="chat-input" 
-                @keyup.enter="sendOnEnter" 
-                @keydown.enter.prevent="() => {}"></textarea>
+      <textarea
+        v-model="input_message"
+        placeholder="输入消息..."
+        class="chat-input"
+        @keyup.enter="sendOnEnter"
+        @keydown.enter.prevent="() => {}"
+      ></textarea>
       <button @click="sendMessage" class="send-button">
         <img src="@/assets/send-one.svg" alt="Send" />
       </button>
@@ -35,39 +42,69 @@
   </div>
 </template>
 
-
 <script lang="ts" setup>
-import { ref, watch, onMounted } from 'vue';
-import Divider from '@/components/Divider.vue';
+import axios from "axios";
+import { ref, watch, onMounted } from "vue";
+import Divider from "@/components/Divider.vue";
+import authConfig from "../../../configs/auth";
 
 const MessageType = {
-  User: 'MessageUser',
-  AI: 'MessageAI'
+  User: "MessageUser",
+  AI: "MessageAI",
 };
 
+const knowledgeId = 0;
+const userId = "Roy";
+
 // 从localStorage读取聊天历史，如果没有则初始化为空数组
-const storedMessages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+const storedMessages = JSON.parse(localStorage.getItem("chatMessages") || "[]");
 const messages = ref(storedMessages);
-const input_message = ref('');
+const input_message = ref("");
 
 // 初始问候语
 const loadInitialChat = () => {
-  const storedMessages = JSON.parse(localStorage.getItem('chatMessages'));
+  const storedMessages = JSON.parse(localStorage.getItem("chatMessages"));
   if (storedMessages && storedMessages.length > 0) {
     messages.value = storedMessages;
   } else {
-    messages.value = [{ content: 'What kind of PPT you want generate?', type: MessageType.AI }];
+    messages.value = [
+      { content: "What kind of PPT you want generate?", type: MessageType.AI },
+    ];
   }
 };
 
-const sendMessage = () => {
-  if (input_message.value.trim() !== '') {
+const sendMessage = async () => {
+  if (input_message.value.trim() !== "") {
     const userMessage = {
       content: input_message.value,
-      type: MessageType.User
+      type: MessageType.User,
     };
     messages.value.push(userMessage);
-    input_message.value = '';
+    try {
+      const response = await axios.post(
+        authConfig.backEndApiChatBook + "/api/ChatOpenai",
+        {
+          question: userMessage.content,
+          knowledgeId: knowledgeId,
+          userId: userId, // 注意这里是 `knowledgeId` 不是 `konwledgeId`
+          history: storedMessages,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authConfig.jwtTokenSecret}`,
+          },
+        }
+      );
+      const aiResponse = {
+        content: response.data.answer,
+        type: MessageType.AI,
+      };
+      messages.value.push(aiResponse);
+    } catch (error) {
+      console.error("Error getting AI response:", error);
+      // 处理错误情况，如显示错误消息
+    }
+    input_message.value = "";
 
     // 保存消息
     saveMessagesToLocalStorage();
@@ -76,30 +113,29 @@ const sendMessage = () => {
     setTimeout(() => {
       const aiResponse = {
         content: "AI response",
-        type: MessageType.AI
+        type: MessageType.AI,
       };
       messages.value.push(aiResponse);
-      
+
       // 保存消息
       saveMessagesToLocalStorage();
-    }, 500); 
+    }, 500);
   }
 };
 
 // 用于保存消息到localStorage
 const saveMessagesToLocalStorage = () => {
-  localStorage.setItem('chatMessages', JSON.stringify(messages.value));
+  localStorage.setItem("chatMessages", JSON.stringify(messages.value));
 };
 
 const clearChatHistory = () => {
-  localStorage.removeItem('chatMessages');
+  localStorage.removeItem("chatMessages");
   messages.value = []; // 清空当前组件的聊天状态
   loadInitialChat();
 };
 
-
 const sendOnEnter = (event) => {
-  if (!event.shiftKey) { 
+  if (!event.shiftKey) {
     sendMessage();
   }
 };
@@ -116,8 +152,6 @@ watch(messages, () => {
 });
 </script>
 
-
-
 <style lang="scss" scoped>
 .element-chat-panel {
   display: flex;
@@ -125,7 +159,9 @@ watch(messages, () => {
   height: 100%;
 }
 
-.tip, .chat-messages, .chat-input-container {
+.tip,
+.chat-messages,
+.chat-input-container {
   padding: 10px;
 }
 
@@ -164,9 +200,8 @@ watch(messages, () => {
 .chat-input-container {
   display: flex;
   gap: 10px;
-  margin-top: auto
+  margin-top: auto;
 }
-  
 
 .chat-input {
   flex-grow: 1;
@@ -193,15 +228,15 @@ watch(messages, () => {
     cursor: not-allowed;
   }
   .ai-prefix {
-  font-weight: bold;
-  color: #007bff; 
-}
+    font-weight: bold;
+    color: #007bff;
+  }
 
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
 }
 </style>
