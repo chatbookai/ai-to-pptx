@@ -53,9 +53,6 @@ const MessageType = {
   AI: "MessageAI",
 };
 
-const knowledgeId = 0;
-const userId = "Roy";
-
 // 从localStorage读取聊天历史，如果没有则初始化为空数组
 const storedMessages = JSON.parse(localStorage.getItem("chatMessages") || "[]");
 const messages = ref(storedMessages);
@@ -80,18 +77,24 @@ const sendMessage = async () => {
       type: MessageType.User,
     };
     messages.value.push(userMessage);
+
+    const knowledgeId = 0;
+    const userId = "Roy";
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJjaGF0Ym9vay1hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTIwOTEyOTEsImV4cCI6MTcxMjA5MTg5MX0.SAYcCs14TOTLNKam-j0Kbiot4D4vDNPHH6upw-tHuV8";
+
     try {
       const response = await axios.post(
         authConfig.backEndApiChatBook + "/api/ChatOpenai",
         {
           question: userMessage.content,
           knowledgeId: knowledgeId,
-          userId: userId, // 注意这里是 `knowledgeId` 不是 `konwledgeId`
+          userId: userId,
           history: storedMessages,
         },
         {
           headers: {
-            Authorization: `Bearer ${authConfig.jwtTokenSecret}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
