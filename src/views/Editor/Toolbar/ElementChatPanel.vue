@@ -60,7 +60,7 @@ const input_message = ref("");
 
 // 初始问候语
 const loadInitialChat = () => {
-  const storedMessages = JSON.parse(localStorage.getItem("chatMessages"));
+  const storedMessages = JSON.parse(localStorage.getItem("chatMessages") || "[]");
   if (storedMessages && storedMessages.length > 0) {
     messages.value = storedMessages;
   } else {
@@ -78,10 +78,9 @@ const sendMessage = async () => {
     };
     messages.value.push(userMessage);
 
-    const knowledgeId = 0;
-    const userId = "Roy";
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJjaGF0Ym9vay1hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTIwOTEyOTEsImV4cCI6MTcxMjA5MTg5MX0.SAYcCs14TOTLNKam-j0Kbiot4D4vDNPHH6upw-tHuV8";
+    const knowledgeId = 'ChatGPT3.5';
+    const userId = 1;
+    const token = localStorage.getItem(authConfig.storageTokenKeyName);
 
     try {
       const response = await axios.post(
@@ -94,7 +93,8 @@ const sendMessage = async () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            'Authorization': `${token}`,
+            'Content-Type': 'application/json'
           },
         }
       );
@@ -137,13 +137,13 @@ const clearChatHistory = () => {
   loadInitialChat();
 };
 
-const sendOnEnter = (event) => {
+const sendOnEnter = (event: any) => {
   if (!event.shiftKey) {
     sendMessage();
   }
 };
 
-const formatMessage = (msg) => msg.content;
+const formatMessage = (msg: any) => msg.content;
 
 onMounted(() => {
   loadInitialChat();
