@@ -111,7 +111,17 @@ export async function initChatBookOpenAIStream(
       process.env.OPENAI_BASE_URL = OPENAI_API_BASE;
       process.env.OPENAI_API_KEY = OPENAI_API_KEY;
     }
+    console.log("knowledgeId", knowledgeId)
+    console.log("OPENAI_API_KEY", OPENAI_API_KEY)
+    console.log("OPENAI_Temperature", OPENAI_Temperature)
+    console.log("getLLMSSettingData", getLLMSSettingData)
+    console.log("PINECONE_API_KEY", PINECONE_API_KEY)
     try {
+      console.log("knowledgeId", knowledgeId)
+      console.log("OPENAI_API_KEY", OPENAI_API_KEY)
+      console.log("OPENAI_Temperature", OPENAI_Temperature)
+      console.log("getLLMSSettingData", getLLMSSettingData)
+      console.log("PINECONE_API_KEY", PINECONE_API_KEY)
       ChatOpenAIModel = new ChatOpenAI({
         modelName: getLLMSSettingData.ModelName ?? "gpt-3.5-turbo",
         openAIApiKey: OPENAI_API_KEY,
@@ -150,8 +160,12 @@ export async function chatChatOpenAI(
   const pastMessages: any[] = [];
   if (history && history.length > 0) {
     history.map((Item) => {
-      pastMessages.push(new HumanMessage(Item[0]));
-      pastMessages.push(new AIMessage(Item[1]));
+      if(Item[0]) {
+        pastMessages.push(new HumanMessage(Item[0]))
+      }
+      if(Item[1]) {
+        pastMessages.push(new AIMessage(Item[1]))
+      }
     });
   }
   const memory = new BufferMemory({
@@ -178,7 +192,6 @@ export async function chatChatOpenAI(
     insertChatLog.finalize();
   } catch (error: any) {
     console.log("chatChatOpenAI error", error.message);
-    res.write(error.message);
   }
   res.end();
 }
