@@ -60,7 +60,9 @@ const input_message = ref("");
 
 // 初始问候语
 const loadInitialChat = () => {
-  const storedMessages = JSON.parse(localStorage.getItem("chatMessages") || "[]");
+  const storedMessages = JSON.parse(
+    localStorage.getItem("chatMessages") || "[]"
+  );
   if (storedMessages && storedMessages.length > 0) {
     messages.value = storedMessages;
   } else {
@@ -78,9 +80,18 @@ const sendMessage = async () => {
     };
     messages.value.push(userMessage);
 
-    const knowledgeId = 'ChatGPT3.5';
+    const knowledgeId = "ChatGPT3.5";
     const userId = 1;
     const token = localStorage.getItem(authConfig.storageTokenKeyName);
+
+    const history = messages.value.reduce((acc, message) => {
+      if (message.type === MessageType.User) {
+        acc.push([message.content]);
+      } else if (message.type === MessageType.AI && acc.length > 0) {
+        acc[acc.length - 1].push(message.content);
+      }
+      return acc;
+    }, []);
 
     try {
       const response = await axios.post(
@@ -89,20 +100,26 @@ const sendMessage = async () => {
           question: userMessage.content,
           knowledgeId: knowledgeId,
           userId: userId,
-          history: storedMessages,
+          history: history,
         },
         {
           headers: {
-            'Authorization': `${token}`,
-            'Content-Type': 'application/json'
+            Authorization: `${token}`,
+            "Content-Type": "application/json",
           },
         }
       );
-      const aiResponse = {
-        content: response.data.answer,
-        type: MessageType.AI,
-      };
-      messages.value.push(aiResponse);
+
+      // Check if response has data and add it to messages
+      if (response.data) {
+        const aiResponse = {
+          content: response.data,
+          type: MessageType.AI,
+        };
+        messages.value.push(aiResponse);
+      } else {
+        console.error("No AI response received:", response);
+      }
     } catch (error) {
       console.error("Error getting AI response:", error);
       // 处理错误情况，如显示错误消息
@@ -111,18 +128,6 @@ const sendMessage = async () => {
 
     // 保存消息
     saveMessagesToLocalStorage();
-
-    // 模拟AI回复
-    setTimeout(() => {
-      const aiResponse = {
-        content: "AI response",
-        type: MessageType.AI,
-      };
-      messages.value.push(aiResponse);
-
-      // 保存消息
-      saveMessagesToLocalStorage();
-    }, 500);
   }
 };
 
