@@ -53,15 +53,24 @@ const MessageType = {
   AI: "MessageAI",
 };
 
+//假设
+const knowledgeId = "ChatGPT3.5";
+const userId = 1;
+const token = localStorage.getItem(authConfig.storageTokenKeyName);
+
+const chatMessagesKey = `chatMessages_${userId}`;
+
 // 从localStorage读取聊天历史，如果没有则初始化为空数组
-const storedMessages = JSON.parse(localStorage.getItem("chatMessages") || "[]");
+const storedMessages = JSON.parse(
+  localStorage.getItem(chatMessagesKey) || "[]"
+);
 const messages = ref(storedMessages);
 const input_message = ref("");
 
 // 初始问候语
 const loadInitialChat = () => {
   const storedMessages = JSON.parse(
-    localStorage.getItem("chatMessages") || "[]"
+    localStorage.getItem(chatMessagesKey) || "[]"
   );
   if (storedMessages && storedMessages.length > 0) {
     messages.value = storedMessages;
@@ -79,10 +88,6 @@ const sendMessage = async () => {
       type: MessageType.User,
     };
     messages.value.push(userMessage);
-
-    const knowledgeId = "ChatGPT3.5";
-    const userId = 1;
-    const token = localStorage.getItem(authConfig.storageTokenKeyName);
 
     const history = messages.value.reduce((acc, message) => {
       if (message.type === MessageType.User) {
@@ -133,11 +138,11 @@ const sendMessage = async () => {
 
 // 用于保存消息到localStorage
 const saveMessagesToLocalStorage = () => {
-  localStorage.setItem("chatMessages", JSON.stringify(messages.value));
+  localStorage.setItem(chatMessagesKey, JSON.stringify(messages.value));
 };
 
 const clearChatHistory = () => {
-  localStorage.removeItem("chatMessages");
+  localStorage.removeItem(chatMessagesKey);
   messages.value = []; // 清空当前组件的聊天状态
   loadInitialChat();
 };
