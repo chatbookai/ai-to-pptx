@@ -41,16 +41,6 @@ npm run express
 - 3 所有后端功能版权属于ChatBookAi
 - 4 本项目发行协议: [AGPL-3.0 License]
 
-# 🌟 Star History
-
-<a href="https://github.com/chatbookai/ai-to-pptx/stargazers" target="_blank" style="display: block" align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date" />
-  </picture>
-</a>
-
 # 🧮 商业用途
 - 开源商用: 无需联系,可以直接使用,需要在您官网页面底部增加您的开源库的URL(根据开源协议你需要公开你的源代码),GPL协议授权你可以修改代码,并共享你修改以后的代码,但没有授权你可以修改版权信息,所以版权信息不能修改.
 - 闭源商用: 需要联系,额外取得商业授权,根据商业授权协议的内容,来决定你是否可以合法的修改版权信息.
@@ -58,3 +48,12 @@ npm run express
 - 宣传折扣: 如果你愿意推广和宣传本项目,可以让你的朋友们来给本项目点赞(STAR),每一个STAR在你购买商业版本授权的时候可抵扣一定的金额,最多可抵扣50%.如果不需要购买商业授权,则无需这样做.
 - 技术服务: 可选项目,每年支付一次,主要用于软件二次开发商做二次开发的时候的技术咨询和服务,其它业务场景则不需要支付此费用,具体请咨询.
 - 额外说明: 本系统指的是计算机软件代码,系统里面带的模板并不是开源项目的一部分.虽然系统会自带四套模板供大家免费使用,但更多模板需要购买模板的授权.
+
+# 🌟 Star History
+<a href="https://github.com/chatbookai/ai-to-pptx/stargazers" target="_blank" style="display: block" align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date" />
+  </picture>
+</a>
