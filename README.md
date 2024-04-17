@@ -41,6 +41,16 @@ npm run express
 - 3 所有后端功能版权属于ChatBookAi
 - 4 本项目发行协议: [AGPL-3.0 License]
 
+# 🌟 Star History
+
+<a href="https://github.com/chatbookai/ai-to-pptx/stargazers" target="_blank" style="display: block" align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date" />
+  </picture>
+</a>
+
 # 🧮 商业用途
 - 开源商用: 无需联系,可以直接使用,需要在您官网页面底部增加您的开源库的URL(根据开源协议你需要公开你的源代码),GPL协议授权你可以修改代码,并共享你修改以后的代码,但没有授权你可以修改版权信息,所以版权信息不能修改.
 - 闭源商用: 需要联系,额外取得商业授权,根据商业授权协议的内容,来决定你是否可以合法的修改版权信息.
