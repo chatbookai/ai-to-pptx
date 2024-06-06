@@ -38,12 +38,13 @@ npm run express
 # 🚀 交流群组
 - QQ群: 186411255
 
+# 🚀 开发进度
+- 开发中...
+- 本项目正在向REACT的架构迁移,无法继续使用[pipipi-pikachu](https://github.com/pipipi-pikachu)的项目代码,所以正在精简这部分的代码,精简完成以后,会直接在ChatBook中集成AI生成PPTX的功能.
+
 # 📄 版权声明/开源协议
-本项目基于[pipipi-pikachu](https://github.com/pipipi-pikachu)开发，在原有项目基础上面增加了后端的功能，同时对前端做了大幅度的修改。
-- 1 原有的PPTX的展示和编辑等基础功能,版权属于[pipipi-pikachu](https://github.com/pipipi-pikachu)
-- 2 使用AI技术来生成PPTX的内容,以及实时渲染等后续新开发的功能,版权属于ChatBookAi
-- 3 所有后端功能版权属于ChatBookAi
-- 4 本项目发行协议: [AGPL-3.0 License]
+- 1 版权属于ChatBookAi
+- 2 本项目发行协议: [AGPL-3.0 License]
 
 # 🧮 商业用途
 - 开源商用: 无需联系,可以直接使用,需要在您官网页面底部增加您的开源库的URL(根据开源协议你需要公开你的源代码),GPL协议授权你可以修改代码,并共享你修改以后的代码,但没有授权你可以修改版权信息,所以版权信息不能修改.
