@@ -13,9 +13,9 @@ import ProductStat from './ProductStat'
 import Faqs from './Faqs'
 import { useSettings } from '@core/hooks/useSettings'
 
-//import CustomerReviews from './CustomerReviews'
-//import Pricing from './Pricing'
-//import OurTeam from './OurTeam'
+import CustomerReviews from './CustomerReviews'
+import Pricing from './Pricing'
+import OurTeam from './OurTeam'
 //import GetStarted from './GetStarted'
 //import ContactUs from './ContactUs'
 
@@ -35,6 +35,9 @@ const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
     <>
       <HeroSection mode={mode} />
       <UsefulFeature />
+      <CustomerReviews />
+      <OurTeam />
+      <Pricing />
       <ProductStat />
       <Faqs />
     </>

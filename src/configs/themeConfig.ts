@@ -51,9 +51,9 @@ export type Config = {
 }
 
 const themeConfig: Config = {
-  templateName: 'AoWallet',
+  templateName: 'Ai to PPTX',
   homePageUrl: '/home',
-  settingsCookieName: 'AoWallet-Session',
+  settingsCookieName: 'Ai-to-PPTX-Session',
   mode: 'system', // 'system', 'light', 'dark'
   skin: 'default', // 'default', 'bordered'
   semiDark: false, // true, false

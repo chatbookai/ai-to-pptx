@@ -21,15 +21,4 @@ export type AuthValuesType = {
   setUser: (value: UserDataType | null) => void
   loading: boolean
   setLoading: (value: boolean) => void
-  connected: boolean
-  address: string | undefined,
-  addresses: string[],
-  api: any,
-  profileModal: any,
-  publicKey: string | undefined,
-  permissions: string[],
-  walletNames: any,
-  strategy: string | boolean,
-  currentAddress: string, 
-  currentWallet: any
 }

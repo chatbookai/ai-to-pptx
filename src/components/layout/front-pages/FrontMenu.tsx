@@ -140,15 +140,6 @@ const FrontMenu = (props: Props) => {
       >
         Tool
       </Typography>
-      <Typography
-        component={Link}
-        href='https://web.aowallet.org'
-        target='_blank'
-        className='font-medium plb-3 pli-1.5 hover:text-primary'
-        color='text.primary'
-      >
-        Web Wallet
-      </Typography>
     </Wrapper>
   )
 }

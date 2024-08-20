@@ -26,7 +26,6 @@ import FrontMenu from './FrontMenu'
 
 // Util Imports
 import { frontLayoutClasses } from '@layouts/utils/layoutClasses'
-import { ConnectButton } from "arweave-wallet-kit"
 
 // Styles Imports
 import styles from '@components/layout/front-pages/styles.module.css'
@@ -58,29 +57,19 @@ const Header = ({ mode }: { mode: Mode }) => {
             {isBelowLgScreen && (
               <Typography
                 component={Link}
-                href='https://web.aowallet.org'
+                href='https://github.com/chatbookai/ai-to-pptx/'
                 target='_blank'
                 className={classnames('font-medium plb-3 pli-1.5 hover:text-primary', {
                   'text-primary': true
                 })}
                 color='text.primary'
               >
-                WebWallet
+                Ai to PPTX
               </Typography>
             )}
           </div>
           <div className='flex items-center sm:gap-4'>
             <ModeDropdown />
-            {!isBelowLgScreen && (
-              <Box sx={{ display: 'flex', alignItems: 'center', my: 0 }}>
-                <ConnectButton
-                  accent="#9155FD"
-                  profileModal={true}
-                  showBalance={true}
-                  showProfilePicture={true}
-                />
-              </Box>
-            )}
           </div>
         </div>
       </div>

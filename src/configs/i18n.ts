@@ -17,7 +17,7 @@ i18n
     lng: 'en',
     backend: {
       /* translation file path */
-      loadPath: 'https://web.aowallet.org/locales/{{lng}}.json'
+      loadPath: '/locales/{{lng}}.json'
     },
     fallbackLng: 'en',
     debug: false,

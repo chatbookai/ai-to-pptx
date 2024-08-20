@@ -73,15 +73,15 @@ const HeroSection = ({ mode }: { mode: Mode }) => {
       <div className={classnames('pbs-16 overflow-hidden', frontCommonStyles.layoutSpacing)}>
         <div className='md:max-is-[550px] mlb-0 mli-auto text-center'>
           <Typography className='font-extrabold text-primary sm:text-[38px] text-3xl mbe-4 leading-[44px]'>
-            All in one Ao & ArWeave wallet application
+            All in one application
           </Typography>
           <Typography className='font-medium' color='text.primary'>
-          Include Wallets, Tokens, Faucets, Email, Chat, and others.
+          Include Faucets, Email, Chat, and others.
           </Typography>
           <div className='mbs-8'>
             <Button
               component={Link}
-              href='https://web.aowallet.org'
+              href='/'
               target="_blank"
               variant='contained'
               color='primary'

@@ -31,21 +31,21 @@ type FaqsDataTypes = {
 const FaqsData: FaqsDataTypes[] = [
   {
     id: 'panel1',
-    question: 'Which platforms does AoWallet support?',
+    question: 'Which platforms does Ai to PPTX support?',
     answer:
       'Ios, Android, Chrome Extension, Web. There will be support for more browser extensions in the future.'
   },
   {
     id: 'panel2',
-    question: 'What is AoWallet?',
+    question: 'What is Ai to PPTX?',
     active: true,
-    answer: `AoWallet is a wallet application on the AO and AR blockchains that supports data encryption and code auditing.
+    answer: `Ai to PPTX is a wallet application on the AO and AR blockchains that supports data encryption and code auditing.
 
 Supply AO & AR wallet function, Token, Faucet, Email, Chat, Blog.`
   },
   {
     id: 'panel3',
-    question: 'What are the subsequent development plans for AoWallet?',
+    question: 'What are the subsequent development plans for Ai to PPTX?',
     answer:
       'The expected development features include: Blog, Paid documents, Swap. If you have better ideas or suggestions, feel free to contact us at any time.'
   }
