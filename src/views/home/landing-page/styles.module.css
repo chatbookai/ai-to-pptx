@@ -1,0 +1,38 @@
+.heroSectionBg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  inline-size: 100%;
+  block-size: 100%;
+  inset-block-start: -12%;
+  pointer-events: none;
+  z-index: -2;
+}
+
+.heroSecDashboard {
+  inline-size: 85%;
+  z-index: -1;
+}
+
+.heroSectionElements {
+  inset-block-start: 18%;
+  inset-inline-end: 3%;
+  img {
+    inline-size: 100%;
+  }
+}
+
+.featureIcon {
+  cursor: pointer;
+
+  & > div:first-child {
+    border-color: var(--mui-palette-primary-darkOpacity);
+  }
+
+  & > div:hover {
+    background-color: var(--mui-palette-primary-mainOpacity);
+    svg {
+      pointer-events: none;
+    }
+  }
+}

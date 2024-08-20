@@ -1,0 +1,72 @@
+/* Basic editor styles */
+.ProseMirror {
+  outline: none;
+  min-block-size: 100px;
+  overflow-y: auto;
+  padding: 1.25rem;
+  inline-size: 100%;
+
+  > * + * {
+    margin-block-start: 0.75em;
+  }
+  p.is-editor-empty:first-child::before {
+    block-size: 0;
+    color: var(--mui-palette-text-disabled);
+    content: attr(data-placeholder);
+    float: inline-start;
+    pointer-events: none;
+  }
+
+  ul,
+  ol {
+    padding-block: 0;
+    padding-inline: 1rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  pre {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: 'JetBrainsMono', monospace;
+    padding-block: 0.75rem;
+    padding-inline: 1rem;
+    border-radius: 0.5rem;
+
+    code {
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
+    }
+  }
+
+  img {
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
+  blockquote {
+    padding-inline-start: 1rem;
+    border-inline-start: 2px solid var(--mui-palette-divider);
+  }
+
+  hr {
+    border: none;
+    border-block-start: 2px solid var(--mui-palette-divider);
+    margin-block: 2rem;
+    margin-inline: 0;
+  }
+}

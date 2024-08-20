@@ -1,0 +1,14 @@
+.tableHead {
+  tr th:not(:first-child) {
+    text-align: center;
+  }
+}
+
+.tableBody {
+  tr td:not(:first-child) {
+    text-align: center;
+  }
+  tr:nth-child(even) {
+    background-color: var(--mui-palette-action-hover);
+  }
+}
