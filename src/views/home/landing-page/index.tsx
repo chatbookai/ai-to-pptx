@@ -16,6 +16,7 @@ import { useSettings } from '@core/hooks/useSettings'
 import CustomerReviews from './CustomerReviews'
 import Pricing from './Pricing'
 import OurTeam from './OurTeam'
+
 //import GetStarted from './GetStarted'
 //import ContactUs from './ContactUs'
 

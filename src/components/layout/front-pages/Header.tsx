@@ -7,7 +7,6 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 // MUI Imports
-import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
