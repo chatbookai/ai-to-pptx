@@ -1,6 +1,8 @@
 /* eslint-disable newline-before-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-this-alias */
+/* eslint-disable newline-before-return */
+/* eslint-disable lines-around-comment */
 
 function SSE(url, options) {
   this.INITIALIZING = -1;

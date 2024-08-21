@@ -1,5 +1,9 @@
+/* eslint-disable newline-before-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-this-alias */
+/* eslint-disable lines-around-comment */
 /* eslint-disable no-self-assign */
+
 import { geometryPaths } from './geometry.js'
 import { drawChart } from './chart.js'
 

@@ -40,7 +40,6 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
         const url = 'https://docmee.cn/api/ppt/generateContent'
         const source: any = new SSE(url, {
             method: 'POST',
-            // withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
                 'Cache-Control': 'no-cache',
@@ -60,6 +59,7 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
                 const json = JSON.parse(data.data)
                 if (json.code != 0) {
                     alert('生成PPT异常：' + json.message)
+
                     return
                 }
             }
@@ -144,6 +144,7 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
                 const resp = JSON.parse(this.responseText)
                 if (resp.code != 0) {
                     alert(resp.message)
+
                     return
                 }
                 const pptInfo = resp.data.pptInfo
@@ -230,6 +231,7 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
                             {pages.map((page: any, index: number) => {
                                 canvasList[index] = createRef();
                                 console.log("PerfectScrollbar page", page)
+                                
                                 return (
                                     <Box key={index} onClick={() => drawPptx(index)} sx={{ cursor: 'pointer' }}>
                                         <canvas ref={canvasList[index]} width="288" height="162" className={currentIdx == index ? 'left_div_item_img ppt_select' : 'left_div_item_img'} />

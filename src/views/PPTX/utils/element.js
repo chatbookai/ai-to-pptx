@@ -1,3 +1,8 @@
+/* eslint-disable newline-before-return */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-this-alias */
+/* eslint-disable lines-around-comment */
+
 // 创建空白页
 export function createPage(page, width, height) {
     return {
