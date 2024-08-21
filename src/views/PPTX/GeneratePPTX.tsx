@@ -11,6 +11,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 
 //import '../styles/GeneratePPTX.css'
 
+// @ts-ignore
 let painter = null as Ppt2Svg
 const canvasList = [] as any
 
@@ -231,7 +232,7 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
                             {pages.map((page: any, index: number) => {
                                 canvasList[index] = createRef();
                                 console.log("PerfectScrollbar page", page)
-                                
+
                                 return (
                                     <Box key={index} onClick={() => drawPptx(index)} sx={{ cursor: 'pointer' }}>
                                         <canvas ref={canvasList[index]} width="288" height="162" className={currentIdx == index ? 'left_div_item_img ppt_select' : 'left_div_item_img'} />
