@@ -1,0 +1,17 @@
+.outline_content {
+  padding-top: 4em;
+  text-align: center;
+}
+.outline_content button {
+  margin-left: .8em;
+}
+.outline_desc {
+  font-size: 1em;
+  margin-top: 1em;
+  color: #999;
+  margin-bottom: 4em;
+}
+.outline {
+  text-align: left;
+  margin: 0 calc(20vw);
+}

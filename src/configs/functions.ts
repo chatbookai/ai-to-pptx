@@ -1,10 +1,15 @@
 
-export function formatXWEAddress(dividend: number, precision: number) {
-  const divisor = 10000;
-  const result = (dividend / divisor).toFixed(precision);
-  
-  return result;
+export function downloadJson(JsonData: any, FileName: string) {
+  const blob = new Blob([JSON.stringify(JsonData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = FileName + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
 }
+
+
 
 export function formatSecondToMinute(miningTime: number): string {
   let timeMemo = '';
