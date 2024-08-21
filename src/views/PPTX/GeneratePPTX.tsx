@@ -195,7 +195,7 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
         painter = new Ppt2Svg(svg.current)
         painter.setMode('edit')
       
-        let mTimer = 0
+        let mTimer: any = 0
         window.addEventListener('resize', function() {
           mTimer && clearTimeout(mTimer)
           mTimer = setTimeout(() => {
