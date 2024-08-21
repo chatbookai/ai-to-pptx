@@ -102,43 +102,43 @@ const FrontMenu = (props: Props) => {
       </Typography>
       <Typography
         component={Link}
-        href='/token'
+        href='/pptx'
         className='font-medium plb-3 pli-1.5 hover:text-primary'
         color='text.primary'
       >
-        Token
+        Pptx
       </Typography>
       <Typography
         component={Link}
-        href='/faucet'
+        href='/templates'
         className='font-medium plb-3 pli-1.5 hover:text-primary'
         color='text.primary'
       >
-        Faucet
+        Templates
       </Typography>
       <Typography
         component={Link}
-        href='/email'
+        href='/pricing'
         className='font-medium plb-3 pli-1.5 hover:text-primary'
         color='text.primary'
       >
-        Email
+        Pricing
       </Typography>
       <Typography
         component={Link}
-        href='/debug'
+        href='/docs'
         className='font-medium plb-3 pli-1.5 hover:text-primary'
         color='text.primary'
       >
-        Debug
+        Docs
       </Typography>
       <Typography
         component={Link}
-        href='/tool'
+        href='/feedback'
         className='font-medium plb-3 pli-1.5 hover:text-primary'
         color='text.primary'
       >
-        Tool
+        Feedback
       </Typography>
     </Wrapper>
   )
