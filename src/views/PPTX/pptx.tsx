@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 
 // ** Axios Imports
 import axios from 'axios'
+import authConfig from '@configs/auth'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -39,7 +40,7 @@ import "./lib/ppt2svg.js";
 // @ts-ignore
 import "./lib/sse.js";
 
-const apiKey = 'ak_6J7pisEET3pvE914YC'
+const apiKey = 'ak_6J8HQorE3rE6vt_Iyy'
 const uid = 'test'
 
 const PPTXModel = () => {
@@ -72,7 +73,7 @@ const PPTXModel = () => {
   const [step, setStep] = useState<number>(1);
   const [pptxId, setPptxId] = useState('1826136781784080384')
   
-  const [token, setToken] = useState<string>('')
+  const [token, setToken] = useState<string>('token')
 
   async function createApiToken() {
     try {
@@ -102,7 +103,7 @@ const PPTXModel = () => {
   const [windowWidth, setWindowWidth] = useState('1152px');
   useEffect(() => {
 
-    createApiToken()
+    //createApiToken()
 
     const handleResize = () => {
       if(window.innerWidth >=1920)   {
@@ -139,7 +140,7 @@ const PPTXModel = () => {
           filters: { type: 1 }
       }, {
           headers: {
-              'token': token,
+              'satoken': token,
               'Content-Type': 'application/json'
           }
       }).then(res=>res.data);
@@ -175,31 +176,37 @@ const PPTXModel = () => {
       }
       setPptxOutlineError('')
 
-      const url = 'https://docmee.cn/api/ppt/generateOutline'
+      //const url = 'https://docmee.cn/api/ppt/generateOutline'
+      const url = authConfig.AppUrl + '/ai/pptx/generateOutline.php'
       let outline = ''
       const source: any = new window.SSE(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache',
-            'token': token
+            'satoken': 'satoken',
         },
-        payload: JSON.stringify({ subject: pptxOutline }),
+        payload: JSON.stringify({ action: 'stream', subject: pptxOutline }),
       })
       console.log("source", source)
       source.onmessage = function (data: any) {
           try {
-            const json = JSON.parse(data.data)
-            outline += json.text
-            setPptxOutlineResult(outline)
-            window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight })
+            if(data.data != "[DONE]")  {
+              const jsonData = JSON.parse(data.data)
+              if(jsonData.choices && jsonData.choices[0] && jsonData.choices[0].delta.content) {
+                outline += jsonData.choices[0].delta.content
+                //console.log("json.choices[0].delta.content", outline)
+                setPptxOutlineResult(outline)
+              }
+              window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight })
+            }
           }
           catch(e: any) {
             console.log("handleGenerateOutline Error", e)
           }
       }
       source.onend = function (data: any) {
-          console.log("onend", data.data)
+          //console.log("onend", data.data)
           console.log("pptxOutlineResult", pptxOutlineResult)
       }
       source.onerror = function (err: any) {
@@ -208,7 +215,7 @@ const PPTXModel = () => {
       source.stream()
 
       setGenerating(false)
-      handleGetRandomTemplates()
+      //handleGetRandomTemplates()
     }
     catch(Error: any) {
       console.log("handleGenerateOutline Error", Error)
@@ -229,7 +236,7 @@ const PPTXModel = () => {
       const url = 'https://docmee.cn/api/ppt/downloadPptx'
       const xhr = new XMLHttpRequest()
       xhr.open('POST', url, true)
-      xhr.setRequestHeader('token', token)
+      xhr.setRequestHeader('satoken', token)
       xhr.setRequestHeader('Content-Type', 'application/json')
       xhr.send(JSON.stringify({ id }))
       xhr.onload = function () {

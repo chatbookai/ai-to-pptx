@@ -206,11 +206,11 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
         resetSize()
       
         const _pptxId = pptxId // new URLSearchParams(window.location.search).get('pptxId')
-        console.log("_pptxId", _pptxId)
+        //console.log("_pptxId", _pptxId)
         if (_pptxId) {
-          loadById(_pptxId)
+          //loadById(_pptxId)
         } else {
-          generatePptx(params.outline, params.templateId)
+          //generatePptx(params.outline, params.templateId)
         }
     }, [pptxId])
 
