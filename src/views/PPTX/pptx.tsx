@@ -166,11 +166,13 @@ const PPTXModel = () => {
       setStep(0)
       if(pptxOutline == '') {
         setPptxOutlineError('PPTX Outline must input')
+        setIsDisabled(false)
 
         return
       }
       if(pptxOutline.length < 3) {
         setPptxOutlineError('PPTX Outline subject is too short')
+        setIsDisabled(false)
 
         return
       }
@@ -264,13 +266,13 @@ const PPTXModel = () => {
           height: '100%',
           borderRadius: 1,
           overflow: 'hidden',
-          my: 6,
+          my: 5,
           backgroundColor: 'background.paper',
           boxShadow: skin === 'bordered' ? 0 : 6,
           ...(skin === 'bordered' && { border: `1px solid ${theme.palette.divider}` })
         }}
       >
-        <Grid item xs={12} sx={{ my: 3, ml: 3 }}>
+        <Grid item xs={12} sx={{ my: 3, ml: 5 }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <TextField
               size="small"
@@ -294,13 +296,13 @@ const PPTXModel = () => {
         </Grid>
 
         {step == 0 && token != '' && (
-            <Grid item xs={12} sx={{ mt: 3, mb: 22 }}>
+            <Grid item xs={12} sx={{ mt: 3, mb: 8 }}>
               <Grid container spacing={2}>
                 <Grid item xs={5}>
                   <Box sx={{ 
                     m: 3,
                     p: 3,
-                    pl: 6,
+                    ml: 5,
                     borderRadius: 1,
                     border: `2px dashed ${theme.palette.mode === 'light' ? 'rgba(93, 89, 98, 0.22)' : 'rgba(247, 244, 254, 0.14)'}`,
                     overflowX: 'hidden', 
