@@ -1,11 +1,7 @@
 'use client'
 
 // MUI Imports
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
-import type { Theme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 
 // Third-party Imports
 import classnames from 'classnames'
@@ -22,8 +18,6 @@ import frontCommonStyles from '@views/home/styles.module.css'
 import authConfig from '@configs/auth'
 
 function FooterSimple() {
-
-  const isBelowLgScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
 
   return (
     <footer className={frontLayoutClasses.footer}>
