@@ -195,7 +195,7 @@ const PPTXModel = () => {
               const jsonData = JSON.parse(data.data)
               if(jsonData.choices && jsonData.choices[0] && jsonData.choices[0].delta.content) {
                 outline += jsonData.choices[0].delta.content
-                //console.log("json.choices[0].delta.content", outline)
+                console.log("json.choices[0].delta.content", outline)
                 setPptxOutlineResult(outline)
               }
               window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight })
@@ -300,6 +300,7 @@ const PPTXModel = () => {
                   <Box sx={{ 
                     m: 3,
                     p: 3,
+                    pl: 6,
                     borderRadius: 1,
                     border: `2px dashed ${theme.palette.mode === 'light' ? 'rgba(93, 89, 98, 0.22)' : 'rgba(247, 244, 254, 0.14)'}`,
                     overflowX: 'hidden', 
