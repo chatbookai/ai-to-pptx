@@ -15,6 +15,7 @@ import FrontLayout from '@components/layout/front-pages'
 
 import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from 'react-hot-toast'
+import authConfig from '@configs/auth'
 
 // Style Imports
 import '@/app/globals.css'
@@ -23,9 +24,8 @@ import '@/app/globals.css'
 import '@assets/iconify-icons/generated-icons.css'
 
 export const metadata = {
-  title: 'Ai to PPTX',
-  description:
-    'Ai to PPTX'
+  title: authConfig.AppName,
+  description: authConfig.AppDesc
 }
 
 const Layout = ({ children }: ChildrenType) => {

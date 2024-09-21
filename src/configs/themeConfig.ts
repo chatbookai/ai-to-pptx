@@ -19,6 +19,8 @@
 // Type Imports
 import type { Mode, Skin, Layout, LayoutComponentPosition, LayoutComponentWidth } from '@core/types'
 
+import authConfig from '@configs/auth'
+
 type Navbar = {
   type: LayoutComponentPosition
   contentWidth: LayoutComponentWidth
@@ -51,7 +53,7 @@ export type Config = {
 }
 
 const themeConfig: Config = {
-  templateName: 'Ai to PPTX',
+  templateName: authConfig.AppName,
   homePageUrl: '/home',
   settingsCookieName: 'Ai-to-PPTX-Session',
   mode: 'system', // 'system', 'light', 'dark'

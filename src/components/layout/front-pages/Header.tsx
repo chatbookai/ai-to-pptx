@@ -29,6 +29,8 @@ import { frontLayoutClasses } from '@layouts/utils/layoutClasses'
 // Styles Imports
 import styles from '@components/layout/front-pages/styles.module.css'
 
+import authConfig from '@configs/auth'
+
 const Header = ({ mode }: { mode: Mode }) => {
   // States
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -56,14 +58,14 @@ const Header = ({ mode }: { mode: Mode }) => {
             {isBelowLgScreen && (
               <Typography
                 component={Link}
-                href='https://github.com/chatbookai/ai-to-pptx/'
+                href={authConfig.AppGithub}
                 target='_blank'
                 className={classnames('font-medium plb-3 pli-1.5 hover:text-primary', {
                   'text-primary': true
                 })}
                 color='text.primary'
               >
-                Ai to PPTX
+                {authConfig.AppName}
               </Typography>
             )}
           </div>

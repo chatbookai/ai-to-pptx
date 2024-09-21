@@ -20,6 +20,8 @@ import { frontLayoutClasses } from '@layouts/utils/layoutClasses'
 // Styles Imports
 import frontCommonStyles from '@views/home/styles.module.css'
 
+import authConfig from '@configs/auth'
+
 function Footer() {
 
   const isBelowLgScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
@@ -121,12 +123,12 @@ function Footer() {
             <span>{`© ${new Date().getFullYear()}, Made with `}</span>
             <span>{`❤️`}</span>
             <span>{` by `}</span>
-            <Link href='https://github.com/chatbookai/ai-to-pptx/' target='_blank' className='font-medium text-white'>
-              Ai to PPTX
+            <Link href={authConfig.AppGithub} target='_blank' className='font-medium text-white'>
+              {authConfig.AppName}
             </Link>
           </p>
           <div className='flex gap-6 items-center opacity-[0.78]'>
-            <IconButton component={Link} size='small' href='https://github.com/chatbookai/ai-to-pptx/' target='_blank'>
+            <IconButton component={Link} size='small' href={authConfig.AppGithub} target='_blank'>
               <i className='ri-github-fill text-white text-lg' />
             </IconButton>
           </div>
