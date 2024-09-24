@@ -9,6 +9,8 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
+import authConfig from '@configs/auth'
+
 //import '../styles/GeneratePPTX.css'
 
 // @ts-ignore
@@ -29,41 +31,53 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
     const [pages, setPages] = useState([] as any)
     const [currentIdx, setCurrentIdx] = useState(0)
 
-    console.log("GeneratePPTX descTime", descTime)
-    console.log("GeneratePPTX descMsg", descMsg)
-    console.log("GeneratePPTX pptxId", pptxId)
+    //console.log("GeneratePPTX params", params)
+    //console.log("GeneratePPTX descTime", descTime)
+    //console.log("GeneratePPTX descMsg", descMsg)
+    //console.log("GeneratePPTX pptxId", pptxId)
 
-    const generatePptx = (outline: string, templateId: string) => {
+    const generatePptxContent = (outline: string, templateId: string) => {
         const timer = setInterval(() => {
             setDescTime(descTime => descTime + 1)
         }, 1000)
         setGening(true)
-        const url = 'https://docmee.cn/api/ppt/generateContent'
-        const source: any = new SSE(url, {
+        let pptxPageContent = ""
+        const pptxPageContentList: string[] = []
+        const url = authConfig.AppUrl + '/ai/pptx/generateContent.php'
+        const source: any = new window.SSE(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Cache-Control': 'no-cache',
-                'token': token
+                'satoken': 'satoken',
             },
-            payload: JSON.stringify({ asyncGenPptx: true, outlineMarkdown: outline, templateId }),
+            payload: JSON.stringify({ action: 'stream', asyncGenPptx: true, outlineMarkdown: outline, templateId }),
         })
         source.onmessage = function (data: any) {
-            const json = JSON.parse(data.data)
-            if (json.pptId) {
-                setDescMsg(`正在生成中，进度 ${json.current}/${json.total}，请稍后...`)
-                asyncGenPptxInfo(json.pptId)
+            if(data.data && data.data != "[DONE]")  {
+                const jsonData = JSON.parse(data.data)
+                if(jsonData.choices && jsonData.choices[0] && jsonData.choices[0].delta.content) {
+                  const content = jsonData.choices[0].delta.content
+                  //console.log("data.data content ----", content)
+                  pptxPageContent += content
+                  if(content == "}")  {
+                    console.log("data.data pptxPageContent ----", pptxPageContent)
+                    pptxPageContentList.push(pptxPageContent)
+                    pptxPageContent = ""
+                  }
+                }
+                window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight })
             }
+            if(data.data == "[DONE]")  {
+                console.log("data.data pptxPageContent DONE ----", pptxPageContent)
+                window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight })
+            }
+            //console.log("pptxPageContentList", pptxPageContentList)
+            //setDescMsg(`正在生成中，进度 ${json.current}/${json.total}，请稍后...`)
+            //asyncGenPptxInfo(json.pptId)
         }
         source.onend = function (data: any) {
-            if (data.data.startsWith('{') && data.data.endsWith('}')) {
-                const json = JSON.parse(data.data)
-                if (json.code != 0) {
-                    alert('生成PPT异常：' + json.message)
-
-                    return
-                }
-            }
+            console.log("pptxPageContentList source.onend", pptxPageContentList)
             clearInterval(timer)
             setGening(false)
             setDescMsg('正在生成中，请稍后...')
@@ -206,12 +220,15 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
         resetSize()
       
         const _pptxId = pptxId // new URLSearchParams(window.location.search).get('pptxId')
-        //console.log("_pptxId", _pptxId)
+        console.log("_pptxId", _pptxId)
         if (_pptxId) {
           //loadById(_pptxId)
         } else {
-          //generatePptx(params.outline, params.templateId)
+          //generatePptxContent(params.outline, params.templateId)
         }
+
+        generatePptxContent(params.outline, params.templateId)
+
     }, [pptxId])
 
     return (

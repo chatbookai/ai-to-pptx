@@ -33,7 +33,7 @@ const Layout = ({ children }: ChildrenType) => {
   const systemMode = 'light'
 
   return (
-    <html id='__next'>
+    <html id='__next' lang='en' dir='ltr'>
       <body className='flex is-full min-bs-full flex-auto flex-col'>
         <AuthProvider>
           <Providers direction='ltr'>

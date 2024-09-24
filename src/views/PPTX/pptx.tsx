@@ -49,10 +49,9 @@ const PPTXModel = () => {
 
   //const auth = useAuth()
   //const router = useRouter()
-  //useEffect(() => {
-    //CheckPermission(auth, router, false)
-    //handleGetRandomTemplates()
-  //}, [])
+  useEffect(() => {
+    handleGetRandomTemplates()
+  }, [])
   
   const theme = useTheme()
   const { settings } = useSettings()
@@ -65,7 +64,7 @@ const PPTXModel = () => {
   const [pptxOutlineResult, setPptxOutlineResult] = useState<string>('');
   const [pptxOutlineError, setPptxOutlineError] = useState<string>('');
   const [pptxRandomTemplates, setPptxRandomTemplates] = useState<any[]>([]);
-  const [pptxRandomTemplates6, setPptxRandomTemplates8] = useState<any[]>([]);
+  const [pptxRandomTemplates8, setPptxRandomTemplates8] = useState<any[]>([]);
   const [pptxObj, setPptxObj] = useState<any>(null);
   const [generating, setGenerating] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
@@ -73,7 +72,7 @@ const PPTXModel = () => {
   const [step, setStep] = useState<number>(1);
   const [pptxId, setPptxId] = useState('1826136781784080384')
   
-  const [token, setToken] = useState<string>('token')
+  const [token, setToken] = useState<string>('')
 
   async function createApiToken() {
     try {
@@ -90,10 +89,10 @@ const PPTXModel = () => {
         })
       })).json()
       
-      console.log("resp", resp)
       if(resp && resp.data && resp.data.token)  {
         setToken(resp.data.token)
       }
+      console.log("resp Token", resp.data.token)
     }
     catch(Error: any) {
       console.log("createApiToken Error", Error)
@@ -101,11 +100,14 @@ const PPTXModel = () => {
   }
 
   const [windowWidth, setWindowWidth] = useState('1152px');
+
   useEffect(() => {
+    console.log("window.innerWidth", window.innerWidth)
+    handleResize();
+  }, [window]);
 
-    //createApiToken()
-
-    const handleResize = () => {
+  const handleResize = () => {
+    if(window)  {
       if(window.innerWidth >=1920)   {
         setWindowWidth('1392px');
       }
@@ -115,25 +117,18 @@ const PPTXModel = () => {
       else if(window.innerWidth <= 1440 && window.innerWidth > 1200)   {
         setWindowWidth('1152px');
       }
-      else {
-        setWindowWidth('1152px');
+      else if(window.innerWidth <= 1200 && window.innerWidth > 852)   {
+        setWindowWidth('852px');
       }
-    };
-    
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
+      else {
+        setWindowWidth(String(window.innerWidth - 48) + 'px');
+      }
+    }
+  };
 
   const handleGetRandomTemplates = async () => {
     try {
-
-      const url = 'https://docmee.cn/api/ppt/randomTemplates'
+      const url = authConfig.AppUrl + '/ai/pptx/randomTemplates.php'
       const GetRandomTemplatesData = await axios.post(url, {
           page: 1,
           size: 10,
@@ -148,7 +143,7 @@ const PPTXModel = () => {
       if(GetRandomTemplatesData && GetRandomTemplatesData.data && GetRandomTemplatesData.data.length > 0) {
         setPptxRandomTemplates(GetRandomTemplatesData.data)
         setPptxRandomTemplates8(GetRandomTemplatesData.data.splice(0, 8))
-        console.log("pptxRandomTemplates", pptxRandomTemplates)
+        console.log("pptxRandomTemplates pptxRandomTemplates", GetRandomTemplatesData.data.splice(0, 8))
       }
     }
     catch(Error: any) {
@@ -158,8 +153,8 @@ const PPTXModel = () => {
 
   const handleGenerateOutline = async () => {
     try {
-      setPptxRandomTemplates([])
-      setPptxRandomTemplates8([])
+      //setPptxRandomTemplates([])
+      //setPptxRandomTemplates8([])
       setGenerating(true)
 
       setIsDisabled(true)
@@ -178,7 +173,6 @@ const PPTXModel = () => {
       }
       setPptxOutlineError('')
 
-      //const url = 'https://docmee.cn/api/ppt/generateOutline'
       const url = authConfig.AppUrl + '/ai/pptx/generateOutline.php'
       let outline = ''
       const source: any = new window.SSE(url, {
@@ -197,8 +191,9 @@ const PPTXModel = () => {
               const jsonData = JSON.parse(data.data)
               if(jsonData.choices && jsonData.choices[0] && jsonData.choices[0].delta.content) {
                 outline += jsonData.choices[0].delta.content
-                console.log("json.choices[0].delta.content", outline)
                 setPptxOutlineResult(outline)
+
+                //console.log("json.choices[0].delta.content", outline)
               }
               window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight })
             }
@@ -209,15 +204,16 @@ const PPTXModel = () => {
       }
       source.onend = function (data: any) {
           //console.log("onend", data.data)
-          console.log("pptxOutlineResult", pptxOutlineResult)
+          handleGetRandomTemplates()
       }
       source.onerror = function (err: any) {
           console.error('生成大纲异常', err)
       }
       source.stream()
+      
+      console.log("pptxOutlineResult", pptxOutlineResult)
 
       setGenerating(false)
-      //handleGetRandomTemplates()
     }
     catch(Error: any) {
       console.log("handleGenerateOutline Error", Error)
@@ -234,6 +230,7 @@ const PPTXModel = () => {
   }
 
   const handleDownloadPPTX = (id: string) => {
+
       setIsDisabledText('Downloading')
       const url = 'https://docmee.cn/api/ppt/downloadPptx'
       const xhr = new XMLHttpRequest()
@@ -256,6 +253,7 @@ const PPTXModel = () => {
       }
       setIsDisabledText('Download PPTX')
   }
+
 
   return (
     <Grid container sx={{margin: '0 auto'}} maxWidth={windowWidth}>
@@ -323,10 +321,10 @@ const PPTXModel = () => {
                     width: '95%'
                   }}>
                     <Grid container spacing={2}>
-                      {pptxRandomTemplates6 && pptxRandomTemplates6.length > 0 && pptxRandomTemplates6.map((item, index) => (
+                      {pptxRandomTemplates && pptxRandomTemplates.length > 0 && pptxRandomTemplates.map((item, index) => (
                         <Grid item xs={6} key={index}>
                           <Box position="relative" sx={{ mb: 2, mr: 2 }}>
-                            <CardMedia image={`${item.coverUrl + '?token=' + token}`} onClick={()=>{
+                            <CardMedia image={`${authConfig.AppUrl}/ai/pptx/templates/${item.id}.png`} onClick={()=>{
                               setStep(1)
                               setTemplateId(item.id)
                             }} sx={{ height: '8.25rem', objectFit: 'contain', borderRadius: 1 }} />
@@ -340,7 +338,7 @@ const PPTXModel = () => {
             </Grid>
         )}
 
-        {step == 1 && token != '' && (
+        {step == 1 && token != ''  && templateId != '' && (
           <Grid item xs={12} sx={{ mt: 3, mb: 22 }}>
             <GeneratePPTX token={token} theme={theme} pptxId={pptxId} setPptxId={setPptxId} pptxObj={pptxObj} setPptxObj={setPptxObj} params={{ outline: pptxOutlineResult, templateId }} />
           </Grid>
