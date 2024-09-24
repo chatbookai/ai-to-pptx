@@ -29,28 +29,28 @@ type StatData = {
 // Data
 const statData: StatData[] = [
   {
-    title: 'Applications',
-    value: 6,
+    title: '模型数量',
+    value: 20,
     icon: 'ri-layout-line',
     color: 'primary',
     isHover: false
   },
   {
-    title: 'Tokens',
-    value: 20,
+    title: '用户数量',
+    value: 1000,
     icon: 'ri-time-line',
     color: 'success',
     isHover: false
   },
   {
-    title: 'Users',
-    value: 100,
+    title: '生成PPTX数量',
+    value: 5000,
     icon: 'ri-user-smile-line',
     color: 'warning',
     isHover: false
   },
   {
-    title: 'Support Platforms',
+    title: '支持平台',
     value: 4,
     icon: 'ri-award-line',
     color: 'info',

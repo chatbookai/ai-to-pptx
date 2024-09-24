@@ -73,10 +73,10 @@ const HeroSection = ({ mode }: { mode: Mode }) => {
       <div className={classnames('pbs-16 overflow-hidden', frontCommonStyles.layoutSpacing)}>
         <div className='md:max-is-[550px] mlb-0 mli-auto text-center'>
           <Typography className='font-extrabold text-primary sm:text-[38px] text-3xl mbe-4 leading-[44px]'>
-            All in one application
+            AI生成PPTX, 思维导图, AI对话
           </Typography>
           <Typography className='font-medium' color='text.primary'>
-          Include Faucets, Email, Chat, and others.
+          使用AI技术来实时生成PPTX.
           </Typography>
           <div className='mbs-8'>
             <Button
@@ -87,7 +87,7 @@ const HeroSection = ({ mode }: { mode: Mode }) => {
               color='primary'
               size='large'
             >
-              Get Early Access
+              点击访问
             </Button>
           </div>
         </div>

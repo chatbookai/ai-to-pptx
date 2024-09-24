@@ -49,17 +49,17 @@ function Footer() {
             {!isBelowLgScreen && (
               <Grid item xs={12} sm={3} lg={2}>
                 <Typography color='white' className='font-medium mbe-6 opacity-[0.92]'>
-                  Coming soon
+                  正在开发中
                 </Typography>
                 <div className='flex flex-col gap-4'>
                   <Typography color='white' className='opacity-[0.78]'>
-                    Blog
+                    课程库
                   </Typography>
                   <Typography color='white' className='opacity-[0.78]'>
-                    Swap
+                    AI测验
                   </Typography>
                   <Typography color='white' className='opacity-[0.78]'>
-                    Paid Document
+                    知识库
                   </Typography>
                 </div>
               </Grid>
@@ -67,18 +67,24 @@ function Footer() {
             {!isBelowLgScreen && (
               <Grid item xs={12} sm={3} lg={2}>
                 <Typography color='white' className='font-medium mbe-6 opacity-[0.92]'>
-                  Products
+                  产品
                 </Typography>
                 <div className='flex flex-col gap-4'>
-                  <Typography component={Link} href='/email' color='white' className='opacity-[0.78]'>
-                    Email
+                  <Typography component={Link} href='/pptx' color='white' className='opacity-[0.78]'>
+                    AI生成PPTX
+                  </Typography>
+                  <Typography component={Link} href='/chat' color='white' className='opacity-[0.78]'>
+                    AI对话
+                  </Typography>
+                  <Typography component={Link} href='/mindmap' color='white' className='opacity-[0.78]'>
+                    思维导图
                   </Typography>
                 </div>
               </Grid>
             )}
             <Grid item xs={12} sm={6} lg={3}>
               <Typography color='white' className='font-medium mbe-6 opacity-[0.92]'>
-                Download Ai to PPTX App
+                移动端
               </Typography>
               <div className='flex flex-col gap-4'>
                 <Link className='bg-[#211B2C] bs-[56px] is-[211px] rounded'>

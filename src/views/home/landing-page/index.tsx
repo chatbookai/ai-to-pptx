@@ -14,8 +14,9 @@ import Faqs from './Faqs'
 import { useSettings } from '@core/hooks/useSettings'
 
 import CustomerReviews from './CustomerReviews'
-import Pricing from './Pricing'
 import OurTeam from './OurTeam'
+
+//import Pricing from './Pricing'
 
 //import GetStarted from './GetStarted'
 //import ContactUs from './ContactUs'
@@ -38,7 +39,6 @@ const LandingPageWrapper = ({ mode }: { mode: Mode }) => {
       <UsefulFeature />
       <CustomerReviews />
       <OurTeam />
-      <Pricing />
       <ProductStat />
       <Faqs />
     </>

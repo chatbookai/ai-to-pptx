@@ -28,33 +28,33 @@ import frontCommonStyles from '@views/home/styles.module.css'
 const feature = [
   {
     icon: <LaptopCharging />,
-    title: 'Wallet',
-    description: 'Create and manage AO & AR wallets, support data encryption, and code auditing.'
+    title: 'Ai生成PPTX',
+    description: '使用Ai技术来生成PPTX.'
   },
   {
     icon: <TransitionUp />,
-    title: 'Token',
-    description: 'Search for tokens, add tokens, check balance, view transaction history, holders, and support online create token.'
+    title: 'Ai对话',
+    description: '支持常用Ai对话功能.'
   },
   {
     icon: <Document />,
-    title: 'Faucet',
-    description: 'Support obtaining aggregated Tokens through an online faucet.'
+    title: '思维导图',
+    description: '使用Ai来生成思维导图.'
   },
   {
     icon: <Edit />,
-    title: 'Email',
-    description: 'An AO-based Email system that supports folder and data encryption, and using AR addresses as recipients.'
+    title: 'Ai课程库',
+    description: '使用AI来生成课件,形成资源库'
   },
   {
     icon: <LifeBuoy />,
-    title: 'Chat',
-    description: 'An AO-based Chat system that supports different Channels and allows for setting respective administrators.'
+    title: '国产模型',
+    description: '使用DeepSeek国产AI模型,价格经济实惠,符合国产AI标准要求.'
   },
   {
     icon: <Cube />,
-    title: 'Apps',
-    description: 'Integrate third-party application subsystems based on AO, allowing users to vote on which applications can be added to Apps.'
+    title: '低代码开发平台',
+    description: '内嵌一套低代码开发平台.'
   }
 ]
 
@@ -91,14 +91,14 @@ const UsefulFeature = () => {
           <div className='flex items-center justify-center mbe-6 gap-3'>
             <Lines />
             <Typography color='text.primary' className='font-medium uppercase'>
-              Useful Feature
+              实用特色
             </Typography>
           </div>
           <div className='flex items-center justify-center flex-wrap gap-2 mbe-2 sm:mbe-1'>
             <Typography variant='h4' className='font-bold'>
               Everything you need
             </Typography>
-            <Typography variant='h5'>to start your web3 project</Typography>
+            <Typography variant='h5'>to start your AI project</Typography>
           </div>
           <Typography className='font-medium text-center'>
             Not just a set of tools, the package includes ready-to-deploy conceptual application.

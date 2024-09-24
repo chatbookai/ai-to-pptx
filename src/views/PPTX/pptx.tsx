@@ -69,8 +69,8 @@ const PPTXModel = () => {
   const [generating, setGenerating] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [isDisabledText, setIsDisabledText] = useState<string>(t('Download PPTX') as string);
-  const [step, setStep] = useState<number>(1);
-  const [pptxId, setPptxId] = useState('1826136781784080384')
+  const [step, setStep] = useState<number>(0);
+  const [pptxId, setPptxId] = useState<string>('')
   
   const [token, setToken] = useState<string>('')
 
@@ -99,12 +99,23 @@ const PPTXModel = () => {
     }
   }
 
-  const [windowWidth, setWindowWidth] = useState('1152px');
+  const [windowWidth, setWindowWidth] = useState<string>('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWindowWidth(String(window.innerWidth) + 'px');
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
 
   useEffect(() => {
     console.log("window.innerWidth", window.innerWidth)
     handleResize();
-  }, [window]);
+  }, [windowWidth]);
 
   const handleResize = () => {
     if(window)  {
@@ -231,6 +242,9 @@ const PPTXModel = () => {
 
   const handleDownloadPPTX = (id: string) => {
 
+      setPptxId(String(Math.random()))
+      return 
+
       setIsDisabledText('Downloading')
       const url = 'https://docmee.cn/api/ppt/downloadPptx'
       const xhr = new XMLHttpRequest()
@@ -293,7 +307,7 @@ const PPTXModel = () => {
           </div>
         </Grid>
 
-        {step == 0 && token != '' && (
+        {step == 0 && (
             <Grid item xs={12} sx={{ mt: 3, mb: 8 }}>
               <Grid container spacing={2}>
                 <Grid item xs={5}>
@@ -321,7 +335,7 @@ const PPTXModel = () => {
                     width: '95%'
                   }}>
                     <Grid container spacing={2}>
-                      {pptxRandomTemplates && pptxRandomTemplates.length > 0 && pptxRandomTemplates.map((item, index) => (
+                      {pptxRandomTemplates8 && pptxRandomTemplates8.length > 0 && pptxRandomTemplates8.map((item, index) => (
                         <Grid item xs={6} key={index}>
                           <Box position="relative" sx={{ mb: 2, mr: 2 }}>
                             <CardMedia image={`${authConfig.AppUrl}/ai/pptx/templates/${item.id}.png`} onClick={()=>{
@@ -338,7 +352,7 @@ const PPTXModel = () => {
             </Grid>
         )}
 
-        {step == 1 && token != ''  && templateId != '' && (
+        {step == 1 && templateId != '' && (
           <Grid item xs={12} sx={{ mt: 3, mb: 22 }}>
             <GeneratePPTX token={token} theme={theme} pptxId={pptxId} setPptxId={setPptxId} pptxObj={pptxObj} setPptxObj={setPptxObj} params={{ outline: pptxOutlineResult, templateId }} />
           </Grid>

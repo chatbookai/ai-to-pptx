@@ -239,7 +239,7 @@ const GeneratePPTX = ({token, theme, params, pptxId, setPptxId, pptxObj, setPptx
             borderRadius: 1,
             border: `2px dashed ${theme.palette.mode === 'light' ? 'rgba(93, 89, 98, 0.22)' : 'rgba(247, 244, 254, 0.14)'}`,
             overflowX: 'hidden', 
-            height: '800px',
+            height: '600px',
             width: '95%'
         }}>
             <Grid container spacing={2} sx={{ height: '100%' }}>
