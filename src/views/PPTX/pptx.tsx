@@ -309,7 +309,7 @@ const PPTXModel = () => {
               //console.log("data.data content ----", content)
               pptxPageContent += content
               if(content == "}" || content == "'}")  {
-                //console.log("data.data pptxPageContent ----", pptxPageContent)
+                console.log("data.data pptxPageContent ----", pptxPageContent)
                 pptxPageContentList.push(pptxPageContent)
                 pptxPageContent = ""
               }
