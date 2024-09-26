@@ -1,13 +1,17 @@
 'use client'
 
 // ** React Imports
-import { useState, useEffect } from 'react'
+import { useState, useRef, createRef, useEffect } from 'react'
 
 // ** Axios Imports
 import axios from 'axios'
 import authConfig from '@configs/auth'
 
-// ** MUI Imports
+import pako from 'pako'
+import base64js from 'base64-js'
+import { Ppt2Svg } from './utils/ppt2svg.js'
+import { Ppt2Canvas } from './utils/ppt2canvas.js'
+
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
@@ -16,6 +20,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 import ReactMarkdown from 'react-markdown'
 import CardMedia from '@mui/material/CardMedia'
 import { useTheme } from '@mui/material/styles'
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 // ** Third Party Import
 import { useTranslation } from 'react-i18next'
@@ -23,7 +28,6 @@ import { useTranslation } from 'react-i18next'
 import { useSettings } from '@core/hooks/useSettings'
 import { downloadJson } from '@/configs/functions'
 
-import GeneratePPTX from './GeneratePPTX'
 
 // @ts-ignore
 import "./lib/chart.js";
@@ -39,6 +43,11 @@ import "./lib/ppt2svg.js";
 
 // @ts-ignore
 import "./lib/sse.js";
+
+
+// @ts-ignore
+let painter = null as Ppt2Svg
+const canvasList = [] as any
 
 const apiKey = 'ak_6J8HQorE3rE6vt_Iyy'
 const uid = 'test'
@@ -68,11 +77,17 @@ const PPTXModel = () => {
   const [pptxObj, setPptxObj] = useState<any>(null);
   const [generating, setGenerating] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-  const [isDisabledText, setIsDisabledText] = useState<string>(t('Download PPTX') as string);
+  const [isDisabledText, setIsDisabledText] = useState<string>(t('下载PPTX文件') as string);
   const [step, setStep] = useState<number>(0);
   const [pptxId, setPptxId] = useState<string>('')
-  
   const [token, setToken] = useState<string>('')
+
+  const [gening, setGening] = useState(false)
+  const [descTime, setDescTime] = useState(0)
+  const [descMsg, setDescMsg] = useState('正在生成中，请稍后...')
+  const svg = useRef(null)
+  const [pages, setPages] = useState([] as any)
+  const [currentIdx, setCurrentIdx] = useState(0)
 
   async function createApiToken() {
     try {
@@ -268,6 +283,188 @@ const PPTXModel = () => {
       setIsDisabledText('Download PPTX')
   }
 
+  
+  const generatePptxContent = (outline: string, templateId: string) => {
+    const timer = setInterval(() => {
+        setDescTime(descTime => descTime + 1)
+    }, 1000)
+    setGening(true)
+    let pptxPageContent = ""
+    const pptxPageContentList: string[] = []
+    const url = authConfig.AppUrl + '/ai/pptx/generateContent.php'
+    const source: any = new window.SSE(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache',
+            'satoken': 'satoken',
+        },
+        payload: JSON.stringify({ action: 'stream', asyncGenPptx: true, outlineMarkdown: outline, templateId }),
+    })
+    source.onmessage = function (data: any) {
+        if(data.data && data.data != "[DONE]")  {
+            const jsonData = JSON.parse(data.data)
+            if(jsonData.choices && jsonData.choices[0] && jsonData.choices[0].delta.content) {
+              const content = jsonData.choices[0].delta.content
+              //console.log("data.data content ----", content)
+              pptxPageContent += content
+              if(content == "}" || content == "'}")  {
+                //console.log("data.data pptxPageContent ----", pptxPageContent)
+                pptxPageContentList.push(pptxPageContent)
+                pptxPageContent = ""
+              }
+            }
+            window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight })
+        }
+        if(data.data == "[DONE]")  {
+            console.log("data.data pptxPageContent DONE ----", pptxPageContent)
+            window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight })
+        }
+        //console.log("pptxPageContentList", pptxPageContentList)
+        //setDescMsg(`正在生成中，进度 ${json.current}/${json.total}，请稍后...`)
+        //asyncGenPptxInfo(json.pptId)
+    }
+    source.onend = function (data: any) {
+        console.log("pptxPageContentList source.onend", pptxPageContentList)
+        clearInterval(timer)
+        setGening(false)
+        setDescMsg('正在生成中，请稍后...')
+        setTimeout(() => {
+            drawPptxList(0, false)
+        }, 200)
+    }
+    source.onerror = function (err: any) {
+        clearInterval(timer)
+        console.error('生成内容异常', err)
+        alert('生成内容异常')
+    }
+    source.stream()
+  }
+
+  const asyncGenPptxInfo = (id: string) => {
+      setPptxId(id)
+      const url = `https://docmee.cn/api/ppt/asyncPptInfo?pptId=${id}`
+      const xhr = new XMLHttpRequest()
+      xhr.open('GET', url, true)
+      xhr.setRequestHeader('token', token)
+      xhr.send()
+      xhr.onload = function () {
+          if (this.status === 200) {
+              const resp = JSON.parse(this.responseText)
+              const gzipBase64 = resp.data.pptxProperty
+              const gzip = base64js.toByteArray(gzipBase64)
+              const json = pako.ungzip(gzip, { to: 'string' })
+              const _pptxObj = JSON.parse(json)
+              setPptxObj(_pptxObj)
+              drawPptxList(resp.data.current - 1, true)
+          }
+      }
+      xhr.onerror = function (e) {
+          console.error(e)
+      }
+  }
+
+  const drawPptxList = (_idx?: number, asyncGen?: boolean) => {
+    const idx = _idx || 0
+    setCurrentIdx(idx)
+    if(pptxObj)   {
+        if (_idx == null || asyncGen) {
+            const _pages = [] as any
+            for (let i = 0; i < pptxObj.pages.length; i++) {
+                if (asyncGen && i > idx) {
+                    break
+                }
+                _pages.push(pptxObj.pages[i])
+            }
+            setPages(_pages)
+        } 
+        else {
+            setPages(pptxObj.pages || [])
+        }
+    }
+
+    drawPptx(idx)
+  }
+
+  const drawPptx = (idx: number) => {
+      if (pptxObj) {
+          setCurrentIdx(idx);
+          painter.drawPptx(pptxObj, idx);
+      }
+  };
+
+  function resetSize() {
+    const width = Math.max(Math.min(document.body.clientWidth - 400, 1600), 480)
+    painter.resetSize(width, width * 0.5625)
+}
+
+  const loadById = (id: string) => {
+    setGening(false)
+    setPptxId(id)
+    const url = 'https://docmee.cn/api/ppt/loadPptx?id=' + id
+    console.log("pptInfo.url", url)
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', url, true)
+    xhr.setRequestHeader('token', token)
+    xhr.send()
+    xhr.onload = function () {
+        if (this.status === 200) {
+            const resp = JSON.parse(this.responseText)
+            if (resp.code != 0) {
+                alert(resp.message)
+
+                return
+            }
+            const pptInfo = resp.data.pptInfo
+            const gzipBase64 = pptInfo.pptxProperty
+            const gzip = base64js.toByteArray(gzipBase64)
+            const json = pako.ungzip(gzip, { to: 'string' })
+            pptInfo.pptxProperty = JSON.parse(json)
+            console.log("pptInfo.pptxProperty", pptInfo.pptxProperty)
+            setPptxObj(pptInfo.pptxProperty)
+            setPages(pptInfo.pptxProperty.pages)
+
+            const loadingPageId = 0
+            setCurrentIdx(loadingPageId);
+            painter.drawPptx(pptInfo.pptxProperty, loadingPageId);
+            
+        }
+    }
+    xhr.onerror = function (e) {
+        console.error(e)
+    }
+  }
+
+  useEffect(() => {
+      if (gening && currentIdx > 0) {
+          canvasList[currentIdx - 1].current.scrollIntoView(true)
+      } else if (canvasList.length > 0 && currentIdx == 0) {
+          canvasList[0].current.scrollIntoView(true)
+      }
+      if (canvasList.length > 0) {
+          for (let i = 0; i < pages.length; i++) {
+              const imgCanvas = canvasList[i].current
+              if (!imgCanvas) {
+                  continue
+              }
+              try {
+                  const _ppt2Canvas = new Ppt2Canvas(imgCanvas)
+                  _ppt2Canvas.drawPptx(pptxObj, i)
+              } catch(e) {
+                  console.log('渲染第' + (i + 1) + '页封面异常', e)
+              }
+          }
+      }
+  }, [gening, pages])
+
+  useEffect(() => {
+      if(step == 1)  {
+      painter = new Ppt2Svg(svg.current)
+      painter.setMode('edit')
+      generatePptxContent(pptxOutlineResult, templateId)
+    }
+  }, [step])
+
 
   return (
     <Grid container sx={{margin: '0 auto'}} maxWidth={windowWidth}>
@@ -295,11 +492,11 @@ const PPTXModel = () => {
               error={!!pptxOutlineError}
             />
             <Button size="small" disabled={generating} variant='contained' style={{ marginLeft: '10px' }} onClick={() => handleGenerateOutline()}>
-              {t("Generate")}
+              {t("生成PPTX大纲")}
             </Button>
             <FormHelperText style={{ color: 'error.main', marginLeft: '10px' }}>{pptxOutlineError}</FormHelperText>
             <Button variant='outlined' size="small" disabled={!isDisabled} style={{ marginLeft: '10px' }} onClick={() => handleDownloadJson()}>
-              Download Json
+              {t("下载JSON数据")}
             </Button>
             <Button variant='contained' size="small" disabled={!isDisabled} style={{ marginLeft: '10px' }} onClick={() => handleDownloadPPTX(pptxId)}>
               {isDisabledText}
@@ -318,6 +515,7 @@ const PPTXModel = () => {
                     borderRadius: 1,
                     border: `2px dashed ${theme.palette.mode === 'light' ? 'rgba(93, 89, 98, 0.22)' : 'rgba(247, 244, 254, 0.14)'}`,
                     overflowX: 'hidden', 
+                    minHeight: '600px',
                     height: '100%',
                     width: '95%'
                   }}>
@@ -354,7 +552,47 @@ const PPTXModel = () => {
 
         {step == 1 && templateId != '' && (
           <Grid item xs={12} sx={{ mt: 3, mb: 22 }}>
-            <GeneratePPTX token={token} theme={theme} pptxId={pptxId} setPptxId={setPptxId} pptxObj={pptxObj} setPptxObj={setPptxObj} params={{ outline: pptxOutlineResult, templateId }} />
+            <Box sx={{ 
+                m: 3,
+                p: 1,
+                borderRadius: 1,
+                border: `2px dashed ${theme.palette.mode === 'light' ? 'rgba(93, 89, 98, 0.22)' : 'rgba(247, 244, 254, 0.14)'}`,
+                overflowX: 'hidden', 
+                height: '600px',
+                width: '95%'
+            }}>
+                <Grid container spacing={2} sx={{ height: '100%' }}>
+                    <Grid item sx={{ height: '100%', width: '332px' }}>
+                        <Box sx={{ p: 2, overflowX: 'hidden', overflowY: 'auto', height: '100%' }}>
+                            <PerfectScrollbar options={{ wheelPropagation: false, suppressScrollX: true }}>
+                                {pages.map((page: any, index: number) => {
+                                    canvasList[index] = createRef();
+                                    console.log("PerfectScrollbar page", page)
+
+                                    return (
+                                        <Box key={index} onClick={() => drawPptx(index)} sx={{ cursor: 'pointer' }}>
+                                            <canvas ref={canvasList[index]} width="288" height="162" className={currentIdx == index ? 'left_div_item_img ppt_select' : 'left_div_item_img'} />
+                                        </Box>
+                                    );
+                                })}
+                                {gening && currentIdx > 0 && (
+                                    <div className="left_div_item">
+                                        <div className="left_div_item_index">{ currentIdx + 2 }</div>
+                                        <div className="left_div_item_img img_gening">生成中...</div>
+                                    </div>
+                                )}
+                            </PerfectScrollbar>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={8} sx={{ }}>
+                        <Box sx={{ mt: 2, overflowX: 'hidden', width: '100%', overflowY: 'hidden', display: 'grid', placeItems: 'center' }}>
+                            <Box sx={{ width: '100%' }}>
+                                <svg ref={svg} style={{ width: "100%" }} className="right_canvas"></svg>
+                            </Box>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Box>
           </Grid>
         )}
 
