@@ -1,9 +1,4 @@
-/* eslint-disable newline-before-return */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-this-alias */
-/* eslint-disable lines-around-comment */
-
-import { Ppt2Canvas } from './ppt2Canvas.js'
+import { Ppt2Canvas } from './ppt2canvas.js'
 
 async function drawPptxFun(pptxObj, idx) {
     let canvas = document.createElement('canvas')

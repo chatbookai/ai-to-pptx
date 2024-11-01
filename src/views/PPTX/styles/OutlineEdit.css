@@ -1,0 +1,85 @@
+.outline_div {
+  padding: 15px;
+  display: flex;
+  /*align-items: center;*/
+  flex-direction: column;
+}
+.outline_div input {
+  border: none;
+  outline: none;
+}
+.outline_div input:hover {
+  border-width: 1px;
+  border-style: inset;
+  border-image: initial;
+  border-color: light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+}
+.operate_div {
+  display: none;
+}
+.subject_div {
+  text-align: center;
+  margin-bottom: 0.5em;
+  color: #3c3c3c;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.2;
+}
+.chapter_div {
+  display: flex;
+  align-items: center;
+}
+.chapter_div:hover > .operate_div {
+  display: inline-block;
+}
+.chapter_title {
+  padding-left: .5rem;
+  padding-right: .5rem;
+  border-radius: .375rem;
+  margin-right: .8rem;
+  border-style: dashed;
+  width: max-content;
+  display: inline-block;
+  color: #624fc4;
+  background-color: #e0dcf3;
+}
+.chapter_name, .page_name, .title_name {
+  margin-right: 0.8rem;
+  text-align: left;
+  display: inline-block;
+}
+.chapter_name, .page_name {
+  font-weight: bold;
+}
+.page_div {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+.page_div:hover > .operate_div {
+  display: inline-block;
+}
+.title_div {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+.title_div:hover > .operate_div {
+  display: inline-block;
+}
+.page_number {
+  font-weight: 700;
+}
+.page_number, .title_number {
+  width: 3rem;
+  margin-right: .5rem;
+  text-align: right;
+}
+.chapter_div:hover, .page_div:hover, .title_div:hover {
+  background-color: #f3f3f3;
+}
+.operate_div span {
+  padding: .2rem .4rem;
+  margin-right: .5rem;
+  cursor: pointer;
+}

@@ -2,8 +2,17 @@
   padding-top: 4em;
   text-align: center;
 }
-.outline_content button {
-  margin-left: .8em;
+.outline_content .input_div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.outline_content select, button {
+  margin: 0 .8em;
+}
+.outline_content input[type=file] {
+  border: 1px dashed #ccc;
 }
 .outline_desc {
   font-size: 1em;
@@ -14,4 +23,8 @@
 .outline {
   text-align: left;
   margin: 0 calc(20vw);
+}
+.outline_edit {
+  width: 32rem;
+  margin: 1rem auto;
 }

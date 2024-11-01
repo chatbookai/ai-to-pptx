@@ -83,6 +83,6 @@
 }
 .ppt_download {
   float: right;
-  margin: 8px;
   cursor: pointer;
+  margin-right: 1.5rem;
 }
