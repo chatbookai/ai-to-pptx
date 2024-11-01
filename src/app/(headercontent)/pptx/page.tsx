@@ -1,10 +1,10 @@
 'use client'
 
-import PPTXModel from '@/views/PPTX/pptx'
+import AiPptModel from '@/views/PPT/components/AiPpt'
 
-const PPTXPage = () => {
+const AiPpt = () => {
 
-  return <PPTXModel />
+  return <AiPptModel />
 }
 
-export default PPTXPage
+export default AiPpt
