@@ -1,6 +1,6 @@
 'use client'
 
-import AiPptModel from '@/views/PPT/components/AiPpt'
+import AiPptModel from '@/views/PPTX/components/AiPpt'
 
 const AiPpt = () => {
 

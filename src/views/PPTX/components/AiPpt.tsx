@@ -46,29 +46,27 @@ function AiPpt() {
   }
 
   useEffect(() => {
-    createApiToken()
+    //createApiToken()
   }, [])
 
   return (
     <>
-      <div>
-        {step == 1 && (
-            <GenerateOutline token={token} nextStep={(params)=> {
-                setStep(step => step + 1)
-                setOutline(() => params.outline)
-                setDataUrl(() => params.dataUrl)
-            }} />
-        )}
-        {step == 2 && (
-            <SelectTemplate token={token} nextStep={(id)=> {
-                setStep(step => step + 1)
-                setTemplateId(() => id)
-            }} />
-        )}
-        {step == 3 && (
-            <GeneratePpt token={token} params={{templateId, outline, dataUrl}} />
-        )}
-      </div>
+      {step == 1 && token !='' && (
+          <GenerateOutline token={token} nextStep={(params)=> {
+              setStep(step => step + 1)
+              setOutline(() => params.outline)
+              setDataUrl(() => params.dataUrl)
+          }} />
+      )}
+      {step == 2 && token !='' && (
+          <SelectTemplate token={token} nextStep={(id)=> {
+              setStep(step => step + 1)
+              setTemplateId(() => id)
+          }} />
+      )}
+      {step == 3 && token !='' && (
+          <GeneratePpt token={token} params={{templateId, outline, dataUrl}} />
+      )}
     </>
   )
 }

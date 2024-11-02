@@ -43,11 +43,24 @@ function GeneratePpt({token, params}: { token: string, params: any }) {
             payload: JSON.stringify({ asyncGenPptx: true, templateId, outlineMarkdown: outline, dataUrl }),
         }) as any
         source.onmessage = function (data: any) {
-            const json = JSON.parse(data.data)
-            if (json.pptId) {
-                setDescMsg(`正在生成中，进度 ${json.current}/${json.total}，请稍后...`)
-                asyncGenPptxInfo(json.pptId)
+          if(data.data)  {
+            try {
+              const jsonData = JSON.parse(data.data)
+              jsonData.choices.forEach((choice: any) => {
+                if (choice.delta && choice.delta.content) {
+                  console.log("choice.delta.content:", choice.delta.content)
+                }
+              });
             }
+            catch(Error: any) {
+
+            }
+          }
+
+            //if (json.pptId) {
+            //    setDescMsg(`正在生成中，进度 ${json.current}/${json.total}，请稍后...`)
+            //    asyncGenPptxInfo(json.pptId)
+            //}
         }
         source.onend = function (data: any) {
             if (data.data.startsWith('{') && data.data.endsWith('}')) {
@@ -255,6 +268,6 @@ function GeneratePpt({token, params}: { token: string, params: any }) {
         </div>
       </>
     )
-  }
+}
 
-  export default GeneratePpt
+export default GeneratePpt
