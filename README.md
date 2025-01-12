@@ -16,8 +16,12 @@ Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导�
 
 # 🚀 开发计划与进度
 - 1 PPTX编辑,导出(完成)
-- 2 PPTX与AI的整合(进行中)
-- 3 用户个性化设置(未开始)
+- 2 PPTX与AI的整合(完成)
+- 3 用户个性化设置(完成)
+
+# 简易版本
+- 1 Ai-to-pptx 简易前端: https://github.com/chatbookai/ai-to-pptx-demo
+- 2 Ai-to-pptx PHP后端: https://github.com/chatbookai/ai-to-pptx-backend
 
 # 🚀 前端项目运行
 ```
