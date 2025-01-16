@@ -34,6 +34,8 @@ const UserLayout = ({ children, contentHeightFixed }: Props) => {
   const { settings, saveSettings } = useSettings()
 
   // ** Vars for server side navigation
+
+  //@ts-ignore
   const { menuItems: verticalMenuItems } = ServerSideVerticalNavItems()
 
   // const { menuItems: horizontalMenuItems } = ServerSideHorizontalNavItems()
