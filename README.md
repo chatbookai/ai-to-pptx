@@ -62,6 +62,21 @@ npm run build
     计费形式：最少服务周期为一年，不接受少于一年的技术服务费用形式。
     服务内容：技术支持，不会涉及到二次开发部分内容。
 
+<table>
+    <tr>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/01.png"/></td>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/02.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/03.png"/></td>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/04.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/05.png"/></td>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/06.png"/></td>
+    </tr>
+</table>
+
 # 🌟 Star History
 <a href="https://github.com/chatbookai/ai-to-pptx/stargazers" target="_blank" style="display: block" align="center">
   <picture>
