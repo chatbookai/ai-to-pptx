@@ -20,11 +20,14 @@ Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导�
 
 # 前端项目运行
 ```
-npm install
+安装: npm install
 
-npm run dev
+开发: npm run dev
 
-npm run build
+打包: npm run build
+
+后端API配置: src/views/AiPPTX/config.ts
+如果你需要自己建设一个独立的后端服务,建设完成以后,需要把这个文件的地址更换为你的后端的API地址.
 ```
 
 # Ai-To-PPTX 开源协议
@@ -58,7 +61,7 @@ npm run build
 
 # Ai-To-PPTX 交流群组
     QQ群: 186411255
-    
+
 ### 项目界面
     MUI界面风格，美观大方，适合集成到你的项目里面。
 <table>
