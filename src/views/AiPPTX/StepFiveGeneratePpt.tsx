@@ -19,12 +19,12 @@ let pptxObj = null as any
 let painter = null as any
 const canvasList = [] as any
 
-function resetSize() {
+const resetSize = () => {
     const width = Math.max(Math.min(document.body.clientWidth - 400, 1600), 480)
     painter.resetSize(width, width * 0.5625)
 }
 
-function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: any) {
+const StepFiveGeneratePpt = ({setActiveStep, inputData, setInputData, token}: any) => {
 
   const [generatePptxStatus, setGeneratePptxStatus] = useState(false)
   const [descTime, setDescTime] = useState(0)
@@ -35,7 +35,15 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
 
   const changePptxTemplate = (pptxId: string, templateId: string) => {
     pptxObj = null
+    setCurrentIdx(0)
     asyncGenPptxInfo(pptxId, templateId)
+  }
+
+  const generatePptxFromBeginning = () => {
+    pptxObj = null
+    setCurrentIdx(0)
+    setActiveStep(0)
+    setInputData({selectedOption: "inputTopic", inputText: "", importOption: "inputText", moreOption:{language:"zh-CN", moreRequirement:"", outlineLength:"regular" }, outlineContent: '', outlineHtml: '', templateId: 0, pptxContent: null, dataUrl: ''})
   }
 
   const generateNewPptx = (templateId: string, outlineContent: string, dataUrl: string) => {
@@ -394,10 +402,7 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
                       size={'small'}
                       disabled={generatePptxStatus}
                       variant={"outlined"}
-                      onClick={() => {
-                        setActiveStep(0)
-                        setInputData({selectedOption: "inputTopic", inputText: "", importOption: "inputText", moreOption:{language:"zh-CN", moreRequirement:"", outlineLength:"regular" }, outlineContent: '', outlineHtml: '', templateId: 0, pptxContent: null, dataUrl: ''})
-                       }}
+                      onClick={() => generatePptxFromBeginning()}
                       startIcon={<ChangeCircle />}
                       sx={{mx: 1}}
                       >
