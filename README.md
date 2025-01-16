@@ -62,6 +62,8 @@ npm run build
     计费形式：最少服务周期为一年，不接受少于一年的技术服务费用形式。
     服务内容：技术支持，不会涉及到二次开发部分内容。
 
+### 项目界面
+    MUI界面风格，美观大方，适合集成到你的项目里面。
 <table>
     <tr>
         <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/01.png"/></td>
