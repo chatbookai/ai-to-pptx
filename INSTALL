@@ -1,0 +1,12 @@
+
+
+How to support HTTP_AUTHORIZATION in PHP and Apache.
+In the httpd-vhosts.conf and <VirtualHost *:port>...</VirtualHost>, add this content:
+```
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks -Multiviews
+    RewriteEngine on
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
+</IfModule>
+```

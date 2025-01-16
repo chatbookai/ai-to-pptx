@@ -1,32 +1,28 @@
-// MUI Imports
-import type { Theme } from '@mui/material/styles'
+// ** MUI Imports
+import { Theme } from '@mui/material/styles'
 
-const tooltip: Theme['components'] = {
-  MuiTooltip: {
-    styleOverrides: {
-      popper: {
-        '&[data-popper-placement*="bottom"] .MuiTooltip-tooltip': {
-          marginTop: '6px !important'
+// ** Util Import
+import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+
+const Tooltip = (theme: Theme) => {
+  return {
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor:
+            theme.palette.mode === 'light'
+              ? hexToRGBA(theme.palette.grey[900], 0.9)
+              : hexToRGBA(theme.palette.grey[700], 0.9)
         },
-        '&[data-popper-placement*="top"] .MuiTooltip-tooltip': {
-          marginBottom: '6px !important'
-        },
-        '&[data-popper-placement*="left"] .MuiTooltip-tooltip': {
-          marginRight: '6px !important'
-        },
-        '&[data-popper-placement*="right"] .MuiTooltip-tooltip': {
-          marginLeft: '6px !important'
+        arrow: {
+          color:
+            theme.palette.mode === 'light'
+              ? hexToRGBA(theme.palette.grey[900], 0.9)
+              : hexToRGBA(theme.palette.grey[700], 0.9)
         }
-      },
-      tooltip: ({ theme }) => ({
-        borderRadius: 'var(--mui-shape-customBorderRadius-sm)',
-        fontSize: theme.typography.subtitle2.fontSize,
-        lineHeight: 1.539,
-        color: 'var(--mui-palette-customColors-tooltipText)',
-        paddingInline: theme.spacing(3)
-      })
+      }
     }
   }
 }
 
-export default tooltip
+export default Tooltip

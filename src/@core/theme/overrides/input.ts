@@ -1,109 +1,62 @@
-// MUI Imports
-import type { Theme } from '@mui/material/styles'
+// ** MUI Imports
+import { Theme } from '@mui/material/styles'
 
-const input: Theme['components'] = {
-  MuiFormControl: {
-    styleOverrides: {
-      root: {
-        '&:has(.MuiRadio-root) .MuiFormHelperText-root, &:has(.MuiCheckbox-root) .MuiFormHelperText-root, &:has(.MuiSwitch-root) .MuiFormHelperText-root':
-          {
-            marginInline: 0
-          }
+const input = (theme: Theme) => {
+  return {
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: theme.palette.text.secondary
+        }
       }
-    }
-  },
-  MuiInputBase: {
-    styleOverrides: {
-      root: {
-        lineHeight: 1.6,
-        '&.MuiInput-underline': {
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
           '&:before': {
-            borderColor: 'var(--mui-palette-customColors-inputBorder)'
+            borderBottom: `1px solid rgba(${theme.palette.customColors.main}, 0.22)`
           },
-          '&:not(.Mui-disabled, .Mui-error):hover:before': {
-            borderColor: 'var(--mui-palette-action-active)'
+          '&:hover:not(.Mui-disabled):before': {
+            borderBottom: `1px solid rgba(${theme.palette.customColors.main}, 0.32)`
+          },
+          '&.Mui-disabled:before': {
+            borderBottomStyle: 'solid'
           }
-        },
-        '&.Mui-disabled .MuiInputAdornment-root, &.Mui-disabled .MuiInputAdornment-root > *': {
-          color: 'var(--mui-palette-action-disabled)'
         }
       }
-    }
-  },
-  MuiFilledInput: {
-    styleOverrides: {
-      root: {
-        '&:before': {
-          borderBottom: '1px solid var(--mui-palette-text-secondary)'
-        },
-        '&.Mui-disabled:before': {
-          borderBottomStyle: 'solid'
-        }
-      }
-    }
-  },
-  MuiInputLabel: {
-    styleOverrides: {
-      shrink: ({ ownerState }) => ({
-        ...(ownerState.variant === 'outlined' && {
-          color: 'var(--mui-palette-text-secondary)',
-          transform: 'translate(14px, -8px) scale(0.867)'
-        }),
-        ...(ownerState.variant === 'filled' && {
-          transform: 'translate(12px, 7px) scale(0.867)'
-        }),
-        ...(ownerState.variant === 'standard' && {
-          transform: 'translate(0, -1.5px) scale(0.867)'
-        })
-      })
-    }
-  },
-  MuiOutlinedInput: {
-    styleOverrides: {
-      root: {
-        '&:not(.Mui-focused):not(.Mui-error):not(.Mui-disabled):hover .MuiOutlinedInput-notchedOutline': {
-          borderColor: 'var(--mui-palette-action-active)'
-        },
-        '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
-          borderColor: 'var(--mui-palette-action-disabledBackground)'
-        }
-      },
-      input: ({ theme, ownerState }) => ({
-        ...(ownerState?.size === 'medium' && {
-          '&:not(.MuiInputBase-inputMultiline, .MuiInputBase-inputAdornedStart)': {
-            paddingBlock: theme.spacing(4)
+    },
+    MuiFilledInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: `rgba(${theme.palette.customColors.main}, 0.04)`,
+          '&:hover:not(.Mui-disabled)': {
+            backgroundColor: `rgba(${theme.palette.customColors.main}, 0.08)`
           },
-          height: '1.5em'
-        }),
-        '& ~ .MuiOutlinedInput-notchedOutline': {
-          borderColor: 'var(--mui-palette-customColors-inputBorder)'
-        }
-      }),
-      notchedOutline: {
-        '& legend': {
-          fontSize: '0.867em'
+          '&:before': {
+            borderBottom: `1px solid rgba(${theme.palette.customColors.main}, 0.22)`
+          },
+          '&:hover:not(.Mui-disabled):before': {
+            borderBottom: `1px solid rgba(${theme.palette.customColors.main}, 0.32)`
+          }
         }
       }
-    }
-  },
-  MuiInputAdornment: {
-    styleOverrides: {
-      root: {
-        color: 'var(--mui-palette-text-primary)',
-        '& i, & svg': {
-          fontSize: '1.25rem'
-        },
-        '& *': {
-          color: 'inherit !important'
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '&:hover:not(.Mui-focused):not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
+            borderColor: `rgba(${theme.palette.customColors.main}, 0.32)`
+          },
+          '&:hover.Mui-error .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.error.main
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: `rgba(${theme.palette.customColors.main}, 0.22)`
+          },
+          '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.text.disabled
+          }
         }
-      }
-    }
-  },
-  MuiFormHelperText: {
-    styleOverrides: {
-      root: {
-        lineHeight: 1,
-        letterSpacing: 'unset'
       }
     }
   }

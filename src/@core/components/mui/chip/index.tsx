@@ -8,7 +8,7 @@ import clsx from 'clsx'
 import { CustomChipProps } from './types'
 
 // ** Hooks Imports
-import useBgColor, { UseBgColorType } from '../../../../@core/hooks/useBgColor'
+import useBgColor, { UseBgColorType } from 'src/@core/hooks/useBgColor'
 
 const Chip = (props: CustomChipProps) => {
   // ** Props

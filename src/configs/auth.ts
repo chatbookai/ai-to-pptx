@@ -1,8 +1,40 @@
-const config = {
-  AppName: 'Ai to PPTX',
-  AppDesc: 'Ai-to-pptx是一个使用AI技术(DeepSeek)制作PPTX的助手，支持在线修改和导出PPTX。 主要功能: 1 使用AI技术(DeepSeek)等大语言模型来生成大纲 2 生成的内容允许用户再次修改 3 生成PPTX的时候可以选择不同的模板 4 支持在线修改PPTX的文字内容，样式，图片等 5 支持导出PPTX，PDF，PNG等多种格式',
-  AppGithub: 'https://github.com/chatbookai/ai-to-pptx/',
-  AppUrl : "http://localhost:80/api"
+
+export const AppSchoolConfigMap: any    = {}
+AppSchoolConfigMap['dandian.net']    = ["https://fdzz.dandian.net:8443/api/", '单点数据中心', "auth/menus.php", "https://fdzz.dandian.net:8443/api/"]
+AppSchoolConfigMap['fdzyzz.com'] = ["https://fdzz.dandian.net:8443/api/", '福鼎职业中专', "auth/menus.php", "https://fdzz.dandian.net:8443/api/"]
+AppSchoolConfigMap['fjsmnx.com'] = ["https://dsj.fjsmlyxx.com:1443/api/", '三明林业学校', "auth/menus.php", "https://dsj.fjsmlyxx.com:1443/api/"]
+
+const AppMarkId = "dandian.net"; //需要针对每个学校的情况进行修改
+
+const APP_URL = AppSchoolConfigMap[AppMarkId][0]
+const AppName = AppSchoolConfigMap[AppMarkId][1]
+const indexMenuspath = AppSchoolConfigMap[AppMarkId][2]
+const backEndApiAiBaseUrl = AppSchoolConfigMap[AppMarkId][3]
+
+export const authConfig = {
+    AppName: AppName,
+    AppLogo: '/icons/' + AppMarkId + '/icon256.png',
+    AppMarkId: AppMarkId,
+    AppSchoolConfigMap: AppSchoolConfigMap,
+    indexMenuspath: indexMenuspath,
+    loginEndpoint: APP_URL + 'jwt.php?action=login',
+    logoutEndpoint: APP_URL + 'jwt.php?action=logout',
+    refreshEndpoint: APP_URL + 'jwt.php?action=refresh',
+    registerEndpoint: APP_URL + 'jwt/register',
+    backEndApiHost: APP_URL,
+    backEndApiAiBaseUrl: backEndApiAiBaseUrl,
+    indexImageUrl: '/images/school/' + AppMarkId + '/index.jpg',
+    logoUrl: '/images/school/' + AppMarkId + '/logo.png'
 }
 
-export default config;
+export const defaultConfig = {
+  Github: 'https://github.com/chatbookai/SchoolDataCenterMobile',
+  AppVersion: '20241125',
+  AppVersionType: '试用版本',
+  defaultLanguage: 'zh',
+  storageTokenKeyName: 'accessToken',
+  storageAccessKeyName: 'accessKey',
+  storageMainMenus: 'storageMainMenus',
+  storageChatApp: 'storageChatApp',
+  storageMyCoursesList: 'storageMyCoursesList',
+}

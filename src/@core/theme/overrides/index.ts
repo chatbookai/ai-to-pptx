@@ -1,84 +1,96 @@
-// Type Imports
-import type { Skin } from '@core/types'
+// ** MUI Imports
+import { Theme } from '@mui/material/styles'
 
-// Override Imports
-import Accordion from './accordion'
-import Alerts from './alerts'
-import Autocomplete from './autocomplete'
-import avatar from './avatar'
-import backdrop from './backdrop'
-import badges from './badges'
-import breadcrumbs from './breadcrumbs'
-import button from './button'
-import buttonGroup from './button-group'
-import card from './card'
-import Checkbox from './checkbox'
-import chip from './chip'
-import dialog from './dialog'
-import drawer from './drawer'
-import fab from './fab'
-import formControlLabel from './form-control-label'
-import iconButton from './icon-button'
-import input from './input'
-import list from './list'
-import menu from './menu'
-import pagination from './pagination'
-import paper from './paper'
-import popover from './popover'
-import progress from './progress'
-import Radio from './radio'
-import Rating from './rating'
-import Select from './select'
-import slider from './slider'
-import snackbar from './snackbar'
-import switchOverrides from './switch'
-import tablePagination from './table-pagination'
-import tabs from './tabs'
-import timeline from './timeline'
-import toggleButton from './toggle-button'
-import tooltip from './tooltip'
-import typography from './typography'
+// ** Type Import
+import { Settings } from 'src/@core/context/settingsContext'
 
-const overrides = (skin: Skin) => {
+// ** Overrides Imports
+import MuiCard from './card'
+import MuiChip from './chip'
+import MuiLink from './link'
+import MuiList from './list'
+import MuiMenu from './menu'
+import MuiTabs from './tabs'
+import MuiInput from './input'
+import MuiPaper from './paper'
+import MuiTable from './table'
+import MuiAlerts from './alerts'
+import MuiButton from './button'
+import MuiDialog from './dialog'
+import MuiRating from './rating'
+import MuiSelect from './select'
+import MuiAvatar from './avatars'
+import MuiDivider from './divider'
+import MuiPopover from './popover'
+import MuiTooltip from './tooltip'
+import MuiBackdrop from './backdrop'
+import MuiDataGrid from './dataGrid'
+import MuiSnackbar from './snackbar'
+import MuiSwitches from './switches'
+import MuiTimeline from './timeline'
+import MuiAccordion from './accordion'
+import MuiPagination from './pagination'
+import MuiTypography from './typography'
+import MuiAutocomplete from './autocomplete'
+import MuiToggleButton from './toggleButton'
+
+const Overrides = (theme: Theme, settings: Settings) => {
+  const { skin } = settings
+
+  const button = MuiButton(theme)
+  const chip = MuiChip(theme)
+  const list = MuiList(theme)
+  const tabs = MuiTabs(theme)
+  const input = MuiInput(theme)
+  const tables = MuiTable(theme)
+  const alerts = MuiAlerts(theme)
+  const rating = MuiRating(theme)
+  const avatars = MuiAvatar(theme)
+  const divider = MuiDivider(theme)
+  const menu = MuiMenu(theme, skin)
+  const tooltip = MuiTooltip(theme)
+  const cards = MuiCard(theme, skin)
+  const backdrop = MuiBackdrop(theme)
+  const dataGrid = MuiDataGrid(theme)
+  const switches = MuiSwitches(theme)
+  const timeline = MuiTimeline(theme)
+  const accordion = MuiAccordion(theme)
+  const dialog = MuiDialog(theme, skin)
+  const pagination = MuiPagination(theme)
+  const popover = MuiPopover(theme, skin)
+  const snackbar = MuiSnackbar(theme, skin)
+  const autocomplete = MuiAutocomplete(theme, skin)
+
   return Object.assign(
-    {},
-    Accordion(skin),
-    Alerts,
-    Autocomplete(skin),
-    avatar,
-    backdrop,
-    badges,
-    breadcrumbs,
-    button,
-    buttonGroup,
-    card(skin),
-    Checkbox,
     chip,
-    dialog(skin),
-    drawer(skin),
-    fab,
-    formControlLabel,
-    iconButton,
-    input,
     list,
-    menu(skin),
-    pagination,
-    paper,
-    popover(skin),
-    progress,
-    Radio,
-    Rating,
-    Select,
-    slider,
-    snackbar(skin),
-    switchOverrides,
-    tablePagination,
+    menu,
     tabs,
-    timeline,
-    toggleButton,
+    cards,
+    input,
+    alerts,
+    button,
+    dialog,
+    rating,
+    tables,
+    avatars,
+    divider,
+    MuiLink,
+    popover,
     tooltip,
-    typography
+    backdrop,
+    dataGrid,
+    MuiPaper,
+    snackbar,
+    switches,
+    timeline,
+    accordion,
+    MuiSelect,
+    pagination,
+    autocomplete,
+    MuiTypography,
+    MuiToggleButton
   )
 }
 
-export default overrides
+export default Overrides

@@ -5,12 +5,19 @@
 /.pnp
 .pnp.js
 
+# PHP library
+/cache
+/api/cache
+
 # testing
 /coverage
 
+# goview
+/goview
+
 # next.js
 /.next/
-/out/
+/webroot/
 
 # production
 /build
@@ -23,19 +30,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
 # local env files
 .env*.local
-.env
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
-
-# icon generated file
-src/assets/iconify-icons/generated-icons.js
-src/assets/iconify-icons/generated-icons.css
+api/tools/update_core.html

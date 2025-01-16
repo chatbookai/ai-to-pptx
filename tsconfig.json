@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "downlevelIteration": true,
+    "baseUrl": ".",
+    "rootDir": "src",
+    "target": "es6",
     "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -13,51 +14,24 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "esnext",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
-      "@/*": [
-        "./src/*"
+      "apexcharts": [
+        "./node_modules/apexcharts-clevision"
       ],
-      "@core/*": [
-        "./src/@core/*"
+      "apexcharts/*": [
+        "./node_modules/apexcharts-clevision/*"
       ],
-      "@layouts/*": [
-        "./src/@layouts/*"
-      ],
-      "@menu/*": [
-        "./src/@menu/*"
-      ],
-      "@assets/*": [
-        "./src/assets/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@configs/*": [
-        "./src/configs/*"
-      ],
-      "@views/*": [
-        "./src/views/*"
-      ]
     }
   },
   "include": [
-    "next.config.mjs",
-    "tailwind.config.ts",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
+    "src",
+    "declaration.d.ts"
   ],
   "exclude": [
     "node_modules"

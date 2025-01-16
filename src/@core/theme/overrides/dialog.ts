@@ -1,67 +1,62 @@
-// MUI Imports
-import type { Theme } from '@mui/material/styles'
+// ** MUI Imports
+import { Theme } from '@mui/material/styles'
 
-// Type Imports
-import type { Skin } from '@core/types'
+// ** Theme Type Import
+import { Skin } from 'src/@core/layouts/types'
 
-const dialog = (skin: Skin): Theme['components'] => ({
-  MuiDialog: {
-    styleOverrides: {
-      paper: ({ theme }) => ({
-        ...(skin !== 'bordered'
-          ? {
-              boxShadow: 'var(--mui-customShadows-xl)'
-            }
-          : {
-              boxShadow: 'none'
-            }),
-        [theme.breakpoints.down('sm')]: {
+const Dialog = (theme: Theme, skin: Skin) => {
+  return {
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          boxShadow: theme.shadows[skin === 'bordered' ? 0 : 6],
+          ...(skin === 'bordered' && { border: `1px solid ${theme.palette.divider}` }),
           '&:not(.MuiDialog-paperFullScreen)': {
-            margin: theme.spacing(6)
+            '@media (max-width:599px)': {
+              margin: theme.spacing(4),
+              width: `calc(100% - ${theme.spacing(8)})`,
+              maxWidth: `calc(100% - ${theme.spacing(8)}) !important`
+            }
+          },
+          '& > .MuiList-root': {
+            paddingLeft: theme.spacing(1),
+            paddingRight: theme.spacing(1)
           }
         }
-      })
-    }
-  },
-  MuiDialogTitle: {
-    defaultProps: {
-      variant: 'h5'
+      }
     },
-    styleOverrides: {
-      root: ({ theme }) => ({
-        padding: theme.spacing(5),
-        '& + .MuiDialogActions-root': {
-          paddingTop: 0
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          padding: theme.spacing(5)
         }
-      })
-    }
-  },
-  MuiDialogContent: {
-    styleOverrides: {
-      root: ({ theme }) => ({
-        padding: theme.spacing(5),
-        '& + .MuiDialogContent-root, & + .MuiDialogActions-root': {
-          paddingTop: 0
-        }
-      })
-    }
-  },
-  MuiDialogActions: {
-    styleOverrides: {
-      root: ({ theme }) => ({
-        padding: theme.spacing(5),
-        '& .MuiButtonBase-root:not(:first-of-type)': {
-          marginInlineStart: theme.spacing(4)
-        },
-        '&:where(.dialog-actions-dense)': {
-          padding: theme.spacing(2.5),
-          '& .MuiButton-text': {
-            paddingInline: theme.spacing(2.5)
+      }
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          padding: theme.spacing(5),
+          '& + .MuiDialogContent-root': {
+            paddingTop: 0
+          },
+          '& + .MuiDialogActions-root': {
+            paddingTop: 0
           }
         }
-      })
+      }
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          padding: theme.spacing(5),
+          '&.dialog-actions-dense': {
+            padding: theme.spacing(2.5),
+            paddingTop: 0
+          }
+        }
+      }
     }
   }
-})
+}
 
-export default dialog
+export default Dialog

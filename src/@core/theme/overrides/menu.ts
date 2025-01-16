@@ -1,57 +1,31 @@
-// MUI Imports
-import type { Theme } from '@mui/material/styles'
+// ** MUI Imports
+import { Theme } from '@mui/material/styles'
 
-// Type Imports
-import type { Skin } from '@core/types'
+// ** Theme Type Import
+import { Skin } from 'src/@core/layouts/types'
 
-const menu = (skin: Skin): Theme['components'] => ({
-  MuiMenu: {
-    defaultProps: {
-      ...(skin === 'bordered' && {
-        slotProps: {
-          paper: {
-            elevation: 0
+const Menu = (theme: Theme, skin: Skin) => {
+  const boxShadow = () => {
+    if (skin === 'bordered') {
+      return theme.shadows[0]
+    } else if (theme.palette.mode === 'light') {
+      return theme.shadows[8]
+    } else return theme.shadows[9]
+  }
+
+  return {
+    MuiMenu: {
+      styleOverrides: {
+        root: {
+          '& .MuiMenu-paper': {
+            borderRadius: 5,
+            boxShadow: boxShadow(),
+            ...(skin === 'bordered' && { border: `1px solid ${theme.palette.divider}` })
           }
         }
-      })
-    },
-    styleOverrides: {
-      paper: ({ theme }) => ({
-        marginBlockStart: theme.spacing(0.5),
-        ...(skin !== 'bordered' && {
-          boxShadow: 'var(--mui-customShadows-lg)'
-        })
-      })
-    }
-  },
-  MuiMenuItem: {
-    styleOverrides: {
-      root: ({ theme }) => ({
-        paddingBlock: theme.spacing(2),
-        color: 'var(--mui-palette-text-primary)',
-        '& i, & svg': {
-          fontSize: '1.375rem'
-        },
-        '& .MuiListItemIcon-root': {
-          minInlineSize: 0
-        },
-        '&.Mui-selected': {
-          backgroundColor: 'var(--mui-palette-primary-lightOpacity)',
-          color: 'var(--mui-palette-primary-main)',
-          '& .MuiListItemIcon-root': {
-            color: 'var(--mui-palette-primary-main)'
-          },
-          '&:hover, &.Mui-focused, &.Mui-focusVisible': {
-            backgroundColor: 'var(--mui-palette-primary-mainOpacity)'
-          }
-        },
-        '&.Mui-disabled': {
-          color: 'var(--mui-palette-text-disabled)',
-          opacity: 1
-        }
-      })
+      }
     }
   }
-})
+}
 
-export default menu
+export default Menu

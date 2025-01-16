@@ -3,8 +3,7 @@ import { Fragment, useEffect } from 'react'
 
 // ** MUI Imports
 import Backdrop from '@mui/material/Backdrop'
-import Box from '@mui/material/Box'
-import type { BoxProps } from '@mui/material/Box'
+import Box, { BoxProps } from '@mui/material/Box'
 
 // ** Types
 import { SidebarType } from './type'
@@ -60,3 +59,7 @@ const Sidebar = (props: BoxProps & SidebarType) => {
 }
 
 export default Sidebar
+
+Sidebar.defaultProps = {
+  direction: 'left'
+}

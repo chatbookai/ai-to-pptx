@@ -1,21 +1,22 @@
-// MUI Imports
-import type { Theme } from '@mui/material/styles'
+// ** MUI Imports
+import { Theme } from '@mui/material/styles'
 
-// Type Imports
-import type { Skin } from '@core/types'
+// ** Theme Type Import
+import { Skin } from 'src/@core/layouts/types'
 
-const popover = (skin: Skin): Theme['components'] => ({
-  MuiPopover: {
-    styleOverrides: {
-      paper: {
-        ...(skin === 'bordered'
-          ? { boxShadow: 'none', border: '1px solid var(--mui-palette-divider)' }
-          : {
-              boxShadow: 'var(--mui-customShadows-sm)'
-            })
+const Popover = (theme: Theme, skin: Skin) => {
+  return {
+    MuiPopover: {
+      styleOverrides: {
+        root: {
+          '& .MuiPopover-paper': {
+            boxShadow: theme.shadows[skin === 'bordered' ? 0 : 6],
+            ...(skin === 'bordered' && { border: `1px solid ${theme.palette.divider}` })
+          }
+        }
       }
     }
   }
-})
+}
 
-export default popover
+export default Popover

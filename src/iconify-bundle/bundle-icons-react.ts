@@ -61,20 +61,15 @@ const sources: BundleScriptConfig = {
     require.resolve('@iconify/json/json/mdi.json'),
 
     // Custom file with only few icons
-
-/* 
-     {
+    {
       filename: require.resolve('@iconify/json/json/line-md.json'),
       icons: ['home-twotone-alt', 'github', 'document-list', 'document-code', 'image-twotone']
     }
- */
 
     // Custom JSON file
     // 'json/gg.json'
   ],
 
-/* 
- 
   icons: [
     'bx:basket',
     'bi:airplane-engines',
@@ -83,7 +78,6 @@ const sources: BundleScriptConfig = {
     'fa6-regular:comment',
     'twemoji:auto-rickshaw'
   ],
- */
 
   svg: [
     {
