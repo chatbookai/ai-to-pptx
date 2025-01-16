@@ -20,9 +20,6 @@ import ListItemButton from '@mui/material/ListItemButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiAutocomplete, { AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 
-// ** Third Party Imports
-import axios from 'axios'
-
 // ** Types Imports
 import { Settings } from 'src/@core/context/settingsContext'
 
@@ -31,9 +28,6 @@ import Icon from 'src/@core/components/icon'
 
 // ** Configs Imports
 import themeConfig from 'src/configs/themeConfig'
-
-// ** Config
-import { authConfig } from 'src/configs/auth'
 
 type AppBarSearchType = {
   id: number
@@ -261,17 +255,7 @@ const AutocompleteComponent = ({ hidden, settings }: Props) => {
 
   // Get all data using API
   useEffect(() => {
-    axios
-      .get(authConfig.backEndApiHost + 'menu_search.php', {
-        params: { q: searchValue }
-      })
-      .then(response => {
-        if (response.data && response.data.length) {
-          setOptions(response.data)
-        } else {
-          setOptions([])
-        }
-      })
+    setOptions([])
   }, [searchValue])
 
   useEffect(() => {
