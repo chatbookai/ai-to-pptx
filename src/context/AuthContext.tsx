@@ -41,66 +41,9 @@ const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const initAuth = async (): Promise<void> => {
-
-      const storedToken = window.localStorage.getItem(defaultConfig.storageTokenKeyName)!
-      const AccessKey = window.localStorage.getItem(defaultConfig.storageAccessKeyName)!
-      const userData = window.localStorage.getItem('userData')!
-      if(userData) {
-        setUser(JSON.parse(userData))
-      }
-
-      if (authConfig && storedToken && storedToken!=undefined) {
-        setLoading(true)
-        await axios
-          .get(authConfig.refreshEndpoint, {
-            headers: {
-              Authorization: storedToken
-            }
-          })
-          .then(async response => {
-            let dataJson: any = null
-            const data = response.data
-            if(data && data.isEncrypted == "1" && data.data)  {
-                const i = data.data.slice(0, 32);
-                const t = data.data.slice(-32);
-                const e = data.data.slice(32, -32);
-                const k = AccessKey;
-                const DecryptDataAES256GCMData = DecryptDataAES256GCM(e, i, t, k)
-                try {
-                    dataJson = JSON.parse(DecryptDataAES256GCMData)
-                }
-                catch(Error: any) {
-                    console.log("DecryptDataAES256GCMData view_default Error", Error)
-
-                    dataJson = data
-                }
-            }
-            else {
-
-                dataJson = data
-            }
-            setLoading(false)
-            dataJson.userData && setUser({ ...dataJson.userData })
-            if(dataJson.status == "ERROR") {
-              handleLogout()
-            }
-          })
-          .catch(() => {
-            setLoading(false)
-          })
-      }
-      else {
-        setLoading(false)
-        if(storedToken == undefined)  {
-          setTimeout(function() {
-            router.replace('/login')
-          }, 5000);
-        }
-      }
+      setLoading(false)
     }
-
     initAuth()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleLogin = (params: any, errorCallback?: ErrCallbackType) => {

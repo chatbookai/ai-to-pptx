@@ -167,7 +167,7 @@ const NoResult = ({ value, setOpenDialog }: NoResultProps) => {
         <ListItem sx={{ py: 2 }} disablePadding onClick={() => setOpenDialog(false)}>
           <Box
             component={Link}
-            href='/dashboards/analytics'
+            href='/pptx'
             sx={{
               display: 'flex',
               alignItems: 'center',
