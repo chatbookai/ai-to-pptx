@@ -60,7 +60,7 @@ const StepFourSelectTemplate = ({activeStep, setActiveStep, inputData, setInputD
               startIcon={<PlayCircleFilled />}
               sx={{mx: 1}}
             >
-              下一步：选择模板
+              下一步：生成PPTX
             </Button>
           </Grid>
         </Grid>

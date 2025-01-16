@@ -44,7 +44,7 @@ const steps = [
 const StepperLinearWithValidation = () => {
 
   const [activeStep, setActiveStep] = useState<number>(0)
-  const [inputData, setInputData] = useState<any>({selectedOption: "inputTopic", inputText: "", importOption: "inputText", moreOption:{language:"zh-CN", moreRequirement:"", outlineLength:"regular" }, outlineContent: '', templateId: 0, pptxContent: null, dataUrl: ''})
+  const [inputData, setInputData] = useState<any>({selectedOption: "inputTopic", inputText: "", importOption: "inputText", moreOption:{language:"zh-CN", moreRequirement:"", outlineLength:"regular" }, outlineContent: '', outlineHtml: '', templateId: 0, pptxContent: null, dataUrl: ''})
 
   return (
     <Card

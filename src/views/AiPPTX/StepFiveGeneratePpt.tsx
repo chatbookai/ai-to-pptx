@@ -26,19 +26,23 @@ function resetSize() {
 
 function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: any) {
 
-  const [gening, setGening] = useState(false)
+  const [generatePptxStatus, setGeneratePptxStatus] = useState(false)
   const [descTime, setDescTime] = useState(0)
   const [descMsg, setDescMsg] = useState('正在生成中，请稍后...')
   const svg = useRef(null)
-  const [pptxId, setPptxId] = useState('')
   const [pages, setPages] = useState([] as any)
   const [currentIdx, setCurrentIdx] = useState(0)
 
-  const generatePptx = (templateId: string, outlineContent: string, dataUrl: string) => {
+  const changePptxTemplate = (pptxId: string, templateId: string) => {
+    pptxObj = null
+    asyncGenPptxInfo(pptxId, templateId)
+  }
+
+  const generateNewPptx = (templateId: string, outlineContent: string, dataUrl: string) => {
       const timer = setInterval(() => {
           setDescTime(descTime => descTime + 1)
       }, 1000)
-      setGening(true)
+      setGeneratePptxStatus(true)
       const url = BackendApi + 'generateContent.php'
       const source = new SSE(url, {
           method: 'POST',
@@ -70,7 +74,7 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
               }
           }
           clearInterval(timer)
-          setGening(false)
+          setGeneratePptxStatus(false)
           setDescMsg('正在生成中，请稍后...')
           setTimeout(() => {
               drawPptxList(0, false)
@@ -85,7 +89,7 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
   }
 
   const asyncGenPptxInfo = (id: string, templateId: string) => {
-      setPptxId(id)
+      setInputData((prevState: any) => ({...prevState, pptxId: id}))
       const currentId = pptxObj && pptxObj.pages ? pptxObj.pages.length : 0
       const url = `${BackendApi}asyncPptInfo.php?currentId=${currentId}&pptId=${id}&templateId=${templateId}`
       const xhr = new XMLHttpRequest()
@@ -94,6 +98,7 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
       xhr.send()
       xhr.onload = function () {
           if (this.status === 200) {
+            try {
               const resp = JSON.parse(this.responseText)
               const gzipBase64 = resp.data.pptxProperty
               const gzip = base64js.toByteArray(gzipBase64)
@@ -111,9 +116,19 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
                   pptxObj = _pptxObj
               }
               console.log("pptxObj.pages", pptxObj.pages)
-              drawPptxList(resp.data.current - 1, true)
+              if(resp.data.current == resp.data.total)  {
+                drawPptxList(0, false)
+              }
+              else {
+                drawPptxList(resp.data.current - 1, true)
+              }
               console.log("json.data _pptxObj", _pptxObj)
               setInputData((prevState: any) => ({...prevState, pptxContent: _pptxObj}))
+
+            }
+            catch(e: any) {
+              console.log("asyncGenPptxInfo JSON.parse(this.responseText) Failed:", e);
+            }
           }
       }
       xhr.onerror = function (e) {
@@ -133,11 +148,17 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
               _pages.push(pptxObj.pages[i])
           }
           setPages(_pages)
-      } else {
-          setPages(pptxObj.pages || [])
+          drawPptx(idx)
       }
-
-      drawPptx(idx)
+      else {
+        if(pptxObj && pptxObj.pages)  {
+          setPages(pptxObj.pages)
+          drawPptx(0)
+        }
+        else {
+          setPages([])
+        }
+      }
   }
 
   const drawPptx = (idx: number) => {
@@ -170,9 +191,9 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
   }
 
   const loadById = (id: string) => {
-      setGening(false)
-      setPptxId(id)
-      const url = 'https://docmee.cn/api/ppt/loadPptx?id=' + id
+      setGeneratePptxStatus(false)
+      setInputData((prevState: any) => ({...prevState, pptxId: id}))
+      const url = BackendApi + 'loadPptx?id=' + id
       const xhr = new XMLHttpRequest()
       xhr.open('GET', url, true)
       xhr.setRequestHeader('token', token)
@@ -200,7 +221,7 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
   }
 
   useEffect(() => {
-      if (gening && currentIdx > 0) {
+      if (generatePptxStatus && currentIdx > 0) {
           if(canvasList[currentIdx - 1])  {
               canvasList[currentIdx - 1].current.scrollIntoView(true)
           }
@@ -223,7 +244,7 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
               }
           }
       }
-  }, [gening, pages])
+  }, [generatePptxStatus, pages])
 
   useEffect(() => {
       // svg
@@ -246,7 +267,10 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
       }
       else {
         if(inputData.pptxContent == null) {
-          generatePptx(inputData.templateId, inputData.outlineContent, inputData.dataUrl)
+          generateNewPptx(inputData.templateId, inputData.outlineContent, inputData.dataUrl)
+        }
+        else {
+          changePptxTemplate(inputData.pptxId, inputData.templateId)
         }
       }
   }, [])
@@ -254,28 +278,25 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
 
   return (
     <>
-      <div style={{paddingLeft: '1em', paddingTop: '-1em'}}>
+      <div style={{paddingLeft: '1em', paddingTop: '-1.25em'}}>
           <div style={{
                       alignItems: 'center',
                       display: 'flex',
                       flexDirection: 'column',
                       flexShrink: 0,
-                      height: 'calc(100vh - 213px)',
+                      height: 'calc(100vh - 216px)',
                       justifyContent: 'center',
                       position: 'absolute',
                       width: '115px',
                     }}>
               <div style={{
-                          background: '#fff',
-                          border: '1px solid #fff',
                           borderRadius: '6px',
-                          boxShadow: '0 4px 10px 0 rgba(0, 0, 0, 0.3)',
                           marginLeft: '12px',
-                          maxHeight: 'calc(100vh - 213px)',
-                          width: '200px',
+                          height: 'calc(100vh - 216px)',
+                          width: '190px',
                         }}>
                   <div style={{
-                              maxHeight: 'calc(100vh - 213px)',
+                              height: 'calc(100vh - 216px)',
                               overflowX: 'hidden',
                               overflowY: 'auto',
                               padding: '0 8px 0 2px',
@@ -284,16 +305,48 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
                           canvasList[index] = createRef()
 
                           return (
-                              <div className="left_div_item" key={index} onClick={() => drawPptx(index)}>
-                                  <div className="left_div_item_index">{ index + 1 }</div>
-                                  <canvas ref={canvasList[index]} width="288" height="162" className={currentIdx == index ? 'left_div_item_img ppt_select' : 'left_div_item_img'} />
+                              <div style={{ display: 'flex', cursor: 'pointer', margin: '10px 2px 10px 3px' }} key={index} onClick={() => drawPptx(index)}>
+                                  <div style={{
+                                        color: '#8d90a5',
+                                        flexShrink: 0,
+                                        paddingRight: 6,
+                                        paddingTop: 30,
+                                        textAlign: 'right',
+                                        width: 23,
+                                      }}>{ index + 1 }</div>
+                                  <canvas
+                                    ref={canvasList[index]}
+                                    width="288"
+                                    height="162"
+                                    style={{
+                                      height: 81,
+                                      width: 144,
+                                      border: currentIdx == index ? '2px solid #491ff8;' : '1px solid #ccc',
+                                      backgroundColor: '#f3f3f3'
+                                    }}
+                                  />
                               </div>
                           )
                       })}
-                      {gening && currentIdx > 0 && (
-                          <div className="left_div_item">
-                              <div className="left_div_item_index">{ currentIdx + 2 }</div>
-                              <div className="left_div_item_img img_gening">生成中...</div>
+                      {generatePptxStatus && currentIdx > 0 && (
+                          <div style={{ display: 'flex', cursor: 'pointer', margin: '10px 2px 10px 3px' }}>
+                              <div style={{
+                                        color: '#8d90a5',
+                                        flexShrink: 0,
+                                        paddingRight: 6,
+                                        paddingTop: 30,
+                                        textAlign: 'right',
+                                        width: 23,
+                                      }}>{ currentIdx + 2 }</div>
+                              <div style={{
+                                    height: 81,
+                                    width: 144,
+                                    border: '1px solid #ccc',
+                                    textAlign: 'center',
+                                    lineHeight: 81,
+                                    color: '#666',
+                                    cursor: 'default',
+                                  }}>生成中...</div>
                           </div>
                       )}
                   </div>
@@ -303,7 +356,7 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
               <Grid container justifyContent="right">
                 <Grid item>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {gening && (
+                    {generatePptxStatus && (
                       <Box sx={{ mr: 2 }}>
                         <Typography component="span">
                           {descMsg}
@@ -315,9 +368,11 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
                     )}
                     <Button
                       size={'small'}
-                      disabled={true}
+                      disabled={generatePptxStatus}
                       variant="outlined"
-                      onClick={() => null}
+                      onClick={() => {
+                        setActiveStep(3)
+                      }}
                       startIcon={<SwapHoriz />}
                       sx={{mx: 1}}
                     >
@@ -325,9 +380,9 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
                     </Button>
                     <Button
                       size={'small'}
-                      disabled={gening}
+                      disabled={generatePptxStatus}
                       variant={"contained"}
-                      onClick={() => downloadPptx(pptxId) }
+                      onClick={() => downloadPptx(inputData.pptxId) }
                       startIcon={<Download />}
                       sx={{mx: 1}}
                       >
@@ -335,11 +390,11 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
                     </Button>
                     <Button
                       size={'small'}
-                      disabled={gening}
-                      variant={"contained"}
+                      disabled={generatePptxStatus}
+                      variant={"outlined"}
                       onClick={() => {
                         setActiveStep(0)
-                        setInputData({selectedOption: "inputTopic", inputText: "", importOption: "inputText", moreOption:{language:"zh-CN", moreRequirement:"", outlineLength:"regular" }, outlineContent: '', templateId: 0, pptxContent: null, dataUrl: ''})
+                        setInputData({selectedOption: "inputTopic", inputText: "", importOption: "inputText", moreOption:{language:"zh-CN", moreRequirement:"", outlineLength:"regular" }, outlineContent: '', outlineHtml: '', templateId: 0, pptxContent: null, dataUrl: ''})
                        }}
                       startIcon={<ChangeCircle />}
                       sx={{mx: 1}}
@@ -350,7 +405,7 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
                 </Grid>
               </Grid>
               <Grid sx={{ ml: '200px', mt: 1 }}>
-                  <svg ref={svg} className="right_canvas"></svg>
+                  <svg ref={svg} style={{ margin: '0 auto', display: 'block', border: '1px solid #666', backgroundColor: '#f3f3f3' }}></svg>
               </Grid>
           </Grid>
       </div>

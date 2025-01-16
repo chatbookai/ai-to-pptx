@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import OutlineEdit from './OutlineEdit'
 import { marked } from 'marked'
 import { SSE } from 'src/functions/AiPPTX/sse'
@@ -25,7 +25,6 @@ marked.setOptions({
 const StepTwoThreeGenerateOutline = ({activeStep, setActiveStep, inputData, setInputData, token}: any) => {
 
     // 生成状态: 0未开始 1生成中 2已完成
-    const [outlineHtml, setOutlineHtml] = useState<string>('')
 
     const parseTextFromAiResult = (ParseText: string) => {
         const ParseTextArray = ParseText.split("\n")
@@ -98,7 +97,7 @@ const StepTwoThreeGenerateOutline = ({activeStep, setActiveStep, inputData, setI
         //return
 
         setActiveStep(1)
-        setOutlineHtml('<h3>正在生成中，请稍后....</h3>')
+        setInputData((prevState: any) => ({...prevState, outlineHtml: '<h3>正在生成中，请稍后....</h3>'}))
         const submitData = {subject: inputData.inputText}
         const url = BackendApi + 'generateOutline.php'
         const source = new SSE(url, {
@@ -120,7 +119,7 @@ const StepTwoThreeGenerateOutline = ({activeStep, setActiveStep, inputData, setI
                       outline = outline + json.choices[0]['delta']['content']
                       const outlineHtml = marked.parse(outline.replace('```markdown', '').replace(/```/g, '')) as string
                       if(outline && outline.length > 20) {
-                        setOutlineHtml(outlineHtml)
+                        setInputData((prevState: any) => ({...prevState, outlineContent: outline, outlineHtml: outlineHtml}))
                       }
                     }
                 }
@@ -133,8 +132,7 @@ const StepTwoThreeGenerateOutline = ({activeStep, setActiveStep, inputData, setI
                 outlineTree = parseTextFromAiResult(outline)
                 console.log("[DONE]outlineTree", outlineTree)
                 const outlineHtml = marked.parse(outline.replace('```markdown', '').replace(/```/g, '')) as string
-                setOutlineHtml(outlineHtml)
-                setInputData((prevState: any) => ({...prevState, outlineContent: outline}))
+                setInputData((prevState: any) => ({...prevState, outlineContent: outline, outlineHtml: outlineHtml}))
             }
         }
         source.onend = function (data: any) {
@@ -160,14 +158,14 @@ const StepTwoThreeGenerateOutline = ({activeStep, setActiveStep, inputData, setI
     const outlineRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-      if (outlineHtml) {
+      if (inputData) {
           window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight })
       }
       if (outlineRef.current) {
         // 将滚动条滚动到底部
         outlineRef.current.scrollTop = outlineRef.current.scrollHeight;
       }
-    }, [outlineHtml])
+    }, [inputData])
 
     useEffect(() => {
       activeStep == 1 && generateOutline()
@@ -181,7 +179,7 @@ const StepTwoThreeGenerateOutline = ({activeStep, setActiveStep, inputData, setI
         {activeStep == 1 && (
           <Grid
             ref={outlineRef} // 绑定 ref
-            dangerouslySetInnerHTML={{ __html: outlineHtml }}
+            dangerouslySetInnerHTML={{ __html: inputData.outlineHtml }}
             style={{
               overflowY: 'auto',
               maxHeight: '100%',

@@ -69,38 +69,6 @@ code[class*='language-'] {
 ::-webkit-scrollbar-thumb {
   background-color: #c1c1c1;
 }
-.left_div_item {
-  display: flex;
-  cursor: pointer;
-  margin: 10px 0;
-}
-.left_div_item_index {
-  color: #8d90a5;
-  flex-shrink: 0;
-  padding-right: 6px;
-  padding-top: 30px;
-  text-align: right;
-  width: 23px;
-}
-.left_div_item_img {
-  height: 81px;
-  width: 144px;
-  border: 1px solid #ccc;
-}
-.img_gening {
-  text-align: center;
-  line-height: 81px;
-  color: #666;
-  cursor: default;
-}
-.right_canvas {
-  margin: 0px auto;
-  display: block;
-  border: 1px solid #666;
-}
-.ppt_select {
-  border: 2px solid #491ff8;
-}
 .draw_el_class {
   position: fixed;
 }
@@ -193,12 +161,10 @@ code[class*='language-'] {
   margin-right: .5rem;
   text-align: right;
 }
-.chapter_div:hover, .page_div:hover, .title_div:hover {
-  background-color: #f3f3f3;
-}
 .operate_div span {
   padding: .2rem .4rem;
   margin-right: .5rem;
   cursor: pointer;
+  color: gray;
 }
 
