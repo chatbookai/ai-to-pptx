@@ -222,7 +222,7 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
 
   useEffect(() => {
       if (generatePptxStatus && currentIdx > 0) {
-          if(canvasList[currentIdx - 1])  {
+          if(canvasList[currentIdx - 1] && canvasList[currentIdx - 1].current)  {
               canvasList[currentIdx - 1].current.scrollIntoView(true)
           }
       } else if (canvasList.length > 0 && currentIdx == 0 && canvasList[0].current) {
@@ -275,6 +275,8 @@ function StepFiveGeneratePpt({setActiveStep, inputData, setInputData, token}: an
       }
   }, [])
 
+
+  console.log("svg", svg)
 
   return (
     <>

@@ -3,6 +3,7 @@ import { BackendApi } from './Config'
 
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
 
 import { PlayCircleFilled } from "@mui/icons-material";
 import { ArrowBack } from '@mui/icons-material';
@@ -92,8 +93,12 @@ const StepFourSelectTemplate = ({activeStep, setActiveStep, inputData, setInputD
             </Grid>
           ))}
           {templates.length === 0 && (
-            <Grid item xs={12}>
-              <div>模板加载中...</div>
+            <Grid container justifyContent="center" alignItems="center">
+              <Grid item xs={12}>
+                <Box display="flex" justifyContent="center" alignItems="center" sx={{mt: 2}}>
+                  <div>模板加载中...</div>
+                </Box>
+              </Grid>
             </Grid>
           )}
         </Grid>
