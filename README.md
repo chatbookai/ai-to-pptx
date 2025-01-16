@@ -28,6 +28,9 @@ Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导�
 
 后端API配置: src/views/AiPPTX/config.ts
 如果你需要自己建设一个独立的后端服务,建设完成以后,需要把这个文件的地址更换为你的后端的API地址.
+
+修改产品名称: src/configs/auth.ts 中的 AppName
+修改界面颜色: src/configs/auth.ts 中的 mode
 ```
 
 # Ai-To-PPTX 开源协议
