@@ -3,7 +3,7 @@
   <a href="./README.md">简体中文</a>
 </p>
 
-# 🎨 Ai-to-pptx
+# Ai-to-pptx
 Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导出PPTX。
 主要功能:
 - 1 使用DeepSeek等大语言模型来生成大纲
@@ -18,7 +18,7 @@ Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导�
 - 1 Ai-to-pptx 项目前端: https://github.com/chatbookai/ai-to-pptx
 - 2 Ai-to-pptx PHP后端: https://github.com/chatbookai/ai-to-pptx-backend
 
-# 🚀 前端项目运行
+# 前端项目运行
 ```
 npm install
 
@@ -42,9 +42,6 @@ npm run build
     3 没有移动端功能.
     4 更多特性,可以考虑采购商业版本.
 
-# Ai-To-PPTX 交流群组
-    QQ群: 186411255
-
 # Ai-To-PPTX 商业用途
     开源商用: 无需联系,可以直接使用,需要在您官网页面底部增加您的开源库的URL(根据开源协议你需要公开你的源代码),GPL协议授权你可以修改代码,并共享你修改以后的代码,但没有授权你可以修改版权信息,所以版权信息不能修改. GPL协议允许修改软件代码, 但没有允许你修改本系统的著作权人信息, 所以像版权归我们所有之类的标记, 不能去除.
     闭源商用: 需要联系,额外取得商业授权,根据商业授权协议的内容,来决定你是否可以合法的修改版权信息.
@@ -59,6 +56,9 @@ npm run build
     3 支持在线增加PPTX模板
     4 支持Android和IOS移动版本
 
+# Ai-To-PPTX 交流群组
+    QQ群: 186411255
+    
 ### 项目界面
     MUI界面风格，美观大方，适合集成到你的项目里面。
 <table>
