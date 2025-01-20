@@ -50,14 +50,14 @@ const StepTwoThreeGenerateOutline = ({activeStep, setActiveStep, inputData, setI
                 else if(Item.trim().startsWith('#### '))  {
                     //标题
                     TitleThree = Item.trim().substring(11)
-                    if(TitleOne!="" && TitleTwo!="" && TitleThree!="")   {
+                    if(TitleOne!="" && TitleTwo!="" && TitleThree!="" && ParseResult[TitleOne][TitleTwo])   {
                         ParseResult[TitleOne][TitleTwo].push(TitleThree)
                     }
                 }
                 else    {
                     //标题
                     TitleThree = Item.trim().substring(6)
-                    if(TitleOne!="" && TitleTwo!="" && TitleThree!="")   {
+                    if(TitleOne!="" && TitleTwo!="" && TitleThree!="" && ParseResult[TitleOne][TitleTwo])   {
                         ParseResult[TitleOne][TitleTwo].push(TitleThree)
                     }
                 }
@@ -97,7 +97,7 @@ const StepTwoThreeGenerateOutline = ({activeStep, setActiveStep, inputData, setI
         //return
 
         setActiveStep(1)
-        setInputData((prevState: any) => ({...prevState, outlineHtml: '<h3>正在生成中，请稍后....</h3>'}))
+        setInputData((prevState: any) => ({...prevState, outlineContent: '', outlineHtml: '<h3>正在生成中，请稍后....</h3>'}))
         const submitData = {subject: inputData.inputText}
         const url = BackendApi + 'generateOutline.php'
         const source = new SSE(url, {

@@ -20,7 +20,7 @@ let painter = null as any
 const canvasList = [] as any
 
 const resetSize = () => {
-    const width = Math.max(Math.min(document.body.clientWidth - 400, 1600), 480)
+    const width = Math.max(Math.min(document.body.clientWidth - 560, 1100), 480)
     painter.resetSize(width, width * 0.5625)
 }
 
@@ -362,7 +362,7 @@ const StepFiveGeneratePpt = ({setActiveStep, inputData, setInputData, token}: an
                   </div>
               </div>
           </div>
-          <Grid sx={{my: 1}}>
+          <Grid sx={{my: 2}}>
               <Grid container justifyContent="right">
                 <Grid item>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -411,7 +411,7 @@ const StepFiveGeneratePpt = ({setActiveStep, inputData, setInputData, token}: an
                   </Box>
                 </Grid>
               </Grid>
-              <Grid sx={{ ml: '200px', mt: 1 }}>
+              <Grid sx={{ ml: '180px', mt: 2 }}>
                   <svg ref={svg} style={{ margin: '0 auto', display: 'block', border: '1px solid #666', backgroundColor: '#f3f3f3' }}></svg>
               </Grid>
           </Grid>
