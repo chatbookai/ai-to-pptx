@@ -38,6 +38,9 @@ Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导�
   2 支持手动独立部署PHP环境
   3 具体步骤请见: https://github.com/chatbookai/ai-to-pptx-backend
 
+# 如何制作Ai-to-pptx项目的PPTX模板
+  请参考 [如何制作 PPTX 模板](README_Make_Template.md) 文件以获取详细说明。
+
 # Ai-To-PPTX 开源协议
     1 本项目发行协议: [AGPL-3.0 License]
     2 根据GPL协议的内容, 您只有在修改了本系统代码的时候, 需要公开的代码仓库如Github上面, 开放你的修改内容.
