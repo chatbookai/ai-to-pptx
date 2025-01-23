@@ -27,3 +27,22 @@
 
 8 PPTX模板也是有版权的, 请不要把有版权的模板拿来做商业用途.
 
+
+<table>
+    <tr>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/guide/01.png"/></td>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/guide/02.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/guide/03.png"/></td>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/guide/04.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/guide/05.png"/></td>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/guide/06.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/guide/07.png"/></td>
+        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/guide/08.png"/></td>
+    </tr>
+</table>
