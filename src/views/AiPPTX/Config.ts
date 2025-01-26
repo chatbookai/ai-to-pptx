@@ -1,1 +1,1 @@
-export const BackendApi = "http://localhost/aipptx/"
+export const BackendApi = "https://fdzz.dandian.net:8443/aipptx/"
