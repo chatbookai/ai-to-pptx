@@ -34,9 +34,9 @@ Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导�
 ```
 
 # 后端项目运行
-  1 支持Docker镜像部署
-  2 支持手动独立部署PHP环境
-  3 具体步骤请见: https://github.com/chatbookai/ai-to-pptx-backend
+    1 支持Docker镜像部署
+    2 支持手动独立部署PHP环境
+    3 具体步骤请见: https://github.com/chatbookai/ai-to-pptx-backend
 
 # 如何制作Ai-to-pptx项目的PPTX模板
   请参考 [如何制作 PPTX 模板](README_Make_Template.md) 文件以获取详细说明。
