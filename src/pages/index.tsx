@@ -61,15 +61,15 @@ const AiPPTXModel = () => {
         </Button>
         <Button
           size={'small'}
-          variant="contained"
+          variant={pageMode == "AiToPPTX" ? "contained" : "outlined"}
           onClick={() => setPageMode('AiToPPTX')}
         >
           AiToPPTX
         </Button>
         <Button
           size={'small'}
-          variant="contained"
-          onClick={() => setPageMode('https://pptx.dandian.net/')}
+          variant={pageMode == "Setting" ? "contained" : "outlined"}
+          onClick={() => setPageMode('Setting')}
         >
           参数设置
         </Button>
