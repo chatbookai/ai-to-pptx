@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // ** MUI Imports
 import Typography from '@mui/material/Typography'; // Importing Typography
@@ -46,6 +46,27 @@ const Setting = () => {
       toast.error(error.message || '保存配置时发生错误');
     }
   };
+
+  // Fetch configuration on component mount
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        const response = await fetch(BackendApi + 'saveConfig.php?action=getConfig');
+        const data = await response.json();
+        console.log("data", data)
+        if (data.status === 'ok') {
+          setAiApiUrl(data.API_URL || "");
+          setAiModel(data.API_MODE || "");
+        } else {
+          toast.error(data.msg);
+        }
+      } catch (error) {
+        toast.error((error as Error).message || '获取配置时发生错误');
+      }
+    };
+
+    fetchConfig();
+  }, []);
 
   return (
     <Box sx={{ py: 5, px: 10 }}>
@@ -100,7 +121,7 @@ const Setting = () => {
       <Typography variant="body2" sx={{ mt: 2, mb: 2 }}>1 支持DeepSeek官方API</Typography>
       <Typography variant="body2" sx={{ mt: 2, mb: 2 }}>2 支持OpenAI官方以及第三方兼容API</Typography>
       <Typography variant="body2" sx={{ mt: 2, mb: 2 }}>3 目前只能在 http://localhost 访问的时候,才可以进行保存参数</Typography>
-      <Typography variant="body2" sx={{ mt: 2, mb: 2 }}>4 为了安全期间, 当前界面只用做信息输入, 不会显示系统目前已经有的值</Typography>
+      <Typography variant="body2" sx={{ mt: 2, mb: 2 }}>4 为了安全期间, 不会显示系统已有Token的值</Typography>
       <Grid container justifyContent="center" sx={{ pt: 5, mt: 2, mb: 2 }}>
         <Grid item>
           <Button
