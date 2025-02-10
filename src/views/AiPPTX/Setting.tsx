@@ -1,7 +1,8 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState } from 'react';
 
 // ** MUI Imports
+import Typography from '@mui/material/Typography'; // Importing Typography
 import toast from 'react-hot-toast';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -15,7 +16,7 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { BackendApi } from './Config'
 
-const StepOneInputData = () => {
+const Setting = () => {
   // ** States
 
   // 状态管理
@@ -96,10 +97,10 @@ const StepOneInputData = () => {
         }}
         helperText="例如: sk-6deec20***********, 请输入你自己的KEY, 如果不需要KEY, 则输入一个任意值就可以." // Added helper text
       />
-      <p>1 支持DeepSeek官方API</p>
-      <p>2 支持OpenAI官方以及第三方兼容API</p>
-      <p>3 目前只能在 http://localhost 访问的时候,才可以进行保存参数</p>
-      <p>4 为了安全期间, 当前界面只用做信息输入, 不会显示系统目前已经有的值</p>
+      <Typography variant="body1">1 支持DeepSeek官方API</Typography>
+      <Typography variant="body1">2 支持OpenAI官方以及第三方兼容API</Typography>
+      <Typography variant="body1">3 目前只能在 http://localhost 访问的时候,才可以进行保存参数</Typography>
+      <Typography variant="body1">4 为了安全期间, 当前界面只用做信息输入, 不会显示系统目前已经有的值</Typography>
       <Grid container justifyContent="center" sx={{ pt: 5, mt: 2, mb: 2 }}>
         <Grid item>
           <Button
@@ -116,4 +117,4 @@ const StepOneInputData = () => {
   )
 }
 
-export default StepOneInputData
+export default Setting

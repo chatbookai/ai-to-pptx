@@ -1,5 +1,8 @@
+// ** React Imports
+import { useState } from 'react';
+
 import AiPPTX from 'src/views/AiPPTX/AiPPTX'
-import Settting from 'src/views/AiPPTX/Settting'
+import Setting from 'src/views/AiPPTX/Setting'
 
 import { ReactNode } from 'react'
 
@@ -13,10 +16,13 @@ const AiPPTXModel = () => {
     window.open(url, '_blank', 'noopener,noreferrer'); // 打开新窗口
   };
 
+  const [pageMode, setPageMode] = useState("AiToPPTX");
+
   return (
     <Box sx={{ minHeight: '100vh', position: 'relative' }}>
       <Box sx={{ padding: 3 }}>
-        <Settting />
+        {pageMode == "AiToPPTX" && <AiPPTX />}
+        {pageMode == "Setting" && <Setting />}
       </Box>
       <Box
         sx={{
@@ -52,6 +58,20 @@ const AiPPTXModel = () => {
           onClick={() => handleButtonClick('https://pptx.dandian.net/')}
         >
           演示站点
+        </Button>
+        <Button
+          size={'small'}
+          variant="contained"
+          onClick={() => setPageMode('AiToPPTX')}
+        >
+          AiToPPTX
+        </Button>
+        <Button
+          size={'small'}
+          variant="contained"
+          onClick={() => setPageMode('https://pptx.dandian.net/')}
+        >
+          参数设置
         </Button>
       </Box>
     </Box>
