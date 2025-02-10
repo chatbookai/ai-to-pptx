@@ -63,7 +63,7 @@ const Setting = () => {
             </InputAdornment>
           ),
         }}
-        helperText="例如: https://api.deepseek.com" // Added helper text
+        helperText="例如: https://api.deepseek.com 注意: 系统会自动在URL的后面追加: /chat/completions " // Added helper text
       />
       <TextField
         fullWidth
@@ -97,10 +97,10 @@ const Setting = () => {
         }}
         helperText="例如: sk-6deec20***********, 请输入你自己的KEY, 如果不需要KEY, 则输入一个任意值就可以." // Added helper text
       />
-      <Typography variant="body2">1 支持DeepSeek官方API</Typography>
-      <Typography variant="body2">2 支持OpenAI官方以及第三方兼容API</Typography>
-      <Typography variant="body2">3 目前只能在 http://localhost 访问的时候,才可以进行保存参数</Typography>
-      <Typography variant="body2">4 为了安全期间, 当前界面只用做信息输入, 不会显示系统目前已经有的值</Typography>
+      <Typography variant="body2" sx={{ mt: 2, mb: 2 }}>1 支持DeepSeek官方API</Typography>
+      <Typography variant="body2" sx={{ mt: 2, mb: 2 }}>2 支持OpenAI官方以及第三方兼容API</Typography>
+      <Typography variant="body2" sx={{ mt: 2, mb: 2 }}>3 目前只能在 http://localhost 访问的时候,才可以进行保存参数</Typography>
+      <Typography variant="body2" sx={{ mt: 2, mb: 2 }}>4 为了安全期间, 当前界面只用做信息输入, 不会显示系统目前已经有的值</Typography>
       <Grid container justifyContent="center" sx={{ pt: 5, mt: 2, mb: 2 }}>
         <Grid item>
           <Button
