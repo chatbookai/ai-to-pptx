@@ -1,4 +1,5 @@
 import AiPPTX from 'src/views/AiPPTX/AiPPTX'
+import Settting from 'src/views/AiPPTX/Settting'
 
 import { ReactNode } from 'react'
 
@@ -15,7 +16,7 @@ const AiPPTXModel = () => {
   return (
     <Box sx={{ minHeight: '100vh', position: 'relative' }}>
       <Box sx={{ padding: 3 }}>
-        <AiPPTX />
+        <Settting />
       </Box>
       <Box
         sx={{
