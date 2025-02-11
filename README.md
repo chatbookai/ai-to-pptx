@@ -10,8 +10,8 @@ Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导�
 - 7 支持用户设计自己的模板上传到共享平台,分享给其它人使用(商业版功能)
 
 # 项目链接
-- 1 Ai-to-pptx 项目前端: https://github.com/chatbookai/ai-to-pptx
-- 2 Ai-to-pptx PHP后端: https://github.com/chatbookai/ai-to-pptx-backend
+- 1 Ai-to-pptx 项目前端: https://github.com/SmartSchoolAI/ai-to-pptx
+- 2 Ai-to-pptx PHP后端: https://github.com/SmartSchoolAI/ai-to-pptx-backend
 
 # 前端项目运行
 ```
@@ -31,7 +31,7 @@ Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导�
 # 后端项目运行
     1 支持Docker镜像部署
     2 支持手动独立部署PHP环境
-    3 具体步骤请见: https://github.com/chatbookai/ai-to-pptx-backend
+    3 具体步骤请见: https://github.com/SmartSchoolAI/ai-to-pptx-backend
 
 # 如何制作Ai-to-pptx项目的PPTX模板
   请参考 [如何制作 PPTX 模板](README_Make_Template.md) 文件以获取详细说明。
@@ -74,25 +74,25 @@ Ai-to-pptx是使用AI技术来自动生成PPTX，并且支持在线修改和导�
     MUI界面风格，美观大方，适合集成到你的项目里面。
 <table>
     <tr>
-        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/01.png"/></td>
-        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/02.png"/></td>
+        <td><img src="https://github.com/SmartSchoolAI/ai-to-pptx/blob/main/resources/images/01.png"/></td>
+        <td><img src="https://github.com/SmartSchoolAI/ai-to-pptx/blob/main/resources/images/02.png"/></td>
     </tr>
     <tr>
-        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/03.png"/></td>
-        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/04.png"/></td>
+        <td><img src="https://github.com/SmartSchoolAI/ai-to-pptx/blob/main/resources/images/03.png"/></td>
+        <td><img src="https://github.com/SmartSchoolAI/ai-to-pptx/blob/main/resources/images/04.png"/></td>
     </tr>
     <tr>
-        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/05.png"/></td>
-        <td><img src="https://github.com/chatbookai/ai-to-pptx/blob/main/resources/images/06.png"/></td>
+        <td><img src="https://github.com/SmartSchoolAI/ai-to-pptx/blob/main/resources/images/05.png"/></td>
+        <td><img src="https://github.com/SmartSchoolAI/ai-to-pptx/blob/main/resources/images/06.png"/></td>
     </tr>
 </table>
 
 # 🌟 Star History
-<a href="https://github.com/chatbookai/ai-to-pptx/stargazers" target="_blank" style="display: block" align="center">
+<a href="https://github.com/SmartSchoolAI/ai-to-pptx/stargazers" target="_blank" style="display: block" align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=chatbookai/ai-to-pptx&type=Date" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=SmartSchoolAI/ai-to-pptx&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=SmartSchoolAI/ai-to-pptx&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=SmartSchoolAI/ai-to-pptx&type=Date" />
   </picture>
 </a>
 
